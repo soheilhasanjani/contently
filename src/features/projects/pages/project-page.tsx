@@ -1,3 +1,4 @@
+import { PanelPageLayout } from "@/components/common/panel-page-layout";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
 type ProjectPageProps = {
@@ -10,9 +11,9 @@ export async function ProjectPage({ params }: ProjectPageProps) {
   const t = await getTranslations("Projects");
 
   return (
-    <main className="flex flex-1 flex-col gap-2">
+    <PanelPageLayout className="space-y-2">
       <h1 className="text-xl font-semibold tracking-tight">{t("title")}</h1>
       <p className="text-sm text-muted-foreground">{t("projectId", { id })}</p>
-    </main>
+    </PanelPageLayout>
   );
 }

@@ -59,7 +59,7 @@ export function HomeOnboarding() {
                   className={cn(
                     "flex w-full items-center gap-3 rounded-lg px-2.5 py-2 text-start text-sm transition-colors",
                     selected
-                      ? "bg-primary/10 text-foreground"
+                      ? "bg-muted text-foreground"
                       : "bg-transparent text-muted-foreground hover:text-foreground",
                   )}
                 >

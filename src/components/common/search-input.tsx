@@ -1,0 +1,37 @@
+"use client";
+
+import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
+import { Search01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
+import type { ComponentProps } from "react";
+
+type SearchInputProps = Omit<ComponentProps<"input">, "type"> & {
+  containerClassName?: string;
+};
+
+/** Shared search field with leading icon. */
+export function SearchInput({
+  className,
+  containerClassName,
+  ...props
+}: SearchInputProps) {
+  return (
+    <div className={cn("relative w-full", containerClassName)}>
+      <HugeiconsIcon
+        icon={Search01Icon}
+        strokeWidth={2}
+        className="pointer-events-none absolute start-2.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground"
+      />
+      <Input
+        type="search"
+        className={cn(
+          "h-10 border-transparent bg-muted shadow-none focus-visible:border-transparent focus-visible:ring-0 dark:bg-muted",
+          "ps-9",
+          className,
+        )}
+        {...props}
+      />
+    </div>
+  );
+}

@@ -1,6 +1,5 @@
 "use client";
 
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { PanelNavLink } from "@/features/panel/components/panel-nav-link";
 import {
@@ -23,17 +22,7 @@ export function PanelSidebar() {
   const t = useTranslations("PanelShell");
 
   return (
-    <aside className="fixed inset-y-0 start-0 z-30 flex w-64 flex-col bg-background">
-      <div className="flex h-14 shrink-0 items-center gap-2.5 px-4">
-        <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary text-sm font-semibold text-primary-foreground">
-          C
-        </span>
-        <span className="min-w-0 truncate text-sm font-semibold tracking-tight">
-          {t("brand")}
-        </span>
-        <Badge variant="warning">{t("freePlan")}</Badge>
-      </div>
-
+    <aside className="fixed bottom-0 start-0 top-16 z-30 flex w-64 flex-col bg-background">
       <nav className="mt-3 flex flex-col gap-0.5 px-4">
         <PanelNavLink
           href={routes.home()}

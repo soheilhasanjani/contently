@@ -9,14 +9,10 @@ type PanelShellProps = {
 
 export function PanelShell({ children }: PanelShellProps) {
   return (
-    <div className="min-h-svh flex-1">
-      <PanelSidebar />
+    <>
       <PanelTopBar />
-      <div className="h-svh ps-64 pt-14">
-        <div className="scroll-fade-t h-full overflow-y-auto">
-          <div className="p-6">{children}</div>
-        </div>
-      </div>
-    </div>
+      <PanelSidebar />
+      <main className="min-h-svh ps-64 pt-16">{children}</main>
+    </>
   );
 }

@@ -1,3 +1,4 @@
+import { PanelPageLayout } from "@/components/common/panel-page-layout";
 import { setRequestLocale } from "next-intl/server";
 import { HomeArticles } from "../components/home-articles";
 import { HomeOnboarding } from "../components/home-onboarding";
@@ -13,13 +14,11 @@ export async function HomePage({ params }: HomePageProps) {
   setRequestLocale(locale);
 
   return (
-    <main className="flex flex-1 flex-col">
-      <div className="mx-auto flex w-full max-w-5xl flex-col gap-8">
-        <HomeWelcome />
-        <HomeOnboarding />
-        <HomeQuickActions />
-        <HomeArticles />
-      </div>
-    </main>
+    <PanelPageLayout>
+      <HomeWelcome />
+      <HomeOnboarding />
+      <HomeQuickActions />
+      <HomeArticles />
+    </PanelPageLayout>
   );
 }
