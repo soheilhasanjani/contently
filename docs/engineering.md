@@ -71,14 +71,13 @@ src/app/[locale]/
 
 ### Typed route helpers
 
-- Maintain a central routes module (e.g. `src/lib/routes.ts`) with **functions** for every app path.
-- All `Link`, `router.push`, `redirect`, and middleware redirects use these helpers — no raw path string literals scattered in features.
-- Example: `router.push(routes.panel.dashboard())`, `routes.auth.login({ next })`, `routes.panel.post({ id })`.
-- Prefer a small in-repo typed helper module; introduce a library only if helpers become unwieldy.
-
-### `next` query safety
-
-- After login, honor `next` only if it matches an **allowlist of specific panel routes** (via the same route helpers / path patterns).
+- **`src/lib/routes.ts` is generated + gitignored** — never hand-edit.
+- Generator: `scripts/generate-routes.mjs` + config `scripts/routes.config.mjs`.
+- `npm run dev` watches `src/app` and regenerates; `prebuild` regenerates for production.
+- Details: [`docs/routes.md`](./routes.md).
+- All `Link`, `router.push`, `redirect`, and proxy redirects use these helpers — no raw path string literals in features.
+- Example: `router.push(routes.panel.dashboard())`, `routes.auth.login({ next })`.
+- Post-login `next`: allowlist of specific panel routes only (auto from `/panel/**` pages).
 - Invalid or unknown `next` → `routes.panel.dashboard()`.
 
 ## Folder structure
@@ -98,11 +97,11 @@ src/
   lib/
     api/client.ts
     auth/cookie.ts
-    routes.ts               # typed route helpers
+    routes.ts               # GENERATED + gitignored (see docs/routes.md)
     env.ts
   stores/
   i18n/
-  middleware.ts
+  proxy.ts                  # Next.js 16 proxy (next-intl locale; auth later)
 ```
 
 ### Path aliases
@@ -178,6 +177,9 @@ src/
 ## Environment & quality
 
 - Zod-validated env + `.env.example`; fail fast.
+- OpenAPI URLs — see [`docs/api.md`](./api.md):
+  - Dev: `http://localhost:8787/openapi.json`
+  - Prod: `https://portfolio-api.soheilpcmir.workers.dev/openapi.json`
 - ESLint + TypeScript + Prettier.
 
 ## Implementation order
