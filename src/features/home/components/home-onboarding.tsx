@@ -1,0 +1,127 @@
+"use client";
+
+import { Button } from "@/components/ui/button";
+import {
+  ONBOARDING_STEPS,
+  type OnboardingStepId,
+} from "@/features/home/data/onboarding-mock";
+import { cn } from "@/lib/utils";
+import { Tick02Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { useTranslations } from "next-intl";
+import { useState } from "react";
+
+function defaultSelectedStep(): OnboardingStepId {
+  return (
+    ONBOARDING_STEPS.find((step) => !step.completed)?.id ??
+    ONBOARDING_STEPS[0].id
+  );
+}
+
+export function HomeOnboarding() {
+  const t = useTranslations("Home.Onboarding");
+  const [hidden, setHidden] = useState(false);
+  const [selectedId, setSelectedId] = useState<OnboardingStepId>(
+    defaultSelectedStep,
+  );
+
+  if (hidden) return null;
+
+  const selectedIndex = ONBOARDING_STEPS.findIndex(
+    (step) => step.id === selectedId,
+  );
+  const selectedStep = ONBOARDING_STEPS[selectedIndex] ?? ONBOARDING_STEPS[0];
+  const stepNumber = selectedIndex + 1;
+
+  return (
+    <section className="relative rounded-xl border border-onboarding-border bg-onboarding p-4 sm:p-5">
+      <Button
+        type="button"
+        variant="link"
+        size="sm"
+        className="absolute end-4 top-4 h-auto px-0 text-onboarding-hide hover:text-onboarding-hide/80 sm:end-5 sm:top-5"
+        onClick={() => setHidden(true)}
+      >
+        {t("hide")}
+      </Button>
+
+      <div className="flex flex-col gap-5 lg:flex-row lg:gap-8">
+        <ol className="flex w-full shrink-0 flex-col gap-1 lg:w-56">
+          {ONBOARDING_STEPS.map((step, index) => {
+            const selected = step.id === selectedId;
+            const title = t(`steps.${step.id}.navTitle`);
+
+            return (
+              <li key={step.id}>
+                <button
+                  type="button"
+                  onClick={() => setSelectedId(step.id)}
+                  aria-current={selected ? "step" : undefined}
+                  className={cn(
+                    "flex w-full items-center gap-3 rounded-lg px-2.5 py-2 text-start text-sm transition-colors",
+                    selected
+                      ? "bg-onboarding-selected text-foreground"
+                      : "bg-transparent text-muted-foreground hover:text-foreground",
+                  )}
+                >
+                  <span
+                    className={cn(
+                      "flex size-6 shrink-0 items-center justify-center rounded-full border text-xs font-semibold",
+                      step.completed
+                        ? "border-primary bg-primary text-primary-foreground"
+                        : selected
+                          ? "border-primary text-primary"
+                          : "border-border text-muted-foreground",
+                    )}
+                    aria-hidden
+                  >
+                    {step.completed ? (
+                      <HugeiconsIcon icon={Tick02Icon} strokeWidth={2} className="size-3.5" />
+                    ) : (
+                      index + 1
+                    )}
+                  </span>
+                  <span
+                    className={cn(
+                      "min-w-0 flex-1 truncate font-medium",
+                      step.completed && "text-muted-foreground line-through",
+                    )}
+                  >
+                    {title}
+                  </span>
+                </button>
+              </li>
+            );
+          })}
+        </ol>
+
+        <div className="flex min-w-0 flex-1 flex-col gap-4 sm:flex-row sm:items-stretch sm:gap-5">
+          <div
+            className="h-36 w-full shrink-0 rounded-lg bg-primary sm:h-auto sm:w-40 lg:w-48"
+            aria-hidden
+          />
+
+          <div className="flex min-w-0 flex-1 flex-col justify-center gap-2">
+            <h3 className="text-base font-semibold tracking-tight text-foreground">
+              {t(`steps.${selectedStep.id}.title`)}
+            </h3>
+            <p className="text-sm text-muted-foreground">
+              {t(`steps.${selectedStep.id}.description`)}
+            </p>
+            <div className="pt-1">
+              <Button type="button" size="sm">
+                {t(`steps.${selectedStep.id}.action`)}
+              </Button>
+            </div>
+            <p className="sr-only">
+              {t("stepProgress", {
+                current: stepNumber,
+                total: ONBOARDING_STEPS.length,
+              })}
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

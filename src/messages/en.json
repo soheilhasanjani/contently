@@ -19,8 +19,39 @@
     "loginFailed": "Unable to sign in. Please try again."
   },
   "Home": {
-    "title": "Home",
-    "subtitle": "Welcome to your Contently panel."
+    "greeting": "Hi {name}, welcome back 👋",
+    "savings": "Congratulations! You've saved <highlight>30 hours</highlight> worth of time by using Contently.",
+    "guestName": "there",
+    "Onboarding": {
+      "hide": "Hide",
+      "stepProgress": "Step {current} of {total}",
+      "steps": {
+        "createProject": {
+          "navTitle": "Create project",
+          "title": "Create your first project",
+          "description": "Set up a project to organize your content, goals, and publishing workflow in one place.",
+          "action": "Create project"
+        },
+        "findGap": {
+          "navTitle": "Find gap content with AI",
+          "title": "Find content gaps with AI",
+          "description": "Discover topics your audience cares about that competitors have not covered yet.",
+          "action": "Find gaps"
+        },
+        "generateArticle": {
+          "navTitle": "Generate article with AI",
+          "title": "Generate an article with AI",
+          "description": "Turn a content gap into a full draft ready for editing and review.",
+          "action": "Generate article"
+        },
+        "reviewArticle": {
+          "navTitle": "Review article from expert",
+          "title": "Review with an expert",
+          "description": "Send your draft for expert review to improve quality before publishing.",
+          "action": "Request review"
+        }
+      }
+    }
   },
   "Calendar": {
     "title": "Content calendar",
