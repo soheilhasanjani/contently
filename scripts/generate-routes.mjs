@@ -91,16 +91,9 @@ function pageFileToRoute(absolutePagePath) {
     const catchAll = part.match(/^\[\.\.\.(.+)\]$/);
     const dynamic = part.match(/^\[(.+)\]$/);
 
-    if (optionalCatchAll) {
-      const name = optionalCatchAll[1];
-      urlParts.push(`\${params.${name}.map(encodeURIComponent).join("/")}`);
-      keyParts.push(toCamelCase(name));
-      params.push(name);
-    } else if (catchAll) {
-      const name = catchAll[1];
-      urlParts.push(`\${params.${name}.map(encodeURIComponent).join("/")}`);
-      keyParts.push(toCamelCase(name));
-      params.push(name);
+    if (optionalCatchAll || catchAll) {
+      // Catch-alls (e.g. `[...rest]` 404 fallback) are not navigable helpers.
+      return null;
     } else if (dynamic) {
       const name = dynamic[1];
       urlParts.push(`\${encodeURIComponent(params.${name})}`);

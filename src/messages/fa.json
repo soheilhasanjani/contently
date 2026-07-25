@@ -70,6 +70,8 @@
     "goToLogin": "رفتن به ورود",
     "accessDeniedTitle": "دسترسی مجاز نیست",
     "accessDeniedDescription": "اجازه مشاهده این صفحه را ندارید.",
+    "notFoundTitle": "صفحه پیدا نشد",
+    "notFoundDescription": "صفحه‌ای که به دنبال آن هستید وجود ندارد یا جابه‌جا شده است.",
     "backToPanel": "بازگشت به پنل"
   }
 }

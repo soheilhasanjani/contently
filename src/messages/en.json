@@ -70,6 +70,8 @@
     "goToLogin": "Go to login",
     "accessDeniedTitle": "Access denied",
     "accessDeniedDescription": "You do not have permission to view this page.",
+    "notFoundTitle": "Page not found",
+    "notFoundDescription": "The page you are looking for does not exist or has been moved.",
     "backToPanel": "Back to panel"
   }
 }
