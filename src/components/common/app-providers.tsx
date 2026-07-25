@@ -23,7 +23,7 @@ type AppProvidersProps = {
  * 4. NuqsAdapter — URL search-param state
  * 5. Toaster — Base UI / shadcn toasts (`toast.add(...)`)
  *
- * Note: `NextIntlClientProvider` stays in the server locale layout.
+ * Used under `[locale]/layout` inside server `RootProvider` (html/body, fonts, next-intl).
  */
 export function AppProviders({ children, direction }: AppProvidersProps) {
   const [queryClient] = useState(

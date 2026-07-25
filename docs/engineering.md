@@ -157,9 +157,10 @@ src/
 
 - **`next-intl`**: `en` / `fa`; prefix routes; `messages/{locale}.json`; full RTL for `fa`.
 - Default locale resolution: `NEXT_LOCALE` → `Accept-Language` → **`fa`**.
-- Locale layout: next-intl + `lang`/`dir` + providers via **`AppProviders`**.
+- Locale layout (`[locale]`): main app shell — `RootProvider` (`html`/`body` + fonts + `NextIntlClientProvider`), **`AppProviders`** (Direction → Query → Theme → Nuqs).
+- Root `app/layout.tsx`: pass-through only (required by Next.js); globals CSS import.
 - **`next-themes`**: `class="dark"`; system default then browser storage; not in Zustand.
-- Fonts: **Inter** + **Vazirmatn** via `next/font` (locale-aware in root / `[locale]` layouts).
+- Fonts: **Inter** + **Vazirmatn** via `next/font` (`src/lib/fonts.ts`) in `RootProvider`.
 
 ## Forms & dates
 

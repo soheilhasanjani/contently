@@ -81,10 +81,6 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-body {
-  font-family: system-ui, sans-serif;
-}
-
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.141 0.005 285.823);
@@ -129,8 +125,5 @@ body {
   }
   button:not(:disabled), [role="button"]:not(:disabled) {
     cursor: pointer;
-  }
-  html {
-    @apply font-sans;
   }
 }
