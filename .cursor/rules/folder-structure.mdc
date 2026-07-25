@@ -8,8 +8,8 @@ alwaysApply: false
 
 ```text
 src/app/[locale]/page.tsx              → auth / login
-src/app/[locale]/panel/**             → private panel
-src/app/[locale]/panel/dashboard      → panel home
+src/app/[locale]/(panel)/**           → private app (route group; URLs without "(panel)")
+src/app/[locale]/(panel)/home         → app home
 src/app/[locale]/unauthorized         → 401 + login button
 src/app/[locale]/access-denied        → 403
 src/api/generated/                    → Orval output (gitignored; codegen on build/dev)

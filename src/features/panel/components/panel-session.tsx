@@ -2,6 +2,7 @@
 
 import { getAuthMe } from "@/api/generated/endpoints/auth/auth";
 import { Button } from "@/components/ui/button";
+import { PanelShell } from "@/features/panel/components/panel-shell";
 import { useRouter } from "@/i18n/navigation";
 import { ApiClientError } from "@/lib/api/error-mapper";
 import { routes } from "@/lib/routes";
@@ -21,7 +22,6 @@ export function PanelSession({ children }: PanelSessionProps) {
   const setUser = useUserStore((s) => s.setUser);
   const clearUser = useUserStore((s) => s.clearUser);
   const logout = useUserStore((s) => s.logout);
-  const user = useUserStore((s) => s.user);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   const meQuery = useQuery({
@@ -80,23 +80,5 @@ export function PanelSession({ children }: PanelSessionProps) {
     );
   }
 
-  return (
-    <div className="flex min-h-full flex-1 flex-col">
-      <header className="flex items-center justify-between gap-4 border-b border-border px-6 py-3">
-        <p className="text-sm text-muted-foreground">
-          {user ? t("signedInAs", { name: user.name }) : null}
-        </p>
-        <Button
-          type="button"
-          variant="ghost"
-          size="sm"
-          disabled={isLoggingOut}
-          onClick={() => void handleLogout()}
-        >
-          {t("logout")}
-        </Button>
-      </header>
-      {children}
-    </div>
-  );
+  return <PanelShell>{children}</PanelShell>;
 }

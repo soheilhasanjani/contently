@@ -1,5 +1,5 @@
 import { setRequestLocale } from "next-intl/server";
-import { DashboardPage } from "@/features/panel/pages/dashboard-page";
+import { NotificationsPage } from "@/features/notifications/pages/notifications-page";
 
 type PageProps = {
   params: Promise<{ locale: string }>;
@@ -8,6 +8,5 @@ type PageProps = {
 export default async function Page({ params }: PageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
-
-  return <DashboardPage params={params} />;
+  return <NotificationsPage params={params} />;
 }

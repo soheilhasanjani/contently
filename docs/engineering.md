@@ -18,8 +18,8 @@ Frontend-only Next.js app. Backend lives in a separate API project. This doc is 
 | API types & clients | Orval → `src/api/generated/` |
 | OpenAPI source | Env URL; config `orval.config.ts` + `npm run api:generate` |
 | Auth cookie | `access_token` (7-day expiry; `Secure` + `SameSite=Lax` + `Path=/`) |
-| Route guards | Middleware on `/panel`; unauthenticated → `/{locale}/?next=…` |
-| Route helpers | Typed path functions (e.g. `routes.panel.dashboard()`) for all navigation |
+| Route guards | Proxy: private app routes; unauthenticated → `/{locale}/?next=…` |
+| Route helpers | Typed path functions (e.g. `routes.home()`) for all navigation |
 | i18n | `next-intl`; locales `en` (LTR), `fa` (RTL); default **`fa`** |
 | Fonts | **Inter** (`en`) + **Vazirmatn** (`fa`) — apply after shadcn when requested |
 | Icons | Install when needed (e.g. lucide with/after UI setup) |
@@ -49,9 +49,9 @@ Frontend-only Next.js app. Backend lives in a separate API project. This doc is 
 
 | Path | Purpose |
 | --- | --- |
-| `/{locale}` | Auth / login (only public app page) |
-| `/{locale}/panel/…` | Private panel (middleware-protected) |
-| `/{locale}/panel/dashboard` | Panel home (post-login landing) |
+| `/{locale}` | Auth / login (public) |
+| `/{locale}/home` | App home (post-login landing) |
+| `/{locale}/…` | Private app routes under `(panel)` group |
 | `/{locale}/unauthorized` | 401 page (cookie present but invalid/expired) |
 | `/{locale}/access-denied` | Forbidden / access denied |
 | `/{locale}` + `not-found` / `error` | 404 and error UI |
@@ -59,9 +59,9 @@ Frontend-only Next.js app. Backend lives in a separate API project. This doc is 
 ```text
 src/app/[locale]/
   page.tsx                      # auth (login)
-  panel/
+  (panel)/
     layout.tsx                  # private shell; load /me → Zustand
-    dashboard/page.tsx
+    home/page.tsx
     ...
   unauthorized/page.tsx
   access-denied/page.tsx
@@ -76,9 +76,9 @@ src/app/[locale]/
 - `npm run dev` watches `src/app` and regenerates; `prebuild` regenerates for production.
 - Details: [`docs/routes.md`](./routes.md).
 - All `Link`, `router.push`, `redirect`, and proxy redirects use these helpers — no raw path string literals in features.
-- Example: `router.push(routes.panel.dashboard())`, `routes.auth.login({ next })`.
-- Post-login `next`: allowlist of specific panel routes only (auto from `/panel/**` pages).
-- Invalid or unknown `next` → `routes.panel.dashboard()`.
+- Example: `router.push(routes.home())`, `routes.auth.login({ next })`.
+- Post-login `next`: allowlist of private app routes (non-public static paths).
+- Invalid or unknown `next` → `routes.home()`.
 
 ## Folder structure
 
@@ -130,9 +130,9 @@ src/
 
 ### Middleware & redirects
 
-- Protect **`/{locale}/panel/**` only**.
+- Protect private app routes (everything except `/`, `/unauthorized`, `/access-denied`).
 - No cookie → `routes.auth.login({ next })`.
-- Cookie on auth page → `routes.panel.dashboard()`.
+- Cookie on auth page → `routes.home()`.
 - `NEXT_LOCALE` via **next-intl** middleware/helpers.
 
 ### Current user (`/auth/me`)

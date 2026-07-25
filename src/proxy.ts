@@ -5,6 +5,8 @@ import { routing } from "./i18n/routing";
 
 const handleI18nRouting = createMiddleware(routing);
 
+const PUBLIC_PATHS = new Set(["/", "/unauthorized", "/access-denied"]);
+
 function stripLocale(pathname: string): {
   locale: string | null;
   pathnameWithoutLocale: string;
@@ -21,6 +23,12 @@ function stripLocale(pathname: string): {
   return { locale: null, pathnameWithoutLocale: pathname };
 }
 
+function isPublicPath(pathnameWithoutLocale: string): boolean {
+  return (
+    PUBLIC_PATHS.has(pathnameWithoutLocale) || pathnameWithoutLocale === ""
+  );
+}
+
 export default function proxy(request: NextRequest) {
   const { locale, pathnameWithoutLocale } = stripLocale(
     request.nextUrl.pathname,
@@ -28,11 +36,11 @@ export default function proxy(request: NextRequest) {
 
   if (locale) {
     const token = request.cookies.get(ACCESS_TOKEN_COOKIE)?.value;
-    const isPanel = pathnameWithoutLocale.startsWith("/panel");
     const isAuthRoot =
       pathnameWithoutLocale === "/" || pathnameWithoutLocale === "";
+    const isPrivate = !isPublicPath(pathnameWithoutLocale);
 
-    if (isPanel && !token) {
+    if (isPrivate && !token) {
       const url = request.nextUrl.clone();
       url.pathname = `/${locale}`;
       url.search = "";
@@ -42,7 +50,7 @@ export default function proxy(request: NextRequest) {
 
     if (isAuthRoot && token) {
       const url = request.nextUrl.clone();
-      url.pathname = `/${locale}/panel/dashboard`;
+      url.pathname = `/${locale}/home`;
       url.search = "";
       return NextResponse.redirect(url);
     }

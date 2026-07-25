@@ -18,14 +18,51 @@
     "signingIn": "در حال ورود…",
     "loginFailed": "ورود ناموفق بود. دوباره تلاش کنید."
   },
+  "Home": {
+    "title": "خانه",
+    "subtitle": "به پنل کانتنتلی خوش آمدید."
+  },
+  "Calendar": {
+    "title": "تقویم محتوا",
+    "comingSoon": "این بخش به‌زودی آماده می‌شود."
+  },
+  "Archived": {
+    "title": "بایگانی",
+    "comingSoon": "این بخش به‌زودی آماده می‌شود."
+  },
+  "Notifications": {
+    "title": "اعلان‌ها",
+    "comingSoon": "این بخش به‌زودی آماده می‌شود."
+  },
+  "Settings": {
+    "title": "تنظیمات",
+    "comingSoon": "این بخش به‌زودی آماده می‌شود."
+  },
+  "Projects": {
+    "title": "پروژه",
+    "projectId": "شناسه پروژه: {id}"
+  },
   "Panel": {
-    "dashboardTitle": "داشبورد",
-    "dashboardSubtitle": "به پنل کانتنتلی خوش آمدید.",
     "loadingSession": "در حال بارگذاری نشست…",
     "sessionError": "بارگذاری نشست ممکن نشد.",
     "backToLogin": "بازگشت به ورود",
     "signedInAs": "وارد شده به عنوان {name}",
     "logout": "خروج"
+  },
+  "PanelShell": {
+    "brand": "کانتنتلی",
+    "freePlan": "پلن رایگان",
+    "home": "خانه",
+    "contentCalendar": "تقویم محتوا",
+    "archived": "بایگانی",
+    "notifications": "اعلان‌ها",
+    "myProjects": "پروژه‌های من",
+    "addProject": "افزودن پروژه",
+    "search": "جستجو",
+    "settings": "تنظیمات",
+    "profile": "پروفایل",
+    "upgradePlan": "ارتقا پلن",
+    "language": "زبان"
   },
   "SystemPages": {
     "unauthorizedTitle": "نشست منقضی شد",

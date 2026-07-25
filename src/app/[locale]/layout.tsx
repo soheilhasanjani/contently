@@ -4,10 +4,9 @@ import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { Inter, Vazirmatn } from "next/font/google";
 import { notFound } from "next/navigation";
 import { AppProviders } from "@/components/common/app-providers";
+import { DocumentAttributes } from "@/components/common/document-attributes";
 import { isRtlLocale, routing } from "@/i18n/routing";
 import { env } from "@/lib/env";
-import { cn } from "@/lib/utils";
-import "../globals.css";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -59,17 +58,15 @@ export default async function LocaleLayout({
   const font = isRtlLocale(locale) ? vazirmatn : inter;
 
   return (
-    <html
-      lang={locale}
-      dir={direction}
-      className={cn("h-full", font.variable)}
-      suppressHydrationWarning
-    >
-      <body className="flex min-h-full flex-col antialiased">
-        <NextIntlClientProvider>
-          <AppProviders direction={direction}>{children}</AppProviders>
-        </NextIntlClientProvider>
-      </body>
-    </html>
+    <>
+      <DocumentAttributes
+        locale={locale}
+        direction={direction}
+        fontClassName={font.variable}
+      />
+      <NextIntlClientProvider>
+        <AppProviders direction={direction}>{children}</AppProviders>
+      </NextIntlClientProvider>
+    </>
   );
 }

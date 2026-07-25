@@ -24,7 +24,7 @@ const root = path.resolve(__dirname, "..");
  *   aliases: Record<string, { key: string[]; searchParams?: string[] }>;
  *   extraRoutes: Array<{ path: string; key: string[]; searchParams?: string[] }>;
  *   defaultNextKey: string[];
- *   panelPrefix: string;
+ *   publicPaths: string[];
  * }} RoutesConfig
  */
 
@@ -293,13 +293,10 @@ function keyToAccessor(key, entries) {
  * @param {RouteEntry[]} entries
  */
 function generateSource(entries) {
-  const panelPaths = entries
+  const publicPaths = new Set(config.publicPaths ?? ["/", "/unauthorized", "/access-denied"]);
+  const nextAllowlist = entries
     .map((e) => e.path)
-    .filter(
-      (p) =>
-        !p.includes("${") &&
-        (p === config.panelPrefix || p.startsWith(`${config.panelPrefix}/`)),
-    )
+    .filter((p) => !p.includes("${") && !publicPaths.has(p))
     .sort();
 
   const fallbackAccessor = keyToAccessor(config.defaultNextKey, entries);
@@ -315,7 +312,7 @@ function generateSource(entries) {
  */
 
 export const panelNextAllowlist = [
-${panelPaths.map((p) => `  ${JSON.stringify(p)},`).join("\n")}
+${nextAllowlist.map((p) => `  ${JSON.stringify(p)},`).join("\n")}
 ] as const;
 
 export type PanelNextPath = (typeof panelNextAllowlist)[number];

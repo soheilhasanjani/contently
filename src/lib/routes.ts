@@ -8,7 +8,11 @@
  */
 
 export const panelNextAllowlist = [
-  "/panel/dashboard",
+  "/archived",
+  "/calendar",
+  "/home",
+  "/notifications",
+  "/settings",
 ] as const;
 
 export type PanelNextPath = (typeof panelNextAllowlist)[number];
@@ -22,7 +26,7 @@ export function resolveNextPath(next: string | null | undefined): string {
   if (next && isPanelNextPath(next)) {
     return next;
   }
-  return routes.panel.dashboard();
+  return routes.home();
 }
 
 export const routes = {
@@ -36,8 +40,13 @@ export const routes = {
     },
   },
   accessDenied: () => "/access-denied",
-  panel: {
-    dashboard: () => "/panel/dashboard",
+  archived: () => "/archived",
+  calendar: () => "/calendar",
+  home: () => "/home",
+  notifications: () => "/notifications",
+  projects: {
+    id: (params: { id: string | number }) => `/projects/${encodeURIComponent(params.id)}`,
   },
+  settings: () => "/settings",
   unauthorized: () => "/unauthorized",
 } as const;

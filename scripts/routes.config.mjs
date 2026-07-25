@@ -11,7 +11,7 @@ const config = {
 
   /**
    * Override helper keys / search params for specific pathnames.
-   * Pathnames are locale-unprefixed (e.g. `/`, `/panel/dashboard`).
+   * Pathnames are locale-unprefixed (e.g. `/`, `/home`).
    */
   aliases: {
     "/": {
@@ -20,17 +20,16 @@ const config = {
     },
   },
 
-  /**
-   * Routes to always emit even if `page.tsx` is not created yet.
-   * Remove entries once the real app pages exist (scan will cover them).
-   */
   extraRoutes: [],
 
   /** `resolveNextPath` falls back here when `next` is missing/invalid. */
-  defaultNextKey: ["panel", "dashboard"],
+  defaultNextKey: ["home"],
 
-  /** Only paths under this prefix may be used as post-login `next`. */
-  panelPrefix: "/panel",
+  /**
+   * Paths that must NOT be used as post-login `next` targets.
+   * All other static generated paths are allowlisted.
+   */
+  publicPaths: ["/", "/unauthorized", "/access-denied"],
 };
 
 export default config;

@@ -23,7 +23,7 @@ export async function AccessDeniedPage({ params }: AccessDeniedPageProps) {
         {t("accessDeniedDescription")}
       </p>
       <Link
-        href={routes.panel.dashboard()}
+        href={routes.home()}
         className={cn(buttonVariants())}
       >
         {t("backToPanel")}

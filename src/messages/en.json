@@ -18,14 +18,51 @@
     "signingIn": "Signing in…",
     "loginFailed": "Unable to sign in. Please try again."
   },
+  "Home": {
+    "title": "Home",
+    "subtitle": "Welcome to your Contently panel."
+  },
+  "Calendar": {
+    "title": "Content calendar",
+    "comingSoon": "This section is coming soon."
+  },
+  "Archived": {
+    "title": "Archived",
+    "comingSoon": "This section is coming soon."
+  },
+  "Notifications": {
+    "title": "Notifications",
+    "comingSoon": "This section is coming soon."
+  },
+  "Settings": {
+    "title": "Settings",
+    "comingSoon": "This section is coming soon."
+  },
+  "Projects": {
+    "title": "Project",
+    "projectId": "Project ID: {id}"
+  },
   "Panel": {
-    "dashboardTitle": "Dashboard",
-    "dashboardSubtitle": "Welcome to your Contently panel.",
     "loadingSession": "Loading session…",
     "sessionError": "Could not load your session.",
     "backToLogin": "Back to login",
     "signedInAs": "Signed in as {name}",
     "logout": "Log out"
+  },
+  "PanelShell": {
+    "brand": "Contently",
+    "freePlan": "Free plan",
+    "home": "Home",
+    "contentCalendar": "Content calendar",
+    "archived": "Archived",
+    "notifications": "Notification",
+    "myProjects": "My projects",
+    "addProject": "Add project",
+    "search": "Search",
+    "settings": "Settings",
+    "profile": "Profile",
+    "upgradePlan": "Upgrade plan",
+    "language": "Language"
   },
   "SystemPages": {
     "unauthorizedTitle": "Session expired",
