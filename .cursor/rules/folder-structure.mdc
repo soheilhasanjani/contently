@@ -1,23 +1,25 @@
 ---
-description: Folder structure — features, api/generated, aliases
+description: Folder structure, aliases, auth vs panel routes
 globs: src/**/*.{ts,tsx}
 alwaysApply: false
 ---
 
-# Folder structure
+# Folder structure & routes
 
 ```text
-src/app/[locale]/         → routes; import feature pages by path
-src/api/generated/        → Orval output only
-src/features/<feature>/   → pages/, components/, hooks/, …
-src/components/ui/        → shadcn primitives
-src/components/common/    → complex shared UI
-src/messages/             → en.json, fa.json
-src/i18n/                 → next-intl config
-src/lib/api/client.ts     → Axios instance
-src/stores/               → Zustand (non-theme)
+src/app/[locale]/page.tsx              → auth / login
+src/app/[locale]/panel/**             → private panel
+src/app/[locale]/panel/dashboard      → panel home
+src/app/[locale]/unauthorized         → 401 + login button
+src/app/[locale]/access-denied        → 403
+src/api/generated/                    → Orval only
+src/features/<feature>/pages|components|hooks/
+src/components/ui|common/
+src/messages/en.json|fa.json
+src/lib/api/client.ts
+src/stores/                           → Zustand (incl. panel user)
 ```
 
-- No feature barrels — `app` imports `features/<name>/pages/...` directly.
+- No feature barrels — import pages by path.
 - Aliases: `@/*`, `@/features/*`, `@/components/*`, `@/lib/*`, `@/messages/*`.
-- Locale layout: next-intl + `lang`/`dir` + ThemeProvider.
+- Panel layout loads `/me` into Zustand user store.

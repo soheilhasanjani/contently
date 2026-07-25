@@ -1,14 +1,16 @@
 ---
-description: TanStack Query, Zustand, nuqs, RHF+Zod state/forms
+description: TanStack Query, Zustand user store, nuqs, RHF+Zod
 globs: src/**/*.{ts,tsx}
 alwaysApply: false
 ---
 
 # State & forms
 
-- **TanStack Query**: all server/async data and mutations.
-- **Zustand**: global client UI state only (shell, …) — **not** theme.
+- **TanStack Query**: server/async data and mutations (via Orval hooks).
+- **Zustand**: shell prefs + **panel current user** (`/me`) — not theme.
 - **nuqs**: filters and URL-serializable UI state.
-- **Theme**: `next-themes` only (system default → user override in browser storage).
-- Never mirror Query cache into Zustand.
+- **Theme**: `next-themes` only.
+- Do not mirror arbitrary Query data into Zustand; user session is the allowed exception.
+- Load `/me` only inside the panel private shell into the user store.
 - Forms: React Hook Form + Zod; inline field errors; toasts for non-field errors.
+- Logout: clear `access_token` + Query cache + redirect to `/{locale}`.

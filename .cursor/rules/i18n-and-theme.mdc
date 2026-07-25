@@ -14,6 +14,7 @@ alwaysApply: false
 - Full RTL for `fa`: `dir="rtl"`, logical CSS, mirrored layout.
 - Locale layout: next-intl provider + `lang`/`dir` on `<html>` + ThemeProvider.
 - `/` resolution: `NEXT_LOCALE` cookie → `Accept-Language` → default **`fa`**.
+- `NEXT_LOCALE` written via **next-intl** middleware/helpers.
 
 ## Theme (`next-themes`)
 

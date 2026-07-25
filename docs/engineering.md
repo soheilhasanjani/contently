@@ -9,15 +9,15 @@ Frontend-only Next.js app. Backend lives in a separate API project. This doc is 
 | Framework | Next.js (App Router), Server Components by default |
 | UI | shadcn/ui (Base UI) via CLI; TipTap later for editor |
 | Server state | TanStack Query via **Orval `react-query` hooks** |
-| Client global state | Zustand (shell prefs, etc. — not theme) |
+| Client global state | Zustand (shell prefs, **current user in panel**, …) |
 | Theme | `next-themes` → `class="dark"` on `<html>` |
 | URL / filter state | nuqs |
 | Forms | React Hook Form + Zod |
 | HTTP | Axios (`src/lib/api/client.ts`) |
 | API types & clients | Orval → `src/api/generated/` |
 | OpenAPI source | Env URL (e.g. `OPENAPI_URL` / backend `/openapi.json`) |
-| Auth | JS-readable cookie → `Authorization: Bearer <token>` |
-| Route guards | Next.js middleware → `/{locale}/login` |
+| Auth cookie | `access_token` (JS-readable; `Secure` + `SameSite=Lax` + `Path=/`) |
+| Route guards | Middleware on `/panel`; unauthenticated → `/{locale}/?next=…` |
 | i18n | `next-intl`; locales `en` (LTR), `fa` (RTL); default **`fa`** |
 | Env | Zod-validated module + `.env.example` |
 | Quality | ESLint + TypeScript + Prettier |
@@ -29,12 +29,38 @@ Frontend-only Next.js app. Backend lives in a separate API project. This doc is 
 - Dynamic-import heavy panels (editor, AI UI) to protect the bundle.
 - Use Next.js primitives (`next/font`, `next/image`, etc.) instead of raw equivalents.
 
+## Routing map
+
+| Path | Purpose |
+| --- | --- |
+| `/{locale}` | Auth / login (only public app page) |
+| `/{locale}/panel/…` | Private panel (middleware-protected) |
+| `/{locale}/panel/dashboard` | Panel home (post-login landing) |
+| `/{locale}/unauthorized` | 401 page (cookie present but invalid/expired) |
+| `/{locale}/access-denied` | Forbidden / access denied |
+| `/{locale}` + `not-found` / `error` | 404 and error UI |
+
+Suggested `app` shape (route groups optional for clarity):
+
+```text
+src/app/[locale]/
+  page.tsx                      # auth (login)
+  panel/
+    layout.tsx                  # private shell; load /me → Zustand
+    dashboard/page.tsx
+    ...
+  unauthorized/page.tsx
+  access-denied/page.tsx
+  not-found.tsx
+  error.tsx
+```
+
 ## Folder structure
 
 ```text
 src/
   app/
-    [locale]/               # locale-prefixed routes (/en, /fa)
+    [locale]/               # see routing map
   api/
     generated/              # Orval output (do not hand-edit)
   features/
@@ -52,11 +78,13 @@ src/
   lib/
     api/
       client.ts             # shared Axios instance + auth interceptor
-    env.ts                  # Zod-validated env
+    auth/
+      cookie.ts             # get/set/clear access_token
+    env.ts
     ...
-  stores/                   # Zustand (non-theme)
+  stores/                   # Zustand (user session, shell, … — not theme)
   i18n/                     # next-intl request/routing config
-  middleware.ts             # auth redirects + locale handling (or root middleware)
+  middleware.ts             # locale (next-intl) + panel auth cookie check
 ```
 
 Rules:
@@ -81,20 +109,45 @@ Rules:
 - OpenAPI spec URL from env (backend OpenAPI endpoint).
 - Prefer Orval types for API payloads/responses; hand-write types for props/lib/utils.
 
-### Auth
+### Auth cookie & session
 
-- `POST /auth/login` → token; frontend stores token in a **JS-readable cookie**.
-- `GET /auth/me` for current user.
-- Axios request interceptor: read cookie → `Authorization: Bearer <token>`.
-- **Middleware** protects panel routes; unauthenticated → `/{locale}/login`.
-- Central API error mapper in `lib`; UX: error boundaries, toasts, inline errors, Suspense/skeletons, mutation errors.
+- Cookie name: **`access_token`**.
+- Flags: **`Secure`**, **`SameSite=Lax`**, **`Path=/`** (JS-readable — not httpOnly).
+- `POST /auth/login` → token; **frontend sets** the cookie.
+- Axios interceptor: read `access_token` → `Authorization: Bearer <token>`.
+- Logout: **clear cookie** + **clear TanStack Query cache** + redirect to `/{locale}` (login).
+
+### Middleware & redirects
+
+- Protect **`/{locale}/panel/**` only** (plus static/intl exclusions as needed).
+- No cookie on panel → redirect to **`/{locale}?next=<original-path>`**.
+- Cookie present on auth page (`/{locale}`) → redirect to **`/{locale}/panel/dashboard`**.
+- `NEXT_LOCALE` managed by **next-intl** middleware/helpers on locale change.
+
+### Current user (`/auth/me`)
+
+- Fetch **only inside the private panel** shell.
+- Provide user via a **Zustand store** (session/user store) for panel UI.
+- Do not load `/me` on the public auth page.
+
+### 401 handling
+
+- If a request returns **401** and a cookie is (or was) present: navigate to **`/{locale}/unauthorized`**.
+- That page shows messaging + a **button to login** (`/{locale}`), not an automatic silent redirect loop.
+- Distinguish **access denied** (403) → `/{locale}/access-denied`.
+
+### Errors UX (general)
+
+- Central API error mapper in `lib`.
+- Error boundaries, toasts, inline field errors, Suspense/skeletons, mutation errors.
+- Dedicated system pages: 404, unauthorized, access-denied, error.
 
 ## State
 
-- **TanStack Query** (via Orval hooks): server/async data only.
-- **Zustand**: cross-route UI/global client state — **not** theme.
+- **TanStack Query** (via Orval hooks): server/async data and mutations.
+- **Zustand**: shell prefs + **panel current user** (from `/me`) — **not** theme.
 - **nuqs**: filters, tabs, and other URL-serializable UI state.
-- Do not duplicate server data in Zustand.
+- Do not mirror arbitrary Query lists into Zustand; **user session in Zustand is the allowed exception**.
 
 ## i18n & theme
 
@@ -108,6 +161,7 @@ Rules:
 - Full RTL: set `dir` from locale, prefer logical CSS, mirror layout for `fa`.
 - Locale layout owns: **`next-intl` provider**, `lang`/`dir` on `<html>`, **ThemeProvider**.
 - Unprefixed `/` resolution order: **`NEXT_LOCALE` cookie** → **`Accept-Language`** → default **`fa`**.
+- Locale cookie written via **next-intl** middleware/helpers.
 
 ### Theme (`next-themes` + shadcn)
 
@@ -146,7 +200,7 @@ Rules:
 
 1. Foundation: `next-intl`, `next-themes`, `nuqs`, `zod`, validated env.
 2. Then shadcn/ui + theme wiring.
-3. Then Axios + Orval + TanStack Query + auth middleware/login.
+3. Then Axios + Orval + TanStack Query + auth middleware/login/panel shell.
 4. TipTap when editor work starts.
 
 ## Deferred
