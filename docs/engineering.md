@@ -13,21 +13,37 @@ Frontend-only Next.js app. Backend lives in a separate API project. This doc is 
 | Theme | `next-themes` → `class="dark"` on `<html>` |
 | URL / filter state | nuqs |
 | Forms | React Hook Form + Zod |
+| Dates | **dayjs** + locales |
 | HTTP | Axios (`src/lib/api/client.ts`) |
 | API types & clients | Orval → `src/api/generated/` |
-| OpenAPI source | Env URL (e.g. `OPENAPI_URL` / backend `/openapi.json`) |
-| Auth cookie | `access_token` (JS-readable; `Secure` + `SameSite=Lax` + `Path=/`) |
+| OpenAPI source | Env URL; config `orval.config.ts` + `npm run api:generate` |
+| Auth cookie | `access_token` (7-day expiry; `Secure` + `SameSite=Lax` + `Path=/`) |
 | Route guards | Middleware on `/panel`; unauthenticated → `/{locale}/?next=…` |
+| Route helpers | Typed path functions (e.g. `routes.panel.dashboard()`) for all navigation |
 | i18n | `next-intl`; locales `en` (LTR), `fa` (RTL); default **`fa`** |
+| Fonts | **Inter** (`en`) + **Vazirmatn** (`fa`) — apply after shadcn when requested |
+| Icons | Install when needed (e.g. lucide with/after UI setup) |
+| Toasts | Install manually when first needed (not via shadcn CLI) |
 | Env | Zod-validated module + `.env.example` |
 | Quality | ESLint + TypeScript + Prettier |
 
 ## Architecture
 
 - This repo is **frontend only**. Persist and business logic stay on the API.
-- Prefer **Server Components**; add `"use client"` only when browser APIs, interactivity, or client libraries require it.
+- Prefer **Server Components**; add `"use client"` only when required.
 - Dynamic-import heavy panels (editor, AI UI) to protect the bundle.
 - Use Next.js primitives (`next/font`, `next/image`, etc.) instead of raw equivalents.
+- Compose client providers in a single **`AppProviders`** module; document provider order in that file.
+
+## Naming & imports
+
+- **Files**: kebab-case (`user-menu.tsx`); components inside are PascalCase.
+- **Feature pages**: `sth-page.tsx` exporting `SthPage` (e.g. `login-page.tsx` → `LoginPage`).
+- **`cn`**: comes from shadcn CLI setup (`lib/utils.ts`); do not hand-roll ahead of shadcn init.
+- **Imports**:
+  - Shared code: aliases (`@/components`, `@/lib`, `@/messages`, …).
+  - Inside the same feature: **relative** imports.
+- Cross-feature imports should go through shared layers when possible, not deep reach into another feature’s internals.
 
 ## Routing map
 
@@ -39,8 +55,6 @@ Frontend-only Next.js app. Backend lives in a separate API project. This doc is 
 | `/{locale}/unauthorized` | 401 page (cookie present but invalid/expired) |
 | `/{locale}/access-denied` | Forbidden / access denied |
 | `/{locale}` + `not-found` / `error` | 404 and error UI |
-
-Suggested `app` shape (route groups optional for clarity):
 
 ```text
 src/app/[locale]/
@@ -55,44 +69,41 @@ src/app/[locale]/
   error.tsx
 ```
 
+### Typed route helpers
+
+- Maintain a central routes module (e.g. `src/lib/routes.ts`) with **functions** for every app path.
+- All `Link`, `router.push`, `redirect`, and middleware redirects use these helpers — no raw path string literals scattered in features.
+- Example: `router.push(routes.panel.dashboard())`, `routes.auth.login({ next })`, `routes.panel.post({ id })`.
+- Prefer a small in-repo typed helper module; introduce a library only if helpers become unwieldy.
+
+### `next` query safety
+
+- After login, honor `next` only if it matches an **allowlist of specific panel routes** (via the same route helpers / path patterns).
+- Invalid or unknown `next` → `routes.panel.dashboard()`.
+
 ## Folder structure
 
 ```text
 src/
-  app/
-    [locale]/               # see routing map
-  api/
-    generated/              # Orval output (do not hand-edit)
-  features/
-    <feature>/
-      pages/                # imported directly by app routes (no barrels)
-      components/
-      hooks/
-      ...
+  app/[locale]/             # see routing map
+  api/generated/            # Orval output (do not hand-edit)
+  features/<feature>/
+    pages/                  # *-page.tsx → *Page (no barrels)
+    components/
+    hooks/
   components/
     ui/                     # shadcn primitives
-    common/                 # shared complex UI
-  messages/
-    en.json
-    fa.json
+    common/                 # shared complex UI + AppProviders
+  messages/en.json|fa.json
   lib/
-    api/
-      client.ts             # shared Axios instance + auth interceptor
-    auth/
-      cookie.ts             # get/set/clear access_token
+    api/client.ts
+    auth/cookie.ts
+    routes.ts               # typed route helpers
     env.ts
-    ...
-  stores/                   # Zustand (user session, shell, … — not theme)
-  i18n/                     # next-intl request/routing config
-  middleware.ts             # locale (next-intl) + panel auth cookie check
+  stores/
+  i18n/
+  middleware.ts
 ```
-
-Rules:
-
-- `app/[locale]/…` wires routes; import feature pages **by path** (no feature barrels).
-- Feature code is grouped by type (`pages`, `components`, `hooks`, …).
-- Put tiny primitives in `components/ui`; put reusable composite UI in `components/common`.
-- Translation files are global: `messages/{locale}.json`.
 
 ### Path aliases
 
@@ -103,106 +114,82 @@ Rules:
 
 ### Orval + Axios + Query
 
-- Orval generates into **`src/api/generated/`** (models + clients together).
-- Use Orval **`react-query`** mode (generated hooks).
-- Shared Axios instance: **`src/lib/api/client.ts`** (`baseURL`, interceptors).
-- OpenAPI spec URL from env (backend OpenAPI endpoint).
-- Prefer Orval types for API payloads/responses; hand-write types for props/lib/utils.
+- Orval: root **`orval.config.ts`** + script **`npm run api:generate`** → `src/api/generated/`.
+- Orval **`react-query`** mode (generated hooks).
+- Shared Axios: **`src/lib/api/client.ts`**.
+- OpenAPI URL from env.
+- Prefer Orval types for API contracts; hand-write props/lib/utils types.
 
 ### Auth cookie & session
 
 - Cookie name: **`access_token`**.
-- Flags: **`Secure`**, **`SameSite=Lax`**, **`Path=/`** (JS-readable — not httpOnly).
-- `POST /auth/login` → token; **frontend sets** the cookie.
-- Axios interceptor: read `access_token` → `Authorization: Bearer <token>`.
-- Logout: **clear cookie** + **clear TanStack Query cache** + redirect to `/{locale}` (login).
+- Flags: **`Secure`**, **`SameSite=Lax`**, **`Path=/`** (JS-readable).
+- Expiry: **7 days** (`Max-Age` / equivalent).
+- Login: frontend **sets** cookie from `POST /auth/login` token.
+- Axios interceptor: cookie → `Authorization: Bearer <token>`.
+- Logout: clear cookie + clear Query cache + redirect via `routes.auth.login()`.
 
 ### Middleware & redirects
 
-- Protect **`/{locale}/panel/**` only** (plus static/intl exclusions as needed).
-- No cookie on panel → redirect to **`/{locale}?next=<original-path>`**.
-- Cookie present on auth page (`/{locale}`) → redirect to **`/{locale}/panel/dashboard`**.
-- `NEXT_LOCALE` managed by **next-intl** middleware/helpers on locale change.
+- Protect **`/{locale}/panel/**` only**.
+- No cookie → `routes.auth.login({ next })`.
+- Cookie on auth page → `routes.panel.dashboard()`.
+- `NEXT_LOCALE` via **next-intl** middleware/helpers.
 
 ### Current user (`/auth/me`)
 
-- Fetch **only inside the private panel** shell.
-- Provide user via a **Zustand store** (session/user store) for panel UI.
+- Fetch **only inside the private panel** shell → **Zustand user store**.
 - Do not load `/me` on the public auth page.
 
-### 401 handling
+### 401 / 403
 
-- If a request returns **401** and a cookie is (or was) present: navigate to **`/{locale}/unauthorized`**.
-- That page shows messaging + a **button to login** (`/{locale}`), not an automatic silent redirect loop.
-- Distinguish **access denied** (403) → `/{locale}/access-denied`.
-
-### Errors UX (general)
-
-- Central API error mapper in `lib`.
-- Error boundaries, toasts, inline field errors, Suspense/skeletons, mutation errors.
-- Dedicated system pages: 404, unauthorized, access-denied, error.
+- API **401** (cookie context) → `routes.unauthorized()` page with **button to login**.
+- **403** → `routes.accessDenied()`.
+- Also: 404 + error pages.
 
 ## State
 
-- **TanStack Query** (via Orval hooks): server/async data and mutations.
-- **Zustand**: shell prefs + **panel current user** (from `/me`) — **not** theme.
-- **nuqs**: filters, tabs, and other URL-serializable UI state.
-- Do not mirror arbitrary Query lists into Zustand; **user session in Zustand is the allowed exception**.
+- **TanStack Query**: server/async data (Orval hooks).
+- **Zustand**: shell + panel current user — **not** theme.
+- **nuqs**: URL/filter state.
+- User session in Zustand is the allowed server-data exception; do not mirror arbitrary lists.
 
-## i18n & theme
+## i18n, theme, fonts
 
-### i18n (`next-intl`)
+- **`next-intl`**: `en` / `fa`; prefix routes; `messages/{locale}.json`; full RTL for `fa`.
+- Default locale resolution: `NEXT_LOCALE` → `Accept-Language` → **`fa`**.
+- Locale layout: next-intl + `lang`/`dir` + providers via **`AppProviders`**.
+- **`next-themes`**: `class="dark"`; system default then browser storage; not in Zustand.
+- Fonts: **Inter** + **Vazirmatn** via `next/font`, applied **after shadcn init when explicitly requested** (not automatically during shadcn setup).
 
-- Library: **`next-intl`** (App Router).
-- Locales: **`en`** (LTR), **`fa`** (RTL).
-- Routing: locale **prefix** — `/en/...`, `/fa/...`.
-- Messages: global `messages/en.json`, `messages/fa.json`.
-- No hardcoded user-facing strings; always use `next-intl`.
-- Full RTL: set `dir` from locale, prefer logical CSS, mirror layout for `fa`.
-- Locale layout owns: **`next-intl` provider**, `lang`/`dir` on `<html>`, **ThemeProvider**.
-- Unprefixed `/` resolution order: **`NEXT_LOCALE` cookie** → **`Accept-Language`** → default **`fa`**.
-- Locale cookie written via **next-intl** middleware/helpers.
+## Forms & dates
 
-### Theme (`next-themes` + shadcn)
+- Forms: React Hook Form + Zod.
+- Dates/numbers display: **dayjs** + locales (lightweight).
 
-- Use **`next-themes`** (matches shadcn dark mode).
-- Apply via `class="dark"` on `<html>` (Tailwind `dark:` variant).
-- First visit: follow **system** preference.
-- After user chooses light/dark: persist in **browser storage** and honor that next time.
-- Avoid theme flash: ThemeProvider + `suppressHydrationWarning` on `<html>` as needed.
-- Do **not** put theme state in Zustand — `next-themes` owns it.
+## Components & extras
 
-## Forms
+- shadcn CLI → `components/ui`; complex shared → `components/common`.
+- **`cn`**: from shadcn install.
+- Toasts: **install manually** when first needed (not shadcn CLI).
+- Icons: install when needed.
+- TipTap deferred until editor work.
 
-- React Hook Form + Zod schemas for login, settings, and other forms.
-- Surface API/field errors inline; use toasts for non-field failures.
+## Environment & quality
 
-## Components
-
-- Add common controls with the **shadcn CLI** into `components/ui`.
-- Build missing complex shared UI in `components/common`.
-- TipTap and other libraries cover editor/specialized surfaces (TipTap setup deferred).
-- Avoid wrapping every shadcn primitive; wrap when reuse or design tokens demand it.
-
-## Environment
-
-- Public config via `NEXT_PUBLIC_*` (API base URL, etc.).
-- OpenAPI URL for Orval generation (env).
-- Validate env with Zod at boot; fail fast on missing/invalid values.
-- Keep `.env.example` documented and in sync.
-
-## Quality gates
-
-- ESLint + TypeScript (strict) + Prettier before merge.
-- Production-grade: clean structure, explicit types at boundaries, no drive-by refactors.
+- Zod-validated env + `.env.example`; fail fast.
+- ESLint + TypeScript + Prettier.
 
 ## Implementation order
 
-1. Foundation: `next-intl`, `next-themes`, `nuqs`, `zod`, validated env.
-2. Then shadcn/ui + theme wiring.
-3. Then Axios + Orval + TanStack Query + auth middleware/login/panel shell.
-4. TipTap when editor work starts.
+1. Foundation: `next-intl`, `next-themes`, `nuqs`, `zod`, env, **typed `routes` helpers**.
+2. shadcn/ui (+ `cn`); then apply **Inter / Vazirmatn** when asked.
+3. Axios + Orval + Query + auth cookie/middleware/panel shell + dayjs as needed.
+4. Manual toast + icons when first UI needs them.
+5. TipTap when editor starts.
 
 ## Deferred
 
-- TipTap editor packaging and extensions — set up when the editor feature starts.
+- TipTap editor packaging.
+- Font wiring until post-shadcn request.
+- Toast/icon packages until first use (manual install).

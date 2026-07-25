@@ -1,5 +1,5 @@
 ---
-description: TanStack Query, Zustand user store, nuqs, RHF+Zod
+description: TanStack Query, Zustand user store, nuqs, RHF+Zod, dayjs
 globs: src/**/*.{ts,tsx}
 alwaysApply: false
 ---
@@ -10,7 +10,9 @@ alwaysApply: false
 - **Zustand**: shell prefs + **panel current user** (`/me`) — not theme.
 - **nuqs**: filters and URL-serializable UI state.
 - **Theme**: `next-themes` only.
+- **Dates**: dayjs + locales.
 - Do not mirror arbitrary Query data into Zustand; user session is the allowed exception.
 - Load `/me` only inside the panel private shell into the user store.
-- Forms: React Hook Form + Zod; inline field errors; toasts for non-field errors.
-- Logout: clear `access_token` + Query cache + redirect to `/{locale}`.
+- Forms: React Hook Form + Zod; inline field errors; toasts when lib is installed.
+- Logout: clear `access_token` + Query cache + `routes.auth.login()`.
+- Navigation: typed `routes.*()` helpers only.

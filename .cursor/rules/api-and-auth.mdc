@@ -1,18 +1,15 @@
 ---
-description: Auth cookie, middleware, panel routes, 401 pages
+description: Auth cookie 7d, middleware, next allowlist, route helpers
 globs: src/**/*.{ts,tsx}
 alwaysApply: false
 ---
 
 # API & auth
 
-- Orval → `src/api/generated/` (react-query hooks). OpenAPI URL from env.
-- Axios: `src/lib/api/client.ts`. Cookie `access_token` → `Authorization: Bearer`.
-- Cookie flags: `Secure` + `SameSite=Lax` + `Path=/` (JS-readable). Frontend **sets** cookie after login.
-- Routes: `/{locale}` = login; `/{locale}/panel/**` = private; home = `/panel/dashboard`.
-- Middleware: protect `/panel` only → `/{locale}?next=…` if no cookie.
-- Logged-in on auth page → `/panel/dashboard`.
-- Logout: clear cookie + Query cache + redirect to `/{locale}`.
-- `/auth/me` only in panel → **Zustand user store**.
-- API 401 (with cookie context) → `/{locale}/unauthorized` (button to login).
-- 403 → `/{locale}/access-denied`. Also support 404 + error pages.
+- Orval: root `orval.config.ts` + `npm run api:generate` → `src/api/generated/` (react-query).
+- Axios: `src/lib/api/client.ts`. Cookie `access_token` → Bearer header.
+- Cookie: Secure + SameSite=Lax + Path=/; **7-day** expiry; frontend sets after login.
+- Paths via `routes.*()` only. Login `/{locale}`; panel `/{locale}/panel/**`; home dashboard.
+- Middleware: no cookie on panel → `routes.auth.login({ next })` (allowlisted panel `next` only).
+- Authed on login → `routes.panel.dashboard()`. Logout: clear cookie + Query cache + login route.
+- `/me` panel-only → Zustand. 401 → unauthorized (+ login button). 403 → access-denied.

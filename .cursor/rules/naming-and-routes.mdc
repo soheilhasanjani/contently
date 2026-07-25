@@ -1,0 +1,15 @@
+---
+description: Naming, imports, typed routes, AppProviders
+globs: src/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# Naming, imports, routes
+
+- Files: **kebab-case**. Feature pages: `sth-page.tsx` exporting `SthPage`.
+- Shared imports: `@/components`, `@/lib`, `@/messages`, ….
+- Same-feature imports: **relative**.
+- Navigation/redirects/Links: only via typed helpers in `src/lib/routes.ts` (or equivalent), e.g. `routes.panel.dashboard()`.
+- Post-login `next`: allowlist of specific panel routes only; else dashboard.
+- Client providers: one `AppProviders` module; document order in-file.
+- `cn`: from shadcn CLI. Do not apply Inter/Vazirmatn until explicitly requested after shadcn.
