@@ -1,0 +1,22 @@
+---
+description: next-intl, en/fa RTL, next-themes dark mode
+globs: src/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# i18n & dark mode
+
+## i18n (`next-intl`)
+
+- Use **`next-intl`** for App Router.
+- Locales: `en` (LTR), `fa` (RTL). Routes: `/en/...`, `/fa/...`.
+- Messages: `messages/en.json`, `messages/fa.json` only (global).
+- No hardcoded user-facing strings.
+- Full RTL for `fa`: `dir="rtl"`, logical CSS, mirrored layout.
+
+## Theme (`next-themes`)
+
+- Use **`next-themes`** with `attribute="class"` (`dark` on `<html>`).
+- Default: **system**. After user picks light/dark, persist in browser storage.
+- Do not store theme in Zustand.
+- Avoid flash: client ThemeProvider + `suppressHydrationWarning` on `<html>` when needed.

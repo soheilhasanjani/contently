@@ -7,7 +7,8 @@ alwaysApply: false
 # State & forms
 
 - **TanStack Query**: all server/async data and mutations.
-- **Zustand**: global client UI state only (theme, shell, …).
+- **Zustand**: global client UI state only (shell, …) — **not** theme.
 - **nuqs**: filters and URL-serializable UI state.
+- **Theme**: `next-themes` only (system default → user override in browser storage).
 - Never mirror Query cache into Zustand.
 - Forms: React Hook Form + Zod; inline field errors; toasts for non-field errors.

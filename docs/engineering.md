@@ -9,12 +9,14 @@ Frontend-only Next.js app. Backend lives in a separate API project. This doc is 
 | Framework | Next.js (App Router), Server Components by default |
 | UI | shadcn/ui (Base UI) via CLI; TipTap later for editor |
 | Server state | TanStack Query |
-| Client global state | Zustand (theme, etc.) |
+| Client global state | Zustand (shell prefs, etc. — not theme) |
+| Theme | `next-themes` → `class="dark"` on `<html>` |
 | URL / filter state | nuqs |
 | Forms | React Hook Form + Zod |
 | HTTP | Axios |
 | API types & clients | Orval (generated) |
 | Auth | Token in cookie → `Authorization: Bearer <token>` |
+| i18n | `next-intl`; locales `en` (LTR), `fa` (RTL) |
 | Env | Zod-validated module + `.env.example` |
 | Quality | ESLint + TypeScript + Prettier |
 
@@ -29,7 +31,8 @@ Frontend-only Next.js app. Backend lives in a separate API project. This doc is 
 
 ```text
 src/
-  app/                    # routes only — import feature pages
+  app/
+    [locale]/               # locale-prefixed routes (/en, /fa)
   features/
     <feature>/
       pages/
@@ -39,15 +42,20 @@ src/
   components/
     ui/                   # shadcn primitives (button, input, select, …)
     common/               # shared complex UI (not single primitives)
+  messages/
+    en.json
+    fa.json
   lib/                    # utils, env, api client setup, error mapper
-  stores/                 # Zustand stores
+  stores/                 # Zustand stores (non-theme)
+  i18n/                   # next-intl request/routing config
 ```
 
 Rules:
 
-- `app/` wires routes; page UI lives under `features/*/pages`.
+- `app/[locale]/…` wires routes; page UI lives under `features/*/pages`.
 - Feature code is grouped by type (`pages`, `components`, `hooks`, …).
 - Put tiny primitives in `components/ui`; put reusable composite UI in `components/common`.
+- Translation files are global: `messages/{locale}.json`.
 
 ## API & auth
 
@@ -61,9 +69,29 @@ Rules:
 ## State
 
 - **TanStack Query**: server/async data only.
-- **Zustand**: cross-route UI/global client state (theme, shell prefs, …).
+- **Zustand**: cross-route UI/global client state (shell prefs, etc.) — **not** theme.
 - **nuqs**: filters, tabs, and other URL-serializable UI state.
 - Do not duplicate server data in Zustand.
+
+## i18n & theme
+
+### i18n (`next-intl`)
+
+- Library: **`next-intl`** (App Router).
+- Locales: **`en`** (LTR), **`fa`** (RTL).
+- Routing: locale **prefix** — `/en/...`, `/fa/...`.
+- Messages: global `messages/en.json`, `messages/fa.json`.
+- No hardcoded user-facing strings; always use `next-intl`.
+- Full RTL: set `dir` from locale, prefer logical CSS, mirror layout for `fa`.
+
+### Theme (`next-themes` + shadcn)
+
+- Use **`next-themes`** (matches shadcn dark mode).
+- Apply via `class="dark"` on `<html>` (Tailwind `dark:` variant).
+- First visit: follow **system** preference (`prefers-color-scheme`).
+- After user chooses light/dark: persist in **browser storage** (next-themes default) and honor that next time.
+- Avoid theme flash: ThemeProvider on the client layout; `suppressHydrationWarning` on `<html>` as needed.
+- Do **not** put theme state in Zustand — `next-themes` owns it.
 
 ## Forms
 
