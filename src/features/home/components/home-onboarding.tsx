@@ -33,19 +33,19 @@ export function HomeOnboarding() {
   const stepNumber = selectedIndex + 1;
 
   return (
-    <section className="relative rounded-xl bg-muted p-4 sm:p-5">
+    <section className="relative overflow-hidden rounded-xl border border-muted bg-muted">
       <Button
         type="button"
         variant="link"
         size="sm"
-        className="absolute end-4 top-4 h-auto px-0 text-muted-foreground hover:text-muted-foreground/80 sm:end-5 sm:top-5"
+        className="absolute end-4 top-4 z-10 h-auto px-0 text-muted-foreground hover:text-muted-foreground/80 sm:end-5 sm:top-5"
         onClick={() => setHidden(true)}
       >
         {t("hide")}
       </Button>
 
-      <div className="flex flex-col gap-5 lg:flex-row lg:gap-8">
-        <ol className="flex w-full shrink-0 flex-col gap-1 lg:w-fit">
+      <div className="flex flex-col lg:flex-row">
+        <ol className="flex w-full shrink-0 flex-col gap-1 bg-background p-3 lg:w-fit lg:rounded-s-xl lg:p-4">
           {ONBOARDING_STEPS.map((step, index) => {
             const selected = step.id === selectedId;
             const title = t(`steps.${step.id}.navTitle`);
@@ -98,7 +98,7 @@ export function HomeOnboarding() {
           })}
         </ol>
 
-        <div className="flex min-w-0 flex-1 flex-col gap-4 sm:flex-row sm:items-stretch sm:gap-5">
+        <div className="flex min-w-0 flex-1 flex-col gap-4 p-4 sm:flex-row sm:items-stretch sm:gap-5 sm:p-5">
           <div
             className="h-36 w-full shrink-0 rounded-lg bg-primary sm:h-auto sm:w-40 lg:w-48"
             aria-hidden
@@ -108,7 +108,7 @@ export function HomeOnboarding() {
             <h3 className="text-base font-semibold tracking-tight text-foreground">
               {t(`steps.${selectedStep.id}.title`)}
             </h3>
-            <p className="text-sm text-muted-foreground max-w-xs">
+            <p className="max-w-xs text-sm text-muted-foreground">
               {t(`steps.${selectedStep.id}.description`)}
             </p>
             <div className="pt-1">

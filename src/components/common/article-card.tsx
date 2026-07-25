@@ -74,9 +74,28 @@ export function ArticleCard({
   return (
     <article className={cn("flex flex-col gap-3", className)}>
       <div className="relative aspect-16/10 w-full overflow-hidden rounded-lg bg-muted">
+        <div
+          className="pointer-events-none absolute inset-x-3 top-[22%] bottom-0 flex justify-center sm:inset-x-4"
+          aria-hidden
+        >
+          <div className="flex h-[170%] w-full max-w-[16.5rem] flex-col gap-2.5 rounded-t-sm border border-b-0 border-border/60 bg-background px-4 pt-4 shadow-xs">
+            <p className="line-clamp-2 text-[10px] font-semibold leading-snug text-foreground">
+              {title}
+            </p>
+            <div className="mt-0.5 flex flex-col gap-1.5">
+              <div className="h-1 w-full rounded-full bg-muted-foreground/15" />
+              <div className="h-1 w-[92%] rounded-full bg-muted-foreground/15" />
+              <div className="h-1 w-full rounded-full bg-muted-foreground/15" />
+              <div className="h-1 w-4/5 rounded-full bg-muted-foreground/15" />
+              <div className="h-1 w-full rounded-full bg-muted-foreground/15" />
+              <div className="h-1 w-3/5 rounded-full bg-muted-foreground/15" />
+            </div>
+          </div>
+        </div>
+
         <span
           className={cn(
-            "absolute start-2 top-2 inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-medium",
+            "absolute start-2 top-2 z-10 inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-medium",
             statusStyle.className,
           )}
         >
