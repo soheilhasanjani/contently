@@ -1,11 +1,11 @@
 import { setRequestLocale } from "next-intl/server";
+import { PanelSession } from "@/features/panel/components/panel-session";
 
 type PanelLayoutProps = {
   children: React.ReactNode;
   params: Promise<{ locale: string }>;
 };
 
-/** Private panel shell — auth guard + /me store land in a later phase. */
 export default async function PanelLayout({
   children,
   params,
@@ -13,5 +13,5 @@ export default async function PanelLayout({
   const { locale } = await params;
   setRequestLocale(locale);
 
-  return <div className="flex min-h-full flex-1 flex-col">{children}</div>;
+  return <PanelSession>{children}</PanelSession>;
 }

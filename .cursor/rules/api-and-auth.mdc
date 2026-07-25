@@ -8,6 +8,7 @@ alwaysApply: false
 
 - Orval: root `orval.config.ts` + `npm run api:generate` → `src/api/generated/` (gitignored; also via `prebuild`/`predev`).
 - Axios: `src/lib/api/client.ts`. Cookie `access_token` → Bearer header.
+- `Accept-Language: en|fa` on every request (path → `NEXT_LOCALE` → default `fa`).
 - Cookie: Secure + SameSite=Lax + Path=/; **7-day** expiry; frontend sets after login.
 - Paths via `routes.*()` only. Login `/{locale}`; panel `/{locale}/panel/**`; home dashboard.
 - Middleware: no cookie on panel → `routes.auth.login({ next })` (allowlisted panel `next` only).

@@ -6,5 +6,33 @@
   "Metadata": {
     "title": "Contently",
     "description": "Contently is an AI-powered automation platform for blog creation, designed with advanced features to enhance your content workflow."
+  },
+  "Auth": {
+    "title": "Contently",
+    "subtitle": "Sign in to continue",
+    "username": "Username",
+    "password": "Password",
+    "usernameRequired": "Username is required",
+    "passwordRequired": "Password is required",
+    "signIn": "Sign in",
+    "signingIn": "Signing in…",
+    "loginFailed": "Unable to sign in. Please try again."
+  },
+  "Panel": {
+    "dashboardTitle": "Dashboard",
+    "dashboardSubtitle": "Welcome to your Contently panel.",
+    "loadingSession": "Loading session…",
+    "sessionError": "Could not load your session.",
+    "backToLogin": "Back to login",
+    "signedInAs": "Signed in as {name}",
+    "logout": "Log out"
+  },
+  "SystemPages": {
+    "unauthorizedTitle": "Session expired",
+    "unauthorizedDescription": "Your session is no longer valid. Sign in again to continue.",
+    "goToLogin": "Go to login",
+    "accessDeniedTitle": "Access denied",
+    "accessDeniedDescription": "You do not have permission to view this page.",
+    "backToPanel": "Back to panel"
   }
 }

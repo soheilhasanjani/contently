@@ -2,6 +2,7 @@ import axios, { type AxiosError } from "axios";
 import { getAccessToken } from "@/lib/auth/cookie";
 import { env } from "@/lib/env";
 import { ApiClientError, mapApiError } from "@/lib/api/error-mapper";
+import { getRequestLocale } from "@/lib/api/locale";
 import { routes } from "@/lib/routes";
 
 export const apiClient = axios.create({
@@ -17,6 +18,9 @@ apiClient.interceptors.request.use((config) => {
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
+
+  config.headers["Accept-Language"] = getRequestLocale();
+
   return config;
 });
 
@@ -29,8 +33,7 @@ apiClient.interceptors.response.use(
       const hasCookie = Boolean(getAccessToken());
       if (hasCookie) {
         const path = routes.unauthorized();
-        const localePrefix = window.location.pathname.match(/^\/(en|fa)(?=\/|$)/);
-        const locale = localePrefix?.[1] ?? "fa";
+        const locale = getRequestLocale();
         window.location.assign(`/${locale}${path === "/" ? "" : path}`);
       }
     }

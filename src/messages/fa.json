@@ -6,5 +6,33 @@
   "Metadata": {
     "title": "کانتنتلی",
     "description": "کانتنتلی یک پلتفرم خودکارسازی مبتنی بر هوش مصنوعی برای تولید بلاگ است که با امکانات پیشرفته، گردش‌کار محتوا را بهبود می‌دهد."
+  },
+  "Auth": {
+    "title": "کانتنتلی",
+    "subtitle": "برای ادامه وارد شوید",
+    "username": "نام کاربری",
+    "password": "رمز عبور",
+    "usernameRequired": "نام کاربری الزامی است",
+    "passwordRequired": "رمز عبور الزامی است",
+    "signIn": "ورود",
+    "signingIn": "در حال ورود…",
+    "loginFailed": "ورود ناموفق بود. دوباره تلاش کنید."
+  },
+  "Panel": {
+    "dashboardTitle": "داشبورد",
+    "dashboardSubtitle": "به پنل کانتنتلی خوش آمدید.",
+    "loadingSession": "در حال بارگذاری نشست…",
+    "sessionError": "بارگذاری نشست ممکن نشد.",
+    "backToLogin": "بازگشت به ورود",
+    "signedInAs": "وارد شده به عنوان {name}",
+    "logout": "خروج"
+  },
+  "SystemPages": {
+    "unauthorizedTitle": "نشست منقضی شد",
+    "unauthorizedDescription": "نشست شما دیگر معتبر نیست. دوباره وارد شوید.",
+    "goToLogin": "رفتن به ورود",
+    "accessDeniedTitle": "دسترسی مجاز نیست",
+    "accessDeniedDescription": "اجازه مشاهده این صفحه را ندارید.",
+    "backToPanel": "بازگشت به پنل"
   }
 }

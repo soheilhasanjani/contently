@@ -4,7 +4,8 @@ Contently is an AI-powered automation platform for blog creation, designed with 
 
 Engineering conventions: [docs/engineering.md](./docs/engineering.md).  
 API / OpenAPI: [docs/api.md](./docs/api.md).  
-Routes codegen: [docs/routes.md](./docs/routes.md).
+Routes codegen: [docs/routes.md](./docs/routes.md).  
+Phases (temporary): [docs/phases.md](./docs/phases.md).
 
 ## Getting started
 

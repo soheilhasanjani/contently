@@ -36,9 +36,19 @@ Runs automatically on:
 
 Falls back to production OpenAPI if `OPENAPI_URL` is unset.
 
-Runtime: Axios `src/lib/api/client.ts` + Orval mutator `src/lib/api/mutator.ts` (Bearer from `access_token` cookie). Error mapper: `src/lib/api/error-mapper.ts`.
+Runtime: Axios `src/lib/api/client.ts` + Orval mutator `src/lib/api/mutator.ts` (Bearer from `access_token` cookie; `Accept-Language: en|fa` from active locale). Error mapper: `src/lib/api/error-mapper.ts`.
+
+## Auth endpoints (used by Contently)
+
+Frontend stores `token` in the `access_token` cookie and sends `Authorization: Bearer …`.
+
+| Method | Path | Purpose |
+| --- | --- | --- |
+| `POST` | `/auth/login` | Body `{ username, password }` → `{ data: { token, tokenType } }` |
+| `GET` | `/auth/me` | Bearer token → `{ data: { id, username, name, email } }` |
+| `POST` | `/auth/logout` | Invalidate session; frontend then clears cookie + cache |
 
 ## Notes
 
-- Auth routes (`POST /auth/login`, `GET /auth/me`, …) are expected when available; current public spec is mostly system/demo stubs.
+- Other OpenAPI paths (system/services) may exist for portfolio demos; Contently auth uses login, me, and logout.
 - Do not commit secrets. Keep `.env*.local` out of git.

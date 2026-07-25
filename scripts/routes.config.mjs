@@ -24,10 +24,7 @@ const config = {
    * Routes to always emit even if `page.tsx` is not created yet.
    * Remove entries once the real app pages exist (scan will cover them).
    */
-  extraRoutes: [
-    { path: "/unauthorized", key: ["unauthorized"] },
-    { path: "/access-denied", key: ["accessDenied"] },
-  ],
+  extraRoutes: [],
 
   /** `resolveNextPath` falls back here when `next` is missing/invalid. */
   defaultNextKey: ["panel", "dashboard"],
