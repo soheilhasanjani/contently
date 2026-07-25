@@ -24,7 +24,6 @@ Frontend-only Next.js app. Backend lives in a separate API project. This doc is 
 | Fonts | **Inter** (`en`) + **Vazirmatn** (`fa`) via `next/font` |
 | Icons | **Hugeicons** (`@hugeicons/react` + `@hugeicons/core-free-icons`) |
 | Toasts | shadcn Base UI toast (`toast` + `<Toaster />` in `AppProviders`) |
-| Toasts | Install manually when first needed (not via shadcn CLI) |
 | Env | Zod-validated module + `.env.example` |
 | Quality | ESLint + TypeScript + Prettier |
 
