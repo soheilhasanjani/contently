@@ -81,7 +81,7 @@ export function PanelSidebar() {
             <li key={project.id}>
               <Link
                 href={routes.projects.id({ id: project.id })}
-                className="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm text-muted-foreground transition-colors hover:bg-muted/70 hover:text-foreground"
+                className="flex h-9 items-center gap-2.5 rounded-lg px-2.5 text-sm text-muted-foreground transition-colors hover:bg-muted/70 hover:text-foreground"
               >
                 <span
                   className="flex size-6 shrink-0 items-center justify-center rounded-md text-[11px] font-semibold text-white"

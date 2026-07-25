@@ -25,7 +25,7 @@ export function PanelNavLink({
     <Link
       href={href}
       className={cn(
-        "flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm transition-colors",
+        "flex h-9 items-center gap-2.5 rounded-lg px-2.5 text-sm transition-colors",
         active
           ? "bg-muted font-medium text-foreground"
           : "text-muted-foreground hover:bg-muted/70 hover:text-foreground",
