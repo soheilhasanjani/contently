@@ -4,6 +4,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { LocaleSwitcher } from "@/features/panel/components/locale-switcher";
+import { ThemeSwitcher } from "@/features/panel/components/theme-switcher";
 import { Link } from "@/i18n/navigation";
 import { routes } from "@/lib/routes";
 import { cn } from "@/lib/utils";
@@ -29,6 +30,7 @@ export function PanelTopBar() {
   return (
     <header className="flex h-14 shrink-0 items-center justify-end gap-2 border-b border-border px-4">
       <LocaleSwitcher />
+      <ThemeSwitcher />
 
       <Button
         type="button"

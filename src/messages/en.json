@@ -62,7 +62,9 @@
     "settings": "Settings",
     "profile": "Profile",
     "upgradePlan": "Upgrade plan",
-    "language": "Language"
+    "language": "Language",
+    "switchToLight": "Switch to light mode",
+    "switchToDark": "Switch to dark mode"
   },
   "SystemPages": {
     "unauthorizedTitle": "Session expired",
