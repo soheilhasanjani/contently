@@ -1,5 +1,5 @@
 ---
-description: Folder structure — features, components, app routes
+description: Folder structure — features, api/generated, aliases
 globs: src/**/*.{ts,tsx}
 alwaysApply: false
 ---
@@ -7,17 +7,17 @@ alwaysApply: false
 # Folder structure
 
 ```text
-src/app/[locale]/         → locale-prefixed routes; import pages from features
+src/app/[locale]/         → routes; import feature pages by path
+src/api/generated/        → Orval output only
 src/features/<feature>/   → pages/, components/, hooks/, …
-src/components/ui/        → shadcn primitives (button, input, select, …)
+src/components/ui/        → shadcn primitives
 src/components/common/    → complex shared UI
 src/messages/             → en.json, fa.json
 src/i18n/                 → next-intl config
-src/lib/                  → env, axios, error mapper, utils
-src/stores/               → Zustand stores (non-theme)
+src/lib/api/client.ts     → Axios instance
+src/stores/               → Zustand (non-theme)
 ```
 
-- Group each feature by type (`pages`, `components`, `hooks`, …).
-- Do not put feature UI directly in `app/`; re-export/import feature pages.
-- Primitives → `components/ui`. Composite shared UI → `components/common`.
-- All copy via `next-intl` + `messages/{locale}.json`.
+- No feature barrels — `app` imports `features/<name>/pages/...` directly.
+- Aliases: `@/*`, `@/features/*`, `@/components/*`, `@/lib/*`, `@/messages/*`.
+- Locale layout: next-intl + `lang`/`dir` + ThemeProvider.

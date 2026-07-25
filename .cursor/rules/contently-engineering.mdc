@@ -10,21 +10,19 @@ Frontend-only Next.js app. Backend is a separate API. Full detail: `docs/enginee
 ## Hard rules
 
 - Server Components by default; `"use client"` only when required.
-- Data via Axios + TanStack Query + Orval-generated clients/types.
-- Auth token from cookie → `Authorization: Bearer <token>`.
+- Orval → `src/api/generated/` with **react-query** hooks; Axios in `src/lib/api/client.ts`.
+- OpenAPI URL from env. Auth: login → JS cookie → Bearer header; middleware → login.
 - TanStack Query = server state; Zustand = global UI (not theme); nuqs = URL/filters.
-- **i18n**: `next-intl`; locales `en` + `fa` (RTL); prefix routes; `messages/{locale}.json`.
-- **Theme**: `next-themes` + `class="dark"`; system default, then user choice in browser storage.
-- Forms: React Hook Form + Zod.
-- Quality: ESLint + TypeScript + Prettier. Production-grade, clean, optimized.
-- Env: Zod-validated module + `.env.example`.
-- Use `next/font`, `next/image`, etc. Dynamic-import heavy UI (editor/AI).
+- **i18n**: `next-intl`; `en` + `fa` (RTL); prefix routes; default locale **`fa`**.
+- **Theme**: `next-themes` + `class="dark"`; system default, then browser storage.
+- Forms: React Hook Form + Zod. Quality: ESLint + TS + Prettier.
+- Env: Zod-validated + `.env.example`.
+- Install order: foundation (intl/themes/nuqs/zod/env) → shadcn → API/auth stack.
 - TipTap: deferred until editor work starts.
 
 ## Do not
 
 - Put business/persistence logic in this repo.
-- Duplicate API data in Zustand.
-- Hardcode user-facing strings (use `next-intl`).
-- Manage theme in Zustand (use `next-themes`).
-- Hand-roll API DTO types when Orval already generates them.
+- Duplicate API data in Zustand / manage theme in Zustand.
+- Hardcode user-facing strings; hand-edit `src/api/generated/`.
+- Feature barrels — import pages by path from `app/`.
