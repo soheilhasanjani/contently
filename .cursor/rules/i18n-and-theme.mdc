@@ -12,7 +12,8 @@ alwaysApply: false
 - Messages: `messages/en.json`, `messages/fa.json`.
 - No hardcoded user-facing strings.
 - Full RTL for `fa`: `dir="rtl"`, logical CSS, mirrored layout.
-- Locale layout: next-intl provider + `lang`/`dir` on `<html>` + ThemeProvider.
+- Locale layout: next-intl + `lang`/`dir` + **DirectionProvider** (shadcn/Base UI) + ThemeProvider.
+- Fonts: **Inter** (`en`) + **Vazirmatn** (`fa`) via `next/font`, switched by locale.
 - `/` resolution: `NEXT_LOCALE` cookie → `Accept-Language` → default **`fa`**.
 - `NEXT_LOCALE` written via **next-intl** middleware/helpers.
 

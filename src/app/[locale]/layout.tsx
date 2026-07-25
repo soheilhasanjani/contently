@@ -1,11 +1,23 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
+import { Inter, Vazirmatn } from "next/font/google";
 import { notFound } from "next/navigation";
 import { AppProviders } from "@/components/common/app-providers";
 import { isRtlLocale, routing } from "@/i18n/routing";
 import { env } from "@/lib/env";
+import { cn } from "@/lib/utils";
 import "../globals.css";
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-sans",
+});
+
+const vazirmatn = Vazirmatn({
+  subsets: ["arabic"],
+  variable: "--font-sans",
+});
 
 type LocaleLayoutProps = {
   children: React.ReactNode;
@@ -34,7 +46,6 @@ export default async function LocaleLayout({
   children,
   params,
 }: LocaleLayoutProps) {
-  // Touch env early so invalid config fails fast on boot.
   void env.NEXT_PUBLIC_API_BASE_URL;
 
   const { locale } = await params;
@@ -44,13 +55,19 @@ export default async function LocaleLayout({
 
   setRequestLocale(locale);
 
-  const dir = isRtlLocale(locale) ? "rtl" : "ltr";
+  const direction = isRtlLocale(locale) ? "rtl" : "ltr";
+  const font = isRtlLocale(locale) ? vazirmatn : inter;
 
   return (
-    <html lang={locale} dir={dir} className="h-full" suppressHydrationWarning>
+    <html
+      lang={locale}
+      dir={direction}
+      className={cn("h-full", font.variable)}
+      suppressHydrationWarning
+    >
       <body className="flex min-h-full flex-col antialiased">
         <NextIntlClientProvider>
-          <AppProviders>{children}</AppProviders>
+          <AppProviders direction={direction}>{children}</AppProviders>
         </NextIntlClientProvider>
       </body>
     </html>
