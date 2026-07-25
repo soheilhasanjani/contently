@@ -21,7 +21,24 @@ Spec title: **portfolio-api** (see [production OpenAPI](https://portfolio-api.so
 
 See `.env.example` for local defaults.
 
+## Codegen (Orval)
+
+`src/api/generated/` is **gitignored**. It is created by Orval — do not hand-edit or commit it.
+
+```bash
+npm run api:generate   # one-shot (uses OPENAPI_URL)
+npm run codegen        # routes + Orval
+```
+
+Runs automatically on:
+- `npm run predev` / `npm run dev`
+- `npm run prebuild` / `npm run build`
+
+Falls back to production OpenAPI if `OPENAPI_URL` is unset.
+
+Runtime: Axios `src/lib/api/client.ts` + Orval mutator `src/lib/api/mutator.ts` (Bearer from `access_token` cookie). Error mapper: `src/lib/api/error-mapper.ts`.
+
 ## Notes
 
-- Auth routes (`POST /auth/login`, `GET /auth/me`, …) are expected from this API when available; current public spec is mostly system/demo stubs.
+- Auth routes (`POST /auth/login`, `GET /auth/me`, …) are expected when available; current public spec is mostly system/demo stubs.
 - Do not commit secrets. Keep `.env*.local` out of git.

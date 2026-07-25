@@ -36,6 +36,7 @@ yarn-error.log*
 
 # generated
 /src/lib/routes.ts
+/src/api/generated/
 
 # vercel
 .vercel

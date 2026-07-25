@@ -12,7 +12,7 @@ src/app/[locale]/panel/**             → private panel
 src/app/[locale]/panel/dashboard      → panel home
 src/app/[locale]/unauthorized         → 401 + login button
 src/app/[locale]/access-denied        → 403
-src/api/generated/                    → Orval only
+src/api/generated/                    → Orval output (gitignored; codegen on build/dev)
 src/features/<feature>/pages|components|hooks/
 src/components/ui|common/
 src/messages/en.json|fa.json

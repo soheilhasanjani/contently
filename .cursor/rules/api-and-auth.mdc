@@ -6,7 +6,7 @@ alwaysApply: false
 
 # API & auth
 
-- Orval: root `orval.config.ts` + `npm run api:generate` → `src/api/generated/` (react-query).
+- Orval: root `orval.config.ts` + `npm run api:generate` → `src/api/generated/` (gitignored; also via `prebuild`/`predev`).
 - Axios: `src/lib/api/client.ts`. Cookie `access_token` → Bearer header.
 - Cookie: Secure + SameSite=Lax + Path=/; **7-day** expiry; frontend sets after login.
 - Paths via `routes.*()` only. Login `/{locale}`; panel `/{locale}/panel/**`; home dashboard.

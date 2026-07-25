@@ -85,7 +85,7 @@ src/app/[locale]/
 ```text
 src/
   app/[locale]/             # see routing map
-  api/generated/            # Orval output (do not hand-edit)
+  api/generated/            # GENERATED + gitignored (Orval; see docs/api.md)
   features/<feature>/
     pages/                  # *-page.tsx → *Page (no barrels)
     components/

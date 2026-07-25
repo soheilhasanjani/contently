@@ -1,8 +1,13 @@
 "use client";
 
 import { DirectionProvider } from "@/components/ui/direction";
+import {
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
 import { ThemeProvider } from "next-themes";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
+import { useState } from "react";
 
 type AppProvidersProps = {
   children: React.ReactNode;
@@ -12,18 +17,31 @@ type AppProvidersProps = {
 /**
  * Client providers composition (outer → inner):
  * 1. DirectionProvider — Base UI / shadcn RTL-LTR behavior
- * 2. ThemeProvider — `class="dark"` on `<html>`, system default + storage
- * 3. NuqsAdapter — URL search-param state
+ * 2. QueryClientProvider — TanStack Query (Orval hooks)
+ * 3. ThemeProvider — `class="dark"` on `<html>`, system default + storage
+ * 4. NuqsAdapter — URL search-param state
  *
  * Note: `NextIntlClientProvider` stays in the server locale layout.
- * Add `QueryClientProvider` here when the API stack lands.
  */
 export function AppProviders({ children, direction }: AppProvidersProps) {
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            refetchOnWindowFocus: false,
+          },
+        },
+      }),
+  );
+
   return (
     <DirectionProvider direction={direction}>
-      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-        <NuqsAdapter>{children}</NuqsAdapter>
-      </ThemeProvider>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <NuqsAdapter>{children}</NuqsAdapter>
+        </ThemeProvider>
+      </QueryClientProvider>
     </DirectionProvider>
   );
 }
