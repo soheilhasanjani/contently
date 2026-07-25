@@ -23,7 +23,7 @@ export function PanelSidebar() {
   const t = useTranslations("PanelShell");
 
   return (
-    <aside className="flex w-64 shrink-0 flex-col bg-background">
+    <aside className="fixed inset-y-0 start-0 z-30 flex w-64 flex-col bg-background">
       <div className="flex h-14 shrink-0 items-center gap-2.5 px-4">
         <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary text-sm font-semibold text-primary-foreground">
           C

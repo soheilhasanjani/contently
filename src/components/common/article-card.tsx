@@ -36,19 +36,19 @@ const STATUS_STYLES: Record<
 > = {
   waitingReview: {
     icon: Clock01Icon,
-    className: "bg-status-waiting text-status-waiting-foreground",
+    className: "bg-info text-info-foreground",
   },
   beingEdited: {
     icon: Edit02Icon,
-    className: "bg-status-editing text-status-editing-foreground",
+    className: "bg-tertiary text-tertiary-foreground",
   },
   revision: {
     icon: Refresh01Icon,
-    className: "bg-status-revision text-status-revision-foreground",
+    className: "bg-warning text-warning-foreground",
   },
   approved: {
     icon: CheckmarkCircle02Icon,
-    className: "bg-status-approved text-status-approved-foreground",
+    className: "bg-success text-success-foreground",
   },
 };
 

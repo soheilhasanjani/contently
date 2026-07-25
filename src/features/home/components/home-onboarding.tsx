@@ -21,9 +21,8 @@ function defaultSelectedStep(): OnboardingStepId {
 export function HomeOnboarding() {
   const t = useTranslations("Home.Onboarding");
   const [hidden, setHidden] = useState(false);
-  const [selectedId, setSelectedId] = useState<OnboardingStepId>(
-    defaultSelectedStep,
-  );
+  const [selectedId, setSelectedId] =
+    useState<OnboardingStepId>(defaultSelectedStep);
 
   if (hidden) return null;
 
@@ -34,19 +33,19 @@ export function HomeOnboarding() {
   const stepNumber = selectedIndex + 1;
 
   return (
-    <section className="relative rounded-xl border border-onboarding-border bg-onboarding p-4 sm:p-5">
+    <section className="relative rounded-xl bg-muted p-4 sm:p-5">
       <Button
         type="button"
         variant="link"
         size="sm"
-        className="absolute end-4 top-4 h-auto px-0 text-onboarding-hide hover:text-onboarding-hide/80 sm:end-5 sm:top-5"
+        className="absolute end-4 top-4 h-auto px-0 text-muted-foreground hover:text-muted-foreground/80 sm:end-5 sm:top-5"
         onClick={() => setHidden(true)}
       >
         {t("hide")}
       </Button>
 
       <div className="flex flex-col gap-5 lg:flex-row lg:gap-8">
-        <ol className="flex w-full shrink-0 flex-col gap-1 lg:w-56">
+        <ol className="flex w-full shrink-0 flex-col gap-1 lg:w-fit">
           {ONBOARDING_STEPS.map((step, index) => {
             const selected = step.id === selectedId;
             const title = t(`steps.${step.id}.navTitle`);
@@ -60,7 +59,7 @@ export function HomeOnboarding() {
                   className={cn(
                     "flex w-full items-center gap-3 rounded-lg px-2.5 py-2 text-start text-sm transition-colors",
                     selected
-                      ? "bg-onboarding-selected text-foreground"
+                      ? "bg-primary/10 text-foreground"
                       : "bg-transparent text-muted-foreground hover:text-foreground",
                   )}
                 >
@@ -76,7 +75,11 @@ export function HomeOnboarding() {
                     aria-hidden
                   >
                     {step.completed ? (
-                      <HugeiconsIcon icon={Tick02Icon} strokeWidth={2} className="size-3.5" />
+                      <HugeiconsIcon
+                        icon={Tick02Icon}
+                        strokeWidth={2}
+                        className="size-3.5"
+                      />
                     ) : (
                       index + 1
                     )}
@@ -105,11 +108,11 @@ export function HomeOnboarding() {
             <h3 className="text-base font-semibold tracking-tight text-foreground">
               {t(`steps.${selectedStep.id}.title`)}
             </h3>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-muted-foreground max-w-xs">
               {t(`steps.${selectedStep.id}.description`)}
             </p>
             <div className="pt-1">
-              <Button type="button" size="sm">
+              <Button type="button" size="lg">
                 {t(`steps.${selectedStep.id}.action`)}
               </Button>
             </div>

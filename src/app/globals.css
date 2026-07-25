@@ -28,14 +28,12 @@
   --color-destructive: var(--destructive);
   --color-warning: var(--warning);
   --color-warning-foreground: var(--warning-foreground);
-  --color-status-waiting: var(--status-waiting);
-  --color-status-waiting-foreground: var(--status-waiting-foreground);
-  --color-status-editing: var(--status-editing);
-  --color-status-editing-foreground: var(--status-editing-foreground);
-  --color-status-revision: var(--status-revision);
-  --color-status-revision-foreground: var(--status-revision-foreground);
-  --color-status-approved: var(--status-approved);
-  --color-status-approved-foreground: var(--status-approved-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+  --color-tertiary: var(--tertiary);
+  --color-tertiary-foreground: var(--tertiary-foreground);
   --color-accent-foreground: var(--accent-foreground);
   --color-accent: var(--accent);
   --color-muted-foreground: var(--muted-foreground);
@@ -44,10 +42,6 @@
   --color-secondary: var(--secondary);
   --color-primary-foreground: var(--primary-foreground);
   --color-primary: var(--primary);
-  --color-onboarding: var(--onboarding);
-  --color-onboarding-border: var(--onboarding-border);
-  --color-onboarding-selected: var(--onboarding-selected);
-  --color-onboarding-hide: var(--onboarding-hide);
   --color-popover-foreground: var(--popover-foreground);
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
@@ -69,25 +63,23 @@
   --card-foreground: oklch(0.141 0.005 285.823);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.141 0.005 285.823);
-  --primary: #6366fb;
+  --primary: #0b57d0;
   --primary-foreground: #ffffff;
   --secondary: oklch(0.967 0.001 286.375);
   --secondary-foreground: oklch(0.21 0.006 285.885);
-  --muted: oklch(0.967 0.001 286.375);
+  --muted: #f0f4f9;
   --muted-foreground: oklch(0.552 0.016 285.938);
   --accent: oklch(0.967 0.001 286.375);
   --accent-foreground: oklch(0.21 0.006 285.885);
   --destructive: oklch(0.577 0.245 27.325);
   --warning: #fff2c1;
   --warning-foreground: #a33b00;
-  --status-waiting: #fce7f3;
-  --status-waiting-foreground: #be185d;
-  --status-editing: #ede9fe;
-  --status-editing-foreground: #6d28d9;
-  --status-revision: #fff2c1;
-  --status-revision-foreground: #a33b00;
-  --status-approved: #dcfce7;
-  --status-approved-foreground: #15803d;
+  --success: #dcfce7;
+  --success-foreground: #15803d;
+  --info: #fce7f3;
+  --info-foreground: #be185d;
+  --tertiary: #ede9fe;
+  --tertiary-foreground: #6d28d9;
   --border: oklch(0.92 0.004 286.32);
   --input: oklch(0.92 0.004 286.32);
   --ring: oklch(0.705 0.015 286.067);
@@ -99,16 +91,12 @@
   --radius: 0.625rem;
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.141 0.005 285.823);
-  --sidebar-primary: #6366fb;
+  --sidebar-primary: #0b57d0;
   --sidebar-primary-foreground: #ffffff;
   --sidebar-accent: oklch(0.967 0.001 286.375);
   --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
   --sidebar-border: oklch(0.92 0.004 286.32);
   --sidebar-ring: oklch(0.705 0.015 286.067);
-  --onboarding: #f9fafd;
-  --onboarding-border: #e7ecf1;
-  --onboarding-selected: #eaf2ff;
-  --onboarding-hide: #7a7f8a;
 }
 
 .dark {
@@ -118,7 +106,7 @@
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.21 0.006 285.885);
   --popover-foreground: oklch(0.985 0 0);
-  --primary: #6366fb;
+  --primary: #0b57d0;
   --primary-foreground: #ffffff;
   --secondary: oklch(0.274 0.006 286.033);
   --secondary-foreground: oklch(0.985 0 0);
@@ -129,14 +117,12 @@
   --destructive: oklch(0.704 0.191 22.216);
   --warning: #fff2c1;
   --warning-foreground: #a33b00;
-  --status-waiting: color-mix(in oklab, #f9a8d4 25%, transparent);
-  --status-waiting-foreground: #f9a8d4;
-  --status-editing: color-mix(in oklab, #c4b5fd 25%, transparent);
-  --status-editing-foreground: #c4b5fd;
-  --status-revision: color-mix(in oklab, #fde68a 25%, transparent);
-  --status-revision-foreground: #fbbf24;
-  --status-approved: color-mix(in oklab, #86efac 25%, transparent);
-  --status-approved-foreground: #4ade80;
+  --success-foreground: #4ade80;
+  --success: color-mix(in oklab, var(--success-foreground) 22%, transparent);
+  --info-foreground: #f9a8d4;
+  --info: color-mix(in oklab, var(--info-foreground) 22%, transparent);
+  --tertiary-foreground: #c4b5fd;
+  --tertiary: color-mix(in oklab, var(--tertiary-foreground) 22%, transparent);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.552 0.016 285.938);
@@ -147,16 +133,12 @@
   --chart-5: oklch(0.274 0.006 286.033);
   --sidebar: oklch(0.21 0.006 285.885);
   --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: #6366fb;
+  --sidebar-primary: #0b57d0;
   --sidebar-primary-foreground: #ffffff;
   --sidebar-accent: oklch(0.274 0.006 286.033);
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.552 0.016 285.938);
-  --onboarding: oklch(0.21 0.006 285.885);
-  --onboarding-border: oklch(1 0 0 / 10%);
-  --onboarding-selected: color-mix(in oklab, var(--primary) 18%, transparent);
-  --onboarding-hide: #7a7f8a;
 }
 
 @layer base {

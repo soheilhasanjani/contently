@@ -160,6 +160,7 @@ src/
 - Locale layout (`[locale]`): main app shell — `RootProvider` (`html`/`body` + fonts + `NextIntlClientProvider`), **`AppProviders`** (Direction → Query → Theme → Nuqs).
 - Root `app/layout.tsx`: pass-through only (required by Next.js); globals CSS import.
 - **`next-themes`**: `class="dark"`; system default then browser storage; not in Zustand.
+- **Colors**: always use **semantic Tailwind classes** (`bg-background`, `text-muted-foreground`, `border-border`, `bg-primary/10`, …) mapped through `@theme` → CSS variables in `src/app/globals.css`. Prefer conventional feedback tokens (`success`, `warning`, `info`, `tertiary`, `destructive`). Define new tokens only when no existing semantic token fits. Never put raw hex/rgb in component classNames or inline styles for theme UI.
 - Fonts: **Inter** + **Vazirmatn** via `next/font` (`src/lib/fonts.ts`) in `RootProvider`.
 
 ## Forms & dates

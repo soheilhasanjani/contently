@@ -19,6 +19,7 @@ Frontend-only Next.js app. Backend is a separate API. Full detail: `docs/enginee
 - Files kebab-case; pages `sth-page.tsx` → `SthPage`. Shared = aliases; inside feature = relative.
 - Providers: single `AppProviders` (Direction → Query → Theme → Nuqs). Fonts Inter (`en`) + Vazirmatn (`fa`).
 - `cn` via shadcn CLI. Toasts install manually when needed. TipTap deferred.
+- **Colors**: always semantic Tailwind classes (`bg-primary`, `text-muted-foreground`, `border-border`, …) backed by CSS variables in `globals.css`. Never raw hex/rgb in components.
 
 ## Do not
 
@@ -26,3 +27,4 @@ Frontend-only Next.js app. Backend is a separate API. Full detail: `docs/enginee
 - Hand-edit `src/lib/routes.ts` (regenerate instead).
 - Put business/persistence logic here; mirror arbitrary API lists into Zustand.
 - Manage theme in Zustand; hardcode UI strings; hand-edit generated API; feature barrels.
+- Hardcode colors in classNames/styles; invent feature-specific color tokens when an existing semantic token fits.
