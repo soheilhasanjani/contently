@@ -28,7 +28,7 @@ export function PanelTopBar() {
   const user = useUserStore((s) => s.user);
 
   return (
-    <header className="flex h-14 shrink-0 items-center justify-end gap-2 border-b border-border px-4">
+    <header className="flex h-14 shrink-0 items-center justify-end gap-2 px-4">
       <LocaleSwitcher />
       <ThemeSwitcher />
 

@@ -11,9 +11,11 @@ export async function HomePage({ params }: HomePageProps) {
   setRequestLocale(locale);
 
   return (
-    <main className="flex flex-1 flex-col gap-8 p-6">
-      <HomeWelcome />
-      <HomeOnboarding />
+    <main className="flex flex-1 flex-col p-6">
+      <div className="mx-auto flex w-full max-w-5xl flex-col gap-8">
+        <HomeWelcome />
+        <HomeOnboarding />
+      </div>
     </main>
   );
 }
