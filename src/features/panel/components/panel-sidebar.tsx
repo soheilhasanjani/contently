@@ -34,7 +34,7 @@ export function PanelSidebar() {
         <Badge variant="warning">{t("freePlan")}</Badge>
       </div>
 
-      <nav className="mt-3 flex flex-col gap-0.5 px-2">
+      <nav className="mt-3 flex flex-col gap-0.5 px-4">
         <PanelNavLink
           href={routes.home()}
           label={t("home")}
@@ -58,8 +58,8 @@ export function PanelSidebar() {
         />
       </nav>
 
-      <div className="mt-6 flex min-h-0 flex-1 flex-col gap-2 px-2 pb-4">
-        <div className="flex items-center justify-between gap-2 px-2">
+      <div className="mt-6 flex min-h-0 flex-1 flex-col gap-2 px-4 pb-4">
+        <div className="flex items-center justify-between gap-2">
           <p className="text-xs font-medium text-muted-foreground">
             {t("myProjects")}
           </p>
