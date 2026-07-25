@@ -1,0 +1,26 @@
+---
+description: Contently frontend engineering principles (always on)
+alwaysApply: true
+---
+
+# Contently engineering
+
+Frontend-only Next.js app. Backend is a separate API. Full detail: `docs/engineering.md`.
+
+## Hard rules
+
+- Server Components by default; `"use client"` only when required.
+- Data via Axios + TanStack Query + Orval-generated clients/types.
+- Auth token from cookie → `Authorization: Bearer <token>`.
+- TanStack Query = server state; Zustand = global UI state; nuqs = URL/filters.
+- Forms: React Hook Form + Zod.
+- Quality: ESLint + TypeScript + Prettier. Production-grade, clean, optimized.
+- Env: Zod-validated module + `.env.example`.
+- Use `next/font`, `next/image`, etc. Dynamic-import heavy UI (editor/AI).
+- TipTap: deferred until editor work starts.
+
+## Do not
+
+- Put business/persistence logic in this repo.
+- Duplicate API data in Zustand.
+- Hand-roll API DTO types when Orval already generates them.

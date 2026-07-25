@@ -1,0 +1,20 @@
+---
+description: Folder structure — features, components, app routes
+globs: src/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# Folder structure
+
+```text
+src/app/                  → routes only; import pages from features
+src/features/<feature>/   → pages/, components/, hooks/, …
+src/components/ui/        → shadcn primitives (button, input, select, …)
+src/components/common/    → complex shared UI
+src/lib/                  → env, axios, error mapper, utils
+src/stores/               → Zustand stores
+```
+
+- Group each feature by type (`pages`, `components`, `hooks`, …).
+- Do not put feature UI directly in `app/`; re-export/import feature pages.
+- Primitives → `components/ui`. Composite shared UI → `components/common`.

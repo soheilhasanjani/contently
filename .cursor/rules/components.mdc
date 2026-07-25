@@ -1,0 +1,14 @@
+---
+description: shadcn/ui, components/ui vs common, Next.js UI
+globs: src/components/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# Components
+
+- Add button/input/select/etc. via **shadcn CLI** → `components/ui`.
+- Complex shared UI (not a single primitive) → `components/common`.
+- Libraries (TipTap, etc.) for surfaces shadcn does not cover.
+- Prefer `next/image`, `next/font`, and Next link/navigation primitives.
+- Dynamic-import heavy feature UIs to keep bundles lean.
+- TipTap setup is deferred; do not scaffold editor packages until that feature starts.

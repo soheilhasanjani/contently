@@ -1,0 +1,23 @@
+---
+description: API client, Orval, Axios, auth headers, errors
+globs: src/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# API & auth
+
+- Use Orval-generated clients on a shared Axios instance.
+- Prefer Orval types for request/response contracts.
+- Hand-write types only for props, lib/utils, and non-API code.
+- Read auth token from cookie; send `Authorization: Bearer <token>`.
+- Centralize API error mapping in `lib` (status → user message + logging).
+- UX baseline: error boundaries, toasts, inline field errors, Suspense/skeletons, mutation error states.
+
+```ts
+// ✅ Axios interceptor sketch
+api.interceptors.request.use((config) => {
+  const token = getTokenFromCookie();
+  if (token) config.headers.Authorization = `Bearer ${token}`;
+  return config;
+});
+```

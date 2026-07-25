@@ -1,0 +1,13 @@
+---
+description: TanStack Query, Zustand, nuqs, RHF+Zod state/forms
+globs: src/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# State & forms
+
+- **TanStack Query**: all server/async data and mutations.
+- **Zustand**: global client UI state only (theme, shell, …).
+- **nuqs**: filters and URL-serializable UI state.
+- Never mirror Query cache into Zustand.
+- Forms: React Hook Form + Zod; inline field errors; toasts for non-field errors.
