@@ -2,11 +2,11 @@
 
 import { DirectionProvider } from "@/components/ui/direction";
 import { Toaster } from "@/components/ui/toast";
+import { ThemeProvider } from "@/components/common/theme-provider";
 import {
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
-import { ThemeProvider } from "next-themes";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { useState } from "react";
 

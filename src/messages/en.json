@@ -132,8 +132,7 @@
     "profile": "Profile",
     "upgradePlan": "Upgrade plan",
     "language": "Language",
-    "switchToLight": "Switch to light mode",
-    "switchToDark": "Switch to dark mode"
+    "toggleTheme": "Toggle theme"
   },
   "SystemPages": {
     "unauthorizedTitle": "Session expired",

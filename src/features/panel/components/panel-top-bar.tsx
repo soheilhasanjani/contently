@@ -53,9 +53,13 @@ export function PanelTopBar() {
         <Link
           href={routes.settings()}
           aria-label={t("settings")}
-          className={cn(buttonVariants({ variant: "ghost", size: "icon-sm" }))}
+          className={cn(buttonVariants({ variant: "ghost", size: "icon" }))}
         >
-          <HugeiconsIcon icon={Settings02Icon} strokeWidth={2} />
+          <HugeiconsIcon
+            icon={Settings02Icon}
+            strokeWidth={1.5}
+            className="size-5"
+          />
         </Link>
 
         <Link
@@ -70,7 +74,7 @@ export function PanelTopBar() {
 
         <Separator orientation="vertical" className="mx-1 h-6" />
 
-        <Button type="button" size="sm">
+        <Button type="button" size="default">
           {t("upgradePlan")}
         </Button>
       </div>

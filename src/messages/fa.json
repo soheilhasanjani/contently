@@ -132,8 +132,7 @@
     "profile": "پروفایل",
     "upgradePlan": "ارتقا پلن",
     "language": "زبان",
-    "switchToLight": "تغییر به حالت روشن",
-    "switchToDark": "تغییر به حالت تاریک"
+    "toggleTheme": "تغییر پوسته"
   },
   "SystemPages": {
     "unauthorizedTitle": "نشست منقضی شد",
