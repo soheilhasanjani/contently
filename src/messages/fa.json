@@ -18,6 +18,14 @@
     "signingIn": "در حال ورود…",
     "loginFailed": "ورود ناموفق بود. دوباره تلاش کنید."
   },
+  "Article": {
+    "status": {
+      "waitingReview": "در انتظار بازبینی",
+      "beingEdited": "در حال ویرایش",
+      "revision": "نیاز به اصلاح",
+      "approved": "تأیید شده"
+    }
+  },
   "Home": {
     "greeting": "سلام {name}، خوش آمدید 👋",
     "savings": "تبریک! با استفاده از کانتنتلی <highlight>۳۰ ساعت</highlight> از وقت خود را ذخیره کرده‌اید.",
@@ -51,6 +59,35 @@
           "action": "درخواست بازبینی"
         }
       }
+    },
+    "QuickActions": {
+      "label": "اقدامات سریع",
+      "items": {
+        "generateArticle": {
+          "title": "تولید مقاله",
+          "description": "با هوش مصنوعی از یک موضوع یا شکاف محتوا پیش‌نویس کامل بسازید."
+        },
+        "createProject": {
+          "title": "ایجاد پروژه",
+          "description": "یک پروژه جدید برای سازمان‌دهی گردش‌کار محتوا بسازید."
+        },
+        "manualArticle": {
+          "title": "مقاله دستی",
+          "description": "مقاله را خودتان از یک سند خالی بنویسید."
+        }
+      }
+    },
+    "Articles": {
+      "title": "مقاله‌ها",
+      "sortLabel": "مرتب‌سازی مقاله‌ها",
+      "sort": {
+        "lastViewedByMe": "آخرین بازدیدهای من",
+        "recentlyEdited": "اخیراً ویرایش‌شده",
+        "titleAsc": "عنوان الف–ی"
+      },
+      "lastEditedMinutes": "آخرین ویرایش {count} دقیقه پیش",
+      "lastEditedHours": "آخرین ویرایش {count} ساعت پیش",
+      "lastEditedDays": "آخرین ویرایش {count} روز پیش"
     }
   },
   "Calendar": {

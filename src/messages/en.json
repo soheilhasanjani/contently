@@ -18,6 +18,14 @@
     "signingIn": "Signing in…",
     "loginFailed": "Unable to sign in. Please try again."
   },
+  "Article": {
+    "status": {
+      "waitingReview": "Waiting review",
+      "beingEdited": "Being edited",
+      "revision": "Revision",
+      "approved": "Approved"
+    }
+  },
   "Home": {
     "greeting": "Hi {name}, welcome back 👋",
     "savings": "Congratulations! You've saved <highlight>30 hours</highlight> worth of time by using Contently.",
@@ -51,6 +59,35 @@
           "action": "Request review"
         }
       }
+    },
+    "QuickActions": {
+      "label": "Quick actions",
+      "items": {
+        "generateArticle": {
+          "title": "Generate article",
+          "description": "Create a full draft with AI from a topic or content gap."
+        },
+        "createProject": {
+          "title": "Create project",
+          "description": "Start a new project to organize your content workflow."
+        },
+        "manualArticle": {
+          "title": "Manual article",
+          "description": "Write an article yourself from a blank document."
+        }
+      }
+    },
+    "Articles": {
+      "title": "Articles",
+      "sortLabel": "Sort articles",
+      "sort": {
+        "lastViewedByMe": "Last viewed by me",
+        "recentlyEdited": "Recently edited",
+        "titleAsc": "Title A–Z"
+      },
+      "lastEditedMinutes": "Last edited {count} min ago",
+      "lastEditedHours": "Last edited {count}h ago",
+      "lastEditedDays": "Last edited {count}d ago"
     }
   },
   "Calendar": {
