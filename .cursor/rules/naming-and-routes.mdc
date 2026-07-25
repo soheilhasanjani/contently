@@ -14,4 +14,4 @@ alwaysApply: false
 - Config aliases/extras: `scripts/routes.config.mjs`. See `docs/routes.md`.
 - Post-login `next`: panel allowlist only; else dashboard.
 - Client providers: one `AppProviders` module; document order in-file.
-- `cn`: from shadcn CLI. Do not apply Inter/Vazirmatn until explicitly requested after shadcn.
+- `cn`: from shadcn CLI.

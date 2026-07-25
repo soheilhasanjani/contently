@@ -5,8 +5,8 @@
 ## How it works
 
 1. `scripts/generate-routes.mjs` scans `src/app/**/page.tsx` (under `[locale]`).
-2. Emits typed helpers: `routes.panel.dashboard()`, `routes.auth.login({ next })`, …
-3. Builds `panelNextAllowlist` from all static `/panel/...` paths.
+2. Emits typed helpers: `routes.home()`, `routes.auth.login({ next })`, …
+3. Builds `panelNextAllowlist` from static private paths (excludes `publicPaths` and catch-alls).
 4. Adds `resolveNextPath()` for safe post-login redirects.
 
 Committed config (aliases / extras / defaults): [`scripts/routes.config.mjs`](../scripts/routes.config.mjs).

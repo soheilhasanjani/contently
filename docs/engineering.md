@@ -21,8 +21,9 @@ Frontend-only Next.js app. Backend lives in a separate API project. This doc is 
 | Route guards | Proxy: private app routes; unauthenticated → `/{locale}/?next=…` |
 | Route helpers | Typed path functions (e.g. `routes.home()`) for all navigation |
 | i18n | `next-intl`; locales `en` (LTR), `fa` (RTL); default **`fa`** |
-| Fonts | **Inter** (`en`) + **Vazirmatn** (`fa`) — apply after shadcn when requested |
-| Icons | Install when needed (e.g. lucide with/after UI setup) |
+| Fonts | **Inter** (`en`) + **Vazirmatn** (`fa`) via `next/font` |
+| Icons | **Hugeicons** (`@hugeicons/react` + `@hugeicons/core-free-icons`) |
+| Toasts | shadcn Base UI toast (`toast` + `<Toaster />` in `AppProviders`) |
 | Toasts | Install manually when first needed (not via shadcn CLI) |
 | Env | Zod-validated module + `.env.example` |
 | Quality | ESLint + TypeScript + Prettier |
@@ -54,7 +55,7 @@ Frontend-only Next.js app. Backend lives in a separate API project. This doc is 
 | `/{locale}/…` | Private app routes under `(panel)` group |
 | `/{locale}/unauthorized` | 401 page (cookie present but invalid/expired) |
 | `/{locale}/access-denied` | Forbidden / access denied |
-| `/{locale}` + `not-found` / `error` | 404 and error UI |
+| unknown under locale | Localized 404 (`not-found.tsx` + `[...rest]` catch-all) |
 
 ```text
 src/app/[locale]/
@@ -66,7 +67,7 @@ src/app/[locale]/
   unauthorized/page.tsx
   access-denied/page.tsx
   not-found.tsx
-  error.tsx
+  [...rest]/page.tsx            # unknown paths → notFound()
 ```
 
 ### Typed route helpers
@@ -101,7 +102,7 @@ src/
     env.ts
   stores/
   i18n/
-  proxy.ts                  # Next.js 16 proxy (next-intl locale; auth later)
+  proxy.ts                  # Next.js 16 proxy (next-intl + auth)
 ```
 
 ### Path aliases
@@ -159,7 +160,7 @@ src/
 - Default locale resolution: `NEXT_LOCALE` → `Accept-Language` → **`fa`**.
 - Locale layout: next-intl + `lang`/`dir` + providers via **`AppProviders`**.
 - **`next-themes`**: `class="dark"`; system default then browser storage; not in Zustand.
-- Fonts: **Inter** + **Vazirmatn** via `next/font`, applied **after shadcn init when explicitly requested** (not automatically during shadcn setup).
+- Fonts: **Inter** + **Vazirmatn** via `next/font` (locale-aware in root / `[locale]` layouts).
 
 ## Forms & dates
 
@@ -170,9 +171,9 @@ src/
 
 - shadcn CLI → `components/ui`; complex shared → `components/common`.
 - **`cn`**: from shadcn install.
-- Toasts: **install manually** when first needed (not shadcn CLI).
-- Icons: install when needed.
-- TipTap deferred until editor work.
+- **Icons**: Hugeicons (`@hugeicons/react` + `@hugeicons/core-free-icons`); shadcn `iconLibrary` is `hugeicons`.
+- **Toasts**: shadcn Base UI toast (`components/ui/toast`); mount `<Toaster />` in `AppProviders`; call `toast.add({ title, description, type })` from `@/components/ui/toast`.
+- TipTap: add when editor work starts.
 
 ## Environment & quality
 
@@ -181,17 +182,3 @@ src/
   - Dev: `http://localhost:8787/openapi.json`
   - Prod: `https://portfolio-api.soheilpcmir.workers.dev/openapi.json`
 - ESLint + TypeScript + Prettier.
-
-## Implementation order
-
-1. Foundation: `next-intl`, `next-themes`, `nuqs`, `zod`, env, **typed `routes` helpers**.
-2. shadcn/ui (+ `cn`); then apply **Inter / Vazirmatn** when asked.
-3. Axios + Orval + Query + auth cookie/middleware/panel shell + dayjs as needed.
-4. Manual toast + icons when first UI needs them.
-5. TipTap when editor starts.
-
-## Deferred
-
-- TipTap editor packaging.
-- Font wiring until post-shadcn request.
-- Toast/icon packages until first use (manual install).
