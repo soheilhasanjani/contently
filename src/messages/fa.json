@@ -196,7 +196,41 @@
   },
   "Projects": {
     "title": "پروژه",
-    "projectId": "شناسه پروژه: {id}"
+    "description": "مقاله‌های این پروژه را مرور و مدیریت کنید.",
+    "projectId": "شناسه پروژه: {id}",
+    "showing": "نمایش: {count} نتیجه",
+    "statusFilter": "وضعیت",
+    "status": {
+      "all": "همه وضعیت‌ها",
+      "waitingReview": "در انتظار بازبینی",
+      "beingEdited": "در حال ویرایش",
+      "revision": "بازبینی",
+      "approved": "تأیید شده"
+    },
+    "sortLabel": "مرتب‌سازی مقالات",
+    "sort": {
+      "recentlyEdited": "آخرین ویرایش",
+      "oldestEdited": "قدیمی‌ترین ویرایش",
+      "titleAsc": "عنوان الف–ی"
+    },
+    "layoutLabel": "چیدمان",
+    "layout": {
+      "list": "چیدمان لیستی",
+      "grid": "چیدمان جعبه‌ای"
+    },
+    "search": "جستجو",
+    "searchPlaceholder": "جستجوی مقالات…",
+    "closeSearch": "بستن جستجو",
+    "today": "امروز",
+    "yesterday": "دیروز",
+    "articleCount": "{count} مقاله",
+    "lastEditedMinutes": "آخرین ویرایش {count} دقیقه پیش",
+    "lastEditedHours": "آخرین ویرایش {count} ساعت پیش",
+    "lastEditedDays": "آخرین ویرایش {count} روز پیش",
+    "emptyTitle": "مقاله‌ای در این پروژه نیست",
+    "emptyDescription": "مقاله‌های این پروژه پس از ایجاد اینجا نمایش داده می‌شوند.",
+    "notFoundTitle": "پروژه پیدا نشد",
+    "notFoundDescription": "پروژه‌ای با شناسه «{id}» وجود ندارد."
   },
   "Panel": {
     "loadingSession": "در حال بارگذاری نشست…",

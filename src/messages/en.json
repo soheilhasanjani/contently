@@ -196,7 +196,41 @@
   },
   "Projects": {
     "title": "Project",
-    "projectId": "Project ID: {id}"
+    "description": "Browse and manage articles in this project.",
+    "projectId": "Project ID: {id}",
+    "showing": "Showing: {count} results",
+    "statusFilter": "Status",
+    "status": {
+      "all": "All statuses",
+      "waitingReview": "Waiting review",
+      "beingEdited": "Being edited",
+      "revision": "Revision",
+      "approved": "Approved"
+    },
+    "sortLabel": "Sort articles",
+    "sort": {
+      "recentlyEdited": "Recently edited",
+      "oldestEdited": "Oldest edited",
+      "titleAsc": "Title A–Z"
+    },
+    "layoutLabel": "Layout",
+    "layout": {
+      "list": "List layout",
+      "grid": "Grid layout"
+    },
+    "search": "Search",
+    "searchPlaceholder": "Search articles…",
+    "closeSearch": "Close search",
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "articleCount": "{count} articles",
+    "lastEditedMinutes": "Last edited {count} min ago",
+    "lastEditedHours": "Last edited {count}h ago",
+    "lastEditedDays": "Last edited {count}d ago",
+    "emptyTitle": "No articles in this project",
+    "emptyDescription": "Articles for this project will show up here once they are created.",
+    "notFoundTitle": "Project not found",
+    "notFoundDescription": "No project matches ID “{id}”."
   },
   "Panel": {
     "loadingSession": "Loading session…",
