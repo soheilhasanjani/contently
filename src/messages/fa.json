@@ -126,7 +126,30 @@
   },
   "Archived": {
     "title": "بایگانی",
-    "comingSoon": "این بخش به‌زودی آماده می‌شود."
+    "description": "مقاله‌های بایگانی‌شده را مرور کنید، بر اساس پروژه فیلتر کنید و در صورت نیاز بازیابی کنید.",
+    "showing": "نمایش: {count} نتیجه",
+    "allProjects": "همه پروژه‌ها",
+    "projectFilter": "پروژه",
+    "sortLabel": "مرتب‌سازی مقالات بایگانی",
+    "sort": {
+      "archivedNewest": "جدیدترین بایگانی",
+      "archivedOldest": "قدیمی‌ترین بایگانی",
+      "titleAsc": "عنوان الف–ی"
+    },
+    "search": "جستجو",
+    "searchPlaceholder": "جستجوی مقالات…",
+    "closeSearch": "بستن جستجو",
+    "restore": "بازیابی",
+    "delete": "حذف",
+    "deleteTitle": "حذف دائمی؟",
+    "deleteDescription": "«{title}» برای همیشه حذف می‌شود. این کار قابل بازگشت نیست.",
+    "deleteCancel": "انصراف",
+    "deleteConfirm": "حذف دائمی",
+    "today": "امروز",
+    "yesterday": "دیروز",
+    "articleCount": "{count} مقاله",
+    "emptyTitle": "مقاله بایگانی‌شده‌ای نیست",
+    "emptyDescription": "مقاله‌هایی که بایگانی می‌کنید اینجا و گروه‌بندی‌شده بر اساس روز بایگانی نمایش داده می‌شوند."
   },
   "Notifications": {
     "title": "اعلان‌ها",

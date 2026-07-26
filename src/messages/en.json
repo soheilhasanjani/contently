@@ -126,7 +126,30 @@
   },
   "Archived": {
     "title": "Archived",
-    "comingSoon": "This section is coming soon."
+    "description": "Browse archived articles, filter by project, and restore them when you need them again.",
+    "showing": "Showing: {count} results",
+    "allProjects": "All projects",
+    "projectFilter": "Project",
+    "sortLabel": "Sort archived articles",
+    "sort": {
+      "archivedNewest": "Newest archived",
+      "archivedOldest": "Oldest archived",
+      "titleAsc": "Title A–Z"
+    },
+    "search": "Search",
+    "searchPlaceholder": "Search articles…",
+    "closeSearch": "Close search",
+    "restore": "Restore",
+    "delete": "Delete",
+    "deleteTitle": "Delete permanently?",
+    "deleteDescription": "“{title}” will be permanently deleted. This action cannot be undone.",
+    "deleteCancel": "Cancel",
+    "deleteConfirm": "Delete permanently",
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "articleCount": "{count} articles",
+    "emptyTitle": "No archived articles",
+    "emptyDescription": "Articles you archive will show up here, grouped by the day they were archived."
   },
   "Notifications": {
     "title": "Notifications",
