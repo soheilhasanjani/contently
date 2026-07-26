@@ -12,7 +12,7 @@ export function PanelShell({ children }: PanelShellProps) {
     <>
       <PanelTopBar />
       <PanelSidebar />
-      <main className="min-h-svh ps-64 pt-16">{children}</main>
+      <main className="min-h-svh min-w-0 ps-64 pt-16">{children}</main>
     </>
   );
 }

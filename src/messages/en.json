@@ -92,7 +92,37 @@
   },
   "Calendar": {
     "title": "Content calendar",
-    "comingSoon": "This section is coming soon."
+    "description": "This is an AI suggestion based on your expected result to help you get the right time to post the blog.",
+    "periodPrev": "Previous week",
+    "periodNext": "Next week",
+    "allProjects": "All projects",
+    "projectFilter": "Project",
+    "postTimeFilter": "Post time",
+    "allPostTimes": "All post times",
+    "postTime": {
+      "morning": "Morning",
+      "afternoon": "Afternoon",
+      "evening": "Evening"
+    },
+    "expectedResult": "Expected result",
+    "expectedResultTitle": "Expected result",
+    "expectedResultDescription": "Set the targets used for AI scheduling suggestions.",
+    "impressionMin": "Impression min",
+    "impressionMax": "Impression max",
+    "engagementRate": "Eng. rate (%)",
+    "conversionRate": "Conv. rate (%)",
+    "apply": "Apply",
+    "search": "Search",
+    "searchPlaceholder": "Search articles…",
+    "closeSearch": "Close search",
+    "showing": "Showing: {count} results",
+    "impressionBadge": "Impression: {min} – {max}",
+    "engagementBadge": "Eng. rate: {rate}%",
+    "conversionBadge": "Conv. rate: {rate}%",
+    "articleCount": "{count}",
+    "aroundTime": "around {time}",
+    "emptyTitle": "No article for this day",
+    "emptyDescription": "There are no good articles to be posted on this date."
   },
   "Archived": {
     "title": "Archived",

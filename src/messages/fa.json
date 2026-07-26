@@ -92,7 +92,37 @@
   },
   "Calendar": {
     "title": "تقویم محتوا",
-    "comingSoon": "این بخش به‌زودی آماده می‌شود."
+    "description": "این پیشنهاد هوش مصنوعی بر اساس نتیجه مورد انتظار شماست تا بهترین زمان انتشار بلاگ را پیدا کنید.",
+    "periodPrev": "هفته قبل",
+    "periodNext": "هفته بعد",
+    "allProjects": "همه پروژه‌ها",
+    "projectFilter": "پروژه",
+    "postTimeFilter": "زمان انتشار",
+    "allPostTimes": "همه زمان‌ها",
+    "postTime": {
+      "morning": "صبح",
+      "afternoon": "بعدازظهر",
+      "evening": "عصر"
+    },
+    "expectedResult": "نتیجه مورد انتظار",
+    "expectedResultTitle": "نتیجه مورد انتظار",
+    "expectedResultDescription": "اهدافی را تنظیم کنید که برای پیشنهاد زمان‌بندی هوش مصنوعی استفاده می‌شود.",
+    "impressionMin": "حداقل نمایش",
+    "impressionMax": "حداکثر نمایش",
+    "engagementRate": "نرخ تعامل (%)",
+    "conversionRate": "نرخ تبدیل (%)",
+    "apply": "اعمال",
+    "search": "جستجو",
+    "searchPlaceholder": "جستجوی مقالات…",
+    "closeSearch": "بستن جستجو",
+    "showing": "نمایش: {count} نتیجه",
+    "impressionBadge": "نمایش: {min} – {max}",
+    "engagementBadge": "نرخ تعامل: {rate}%",
+    "conversionBadge": "نرخ تبدیل: {rate}%",
+    "articleCount": "{count}",
+    "aroundTime": "حدود {time}",
+    "emptyTitle": "مقاله‌ای برای این روز نیست",
+    "emptyDescription": "مقاله مناسبی برای انتشار در این تاریخ وجود ندارد."
   },
   "Archived": {
     "title": "بایگانی",
