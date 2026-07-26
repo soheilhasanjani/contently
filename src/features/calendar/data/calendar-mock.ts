@@ -143,33 +143,10 @@ export const DEFAULT_EXPECTED_RESULT: ExpectedResult = {
   conversionRate: 12.7,
 };
 
-export const PROJECT_COLOR_CLASSES: Record<
-  ProjectColor,
-  { box: string; text: string; group: string }
-> = {
-  primary: {
-    box: "bg-primary text-primary-foreground",
-    text: "text-primary",
-    group: "border-primary/20 bg-primary/5",
-  },
-  info: {
-    box: "bg-info text-info-foreground",
-    text: "text-info-foreground",
-    group: "border-info-foreground/20 bg-info/40",
-  },
-  success: {
-    box: "bg-success text-success-foreground",
-    text: "text-success-foreground",
-    group: "border-success-foreground/20 bg-success/40",
-  },
-  warning: {
-    box: "bg-warning text-warning-foreground",
-    text: "text-warning-foreground",
-    group: "border-warning-foreground/20 bg-warning/40",
-  },
-  tertiary: {
-    box: "bg-tertiary text-tertiary-foreground",
-    text: "text-tertiary-foreground",
-    group: "border-tertiary-foreground/20 bg-tertiary/40",
-  },
+export const PROJECT_COLOR_CLASSES: Record<ProjectColor, { box: string }> = {
+  primary: { box: "bg-primary" },
+  info: { box: "bg-info" },
+  success: { box: "bg-success" },
+  warning: { box: "bg-warning" },
+  tertiary: { box: "bg-tertiary" },
 };

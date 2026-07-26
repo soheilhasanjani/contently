@@ -249,8 +249,11 @@ export function CalendarView() {
 
         <DragOverlay dropAnimation={null}>
           {activeArticle ? (
-            <div className="w-[calc(16rem-1.25rem)] cursor-grabbing shadow-md">
-              <CalendarArticleCardContent article={activeArticle} />
+            <div className="w-[calc(16rem-1.5rem+0.75rem)] cursor-grabbing shadow-md">
+              <CalendarArticleCardContent
+                article={activeArticle}
+                project={projectsById[activeArticle.projectId]}
+              />
             </div>
           ) : null}
         </DragOverlay>

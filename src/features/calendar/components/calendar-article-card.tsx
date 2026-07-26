@@ -7,21 +7,43 @@ import { CSS } from "@dnd-kit/utilities";
 import { Clock01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useTranslations } from "next-intl";
-import type { CalendarArticle } from "../data/calendar-mock";
+import {
+  PROJECT_COLOR_CLASSES,
+  type CalendarArticle,
+  type CalendarProject,
+} from "../data/calendar-mock";
 
 type CalendarArticleCardContentProps = {
   article: CalendarArticle;
+  project?: CalendarProject;
   className?: string;
 };
 
 export function CalendarArticleCardContent({
   article,
+  project,
   className,
 }: CalendarArticleCardContentProps) {
   const t = useTranslations("Calendar");
+  const color = project ? PROJECT_COLOR_CLASSES[project.color] : null;
 
   return (
-    <article className={cn("rounded-lg bg-background p-3", className)}>
+    <article
+      className={cn(
+        "rounded-lg border border-border bg-background p-3",
+        className,
+      )}
+    >
+      {project ? (
+        <p className="mb-2 flex min-w-0 items-center gap-1.5 text-xs text-muted-foreground">
+          <span
+            className={cn("size-2 shrink-0 rounded-full", color?.box)}
+            aria-hidden
+          />
+          <span className="truncate">{project.name}</span>
+        </p>
+      ) : null}
+
       <h3 className="line-clamp-2 text-sm font-semibold tracking-tight text-foreground">
         {article.title}
       </h3>
@@ -42,9 +64,13 @@ export function CalendarArticleCardContent({
 
 type CalendarArticleCardProps = {
   article: CalendarArticle;
+  project?: CalendarProject;
 };
 
-export function CalendarArticleCard({ article }: CalendarArticleCardProps) {
+export function CalendarArticleCard({
+  article,
+  project,
+}: CalendarArticleCardProps) {
   const { attributes, listeners, setNodeRef, transform, isDragging } =
     useDraggable({ id: article.id });
 
@@ -62,7 +88,7 @@ export function CalendarArticleCard({ article }: CalendarArticleCardProps) {
       {...listeners}
       {...attributes}
     >
-      <CalendarArticleCardContent article={article} />
+      <CalendarArticleCardContent article={article} project={project} />
     </div>
   );
 }

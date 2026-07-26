@@ -70,12 +70,10 @@ export function PanelSidebar() {
                 className="flex h-9 items-center gap-2.5 rounded-lg px-2.5 text-sm text-muted-foreground transition-colors hover:bg-muted/70 hover:text-foreground"
               >
                 <span
-                  className="flex size-6 shrink-0 items-center justify-center rounded-md text-[11px] font-semibold text-white"
+                  className="size-2 shrink-0 rounded-full"
                   style={{ backgroundColor: project.color }}
                   aria-hidden
-                >
-                  {project.name.trim().charAt(0).toUpperCase()}
-                </span>
+                />
                 <span className="min-w-0 truncate text-start">{project.name}</span>
               </Link>
             </li>
