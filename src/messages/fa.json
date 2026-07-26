@@ -87,7 +87,11 @@
       },
       "lastEditedMinutes": "آخرین ویرایش {count} دقیقه پیش",
       "lastEditedHours": "آخرین ویرایش {count} ساعت پیش",
-      "lastEditedDays": "آخرین ویرایش {count} روز پیش"
+      "lastEditedDays": "آخرین ویرایش {count} روز پیش",
+      "loading": "در حال بارگذاری مقاله‌ها…",
+      "error": "بارگذاری مقاله‌ها ناموفق بود. دوباره تلاش کنید.",
+      "emptyTitle": "هنوز مقاله‌ای نیست",
+      "emptyDescription": "مقاله‌هایی که بازدید می‌کنید اینجا نمایش داده می‌شوند."
     }
   },
   "Calendar": {

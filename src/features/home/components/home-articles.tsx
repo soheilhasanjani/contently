@@ -1,5 +1,6 @@
 "use client";
 
+import { getApiContentlyArticleViews } from "@/api/generated/endpoints/contently-article-views/contently-article-views";
 import { ArticleCard } from "@/components/common/article-card";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -11,18 +12,27 @@ import {
 } from "@/components/ui/select";
 import {
   ARTICLE_SORT_OPTIONS,
-  MOCK_HOME_ARTICLES,
+  ARTICLE_SORT_TO_API,
   type ArticleSortOption,
-} from "@/features/home/data/articles-mock";
+} from "@/features/home/data/article-sort";
+import {
+  getArticleAuthorName,
+  toArticleStatus,
+} from "@/lib/contently/article";
+import { ApiClientError } from "@/lib/api/error-mapper";
+import { useQuery } from "@tanstack/react-query";
+import dayjs from "dayjs";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 function formatEditedLabel(
-  minutesAgo: number,
+  updatedAt: string,
   t: ReturnType<typeof useTranslations<"Home.Articles">>,
 ): string {
+  const minutesAgo = Math.max(0, dayjs().diff(dayjs(updatedAt), "minute"));
+
   if (minutesAgo < 60) {
-    return t("lastEditedMinutes", { count: minutesAgo });
+    return t("lastEditedMinutes", { count: minutesAgo || 1 });
   }
 
   const hours = Math.round(minutesAgo / 60);
@@ -34,24 +44,17 @@ function formatEditedLabel(
   return t("lastEditedDays", { count: days });
 }
 
-function getSortedArticles(sort: ArticleSortOption) {
-  const items = [...MOCK_HOME_ARTICLES];
-
-  if (sort === "titleAsc") {
-    return items.sort((a, b) => a.title.localeCompare(b.title));
-  }
-
-  if (sort === "recentlyEdited") {
-    return items.sort((a, b) => a.editedMinutesAgo - b.editedMinutesAgo);
-  }
-
-  return items;
-}
-
 export function HomeArticles() {
   const t = useTranslations("Home.Articles");
   const [sort, setSort] = useState<ArticleSortOption>("lastViewedByMe");
-  const articles = getSortedArticles(sort);
+
+  const articlesQuery = useQuery({
+    queryKey: ["contently", "article-views", sort],
+    queryFn: () =>
+      getApiContentlyArticleViews({ sort: ARTICLE_SORT_TO_API[sort] }),
+  });
+
+  const articles = articlesQuery.data?.data ?? [];
 
   return (
     <section className="flex flex-col gap-4" aria-labelledby="home-articles-title">
@@ -67,15 +70,16 @@ export function HomeArticles() {
           value={sort}
           onValueChange={(value) => {
             if (!value) return;
-            if (
-              ARTICLE_SORT_OPTIONS.includes(value as ArticleSortOption)
-            ) {
+            if (ARTICLE_SORT_OPTIONS.includes(value as ArticleSortOption)) {
               setSort(value as ArticleSortOption);
             }
           }}
           aria-label={t("sortLabel")}
         >
-          <SelectTrigger size="sm" className="border-0 bg-transparent px-1 shadow-none dark:bg-transparent">
+          <SelectTrigger
+            size="sm"
+            className="border-0 bg-transparent px-1 shadow-none dark:bg-transparent"
+          >
             <SelectValue>{t(`sort.${sort}`)}</SelectValue>
           </SelectTrigger>
           <SelectContent align="start">
@@ -88,18 +92,38 @@ export function HomeArticles() {
         </Select>
       </div>
 
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {articles.map((article) => (
-          <ArticleCard
-            key={article.id}
-            title={article.title}
-            status={article.status}
-            lastEditedLabel={formatEditedLabel(article.editedMinutesAgo, t)}
-            authorName={article.authorName}
-            authorImageUrl={article.authorImageUrl}
-          />
-        ))}
-      </div>
+      {articlesQuery.isLoading ? (
+        <p className="text-sm text-muted-foreground">{t("loading")}</p>
+      ) : null}
+
+      {articlesQuery.isError ? (
+        <p className="text-sm text-destructive" role="alert">
+          {articlesQuery.error instanceof ApiClientError
+            ? articlesQuery.error.mapped.message
+            : t("error")}
+        </p>
+      ) : null}
+
+      {articlesQuery.isSuccess && articles.length === 0 ? (
+        <div className="flex flex-col gap-1">
+          <p className="text-sm font-medium text-foreground">{t("emptyTitle")}</p>
+          <p className="text-sm text-muted-foreground">{t("emptyDescription")}</p>
+        </div>
+      ) : null}
+
+      {articles.length > 0 ? (
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {articles.map((article) => (
+            <ArticleCard
+              key={article.id}
+              title={article.name}
+              status={toArticleStatus(article.status)}
+              lastEditedLabel={formatEditedLabel(article.updatedAt, t)}
+              authorName={getArticleAuthorName(article)}
+            />
+          ))}
+        </div>
+      ) : null}
     </section>
   );
 }

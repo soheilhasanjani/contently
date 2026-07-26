@@ -87,7 +87,11 @@
       },
       "lastEditedMinutes": "Last edited {count} min ago",
       "lastEditedHours": "Last edited {count}h ago",
-      "lastEditedDays": "Last edited {count}d ago"
+      "lastEditedDays": "Last edited {count}d ago",
+      "loading": "Loading articles…",
+      "error": "Unable to load articles. Please try again.",
+      "emptyTitle": "No articles yet",
+      "emptyDescription": "Articles you view will show up here."
     }
   },
   "Calendar": {

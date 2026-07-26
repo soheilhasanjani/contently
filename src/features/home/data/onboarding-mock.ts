@@ -6,11 +6,11 @@ export type OnboardingStepId =
 
 export type OnboardingStep = {
   id: OnboardingStepId;
-  /** Demo completion until onboarding API exists. */
+  /** Default completion seed; runtime progress lives in localStorage. */
   completed: boolean;
 };
 
-/** Static onboarding steps until an API drives progress. */
+/** Onboarding step ids + default completion (persisted in localStorage). */
 export const ONBOARDING_STEPS: OnboardingStep[] = [
   { id: "createProject", completed: true },
   { id: "findGap", completed: false },
