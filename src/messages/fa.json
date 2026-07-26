@@ -153,7 +153,42 @@
   },
   "Notifications": {
     "title": "اعلان‌ها",
-    "comingSoon": "این بخش به‌زودی آماده می‌شود."
+    "description": "از بررسی‌ها، نظرات، منشن‌ها و به‌روزرسانی‌های سیستم باخبر بمانید.",
+    "showing": "نمایش: {count} نتیجه",
+    "statusFilter": "وضعیت",
+    "status": {
+      "all": "همه",
+      "unread": "خوانده‌نشده",
+      "read": "خوانده‌شده"
+    },
+    "sortLabel": "مرتب‌سازی اعلان‌ها",
+    "sort": {
+      "newest": "جدیدترین",
+      "oldest": "قدیمی‌ترین"
+    },
+    "search": "جستجو",
+    "searchPlaceholder": "جستجوی اعلان‌ها…",
+    "closeSearch": "بستن جستجو",
+    "markAllRead": "خواندن همه",
+    "markRead": "علامت به‌عنوان خوانده‌شده",
+    "markUnread": "علامت به‌عنوان خوانده‌نشده",
+    "unread": "خوانده‌نشده",
+    "delete": "حذف",
+    "deleteTitle": "حذف اعلان؟",
+    "deleteDescription": "«{title}» از اعلان‌های شما حذف می‌شود.",
+    "deleteCancel": "انصراف",
+    "deleteConfirm": "حذف",
+    "today": "امروز",
+    "yesterday": "دیروز",
+    "itemCount": "{count} اعلان",
+    "type": {
+      "review": "بازبینی",
+      "comment": "نظر",
+      "mention": "منشن",
+      "system": "سیستم"
+    },
+    "emptyTitle": "اعلانی نیست",
+    "emptyDescription": "همه‌چیز به‌روز است. اعلان‌های جدید اینجا نمایش داده می‌شوند."
   },
   "Settings": {
     "title": "تنظیمات",

@@ -153,7 +153,42 @@
   },
   "Notifications": {
     "title": "Notifications",
-    "comingSoon": "This section is coming soon."
+    "description": "Stay on top of reviews, comments, mentions, and system updates.",
+    "showing": "Showing: {count} results",
+    "statusFilter": "Status",
+    "status": {
+      "all": "All",
+      "unread": "Unread",
+      "read": "Read"
+    },
+    "sortLabel": "Sort notifications",
+    "sort": {
+      "newest": "Newest",
+      "oldest": "Oldest"
+    },
+    "search": "Search",
+    "searchPlaceholder": "Search notifications…",
+    "closeSearch": "Close search",
+    "markAllRead": "Mark all read",
+    "markRead": "Mark as read",
+    "markUnread": "Mark as unread",
+    "unread": "Unread",
+    "delete": "Delete",
+    "deleteTitle": "Delete notification?",
+    "deleteDescription": "“{title}” will be removed from your notifications.",
+    "deleteCancel": "Cancel",
+    "deleteConfirm": "Delete",
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "itemCount": "{count} notifications",
+    "type": {
+      "review": "Review",
+      "comment": "Comment",
+      "mention": "Mention",
+      "system": "System"
+    },
+    "emptyTitle": "No notifications",
+    "emptyDescription": "You’re all caught up. New notifications will show up here."
   },
   "Settings": {
     "title": "Settings",
