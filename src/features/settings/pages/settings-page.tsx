@@ -1,5 +1,5 @@
-import { PanelPageLayout } from "@/components/common/panel-page-layout";
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
+import { SettingsView } from "../components/settings-view";
 
 type SettingsPageProps = {
   params: Promise<{ locale: string }>;
@@ -8,12 +8,6 @@ type SettingsPageProps = {
 export async function SettingsPage({ params }: SettingsPageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const t = await getTranslations("Settings");
 
-  return (
-    <PanelPageLayout className="space-y-2">
-      <h1 className="text-xl font-semibold tracking-tight">{t("title")}</h1>
-      <p className="text-sm text-muted-foreground">{t("comingSoon")}</p>
-    </PanelPageLayout>
-  );
+  return <SettingsView />;
 }

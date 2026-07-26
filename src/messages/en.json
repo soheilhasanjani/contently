@@ -192,7 +192,96 @@
   },
   "Settings": {
     "title": "Settings",
-    "comingSoon": "This section is coming soon."
+    "description": "Manage your profile, appearance, security, and notification preferences.",
+    "Profile": {
+      "title": "Profile",
+      "description": "Update the details shown across Contently. Changes are saved locally until the profile API is available.",
+      "name": "Full name",
+      "username": "Username",
+      "email": "Email",
+      "nameInvalid": "Enter a valid name.",
+      "usernameInvalid": "Use 3–32 characters: letters, numbers, dots, underscores, or hyphens.",
+      "emailInvalid": "Enter a valid email address.",
+      "save": "Save profile",
+      "saving": "Saving…",
+      "savedTitle": "Profile updated",
+      "savedDescription": "Your profile details were saved."
+    },
+    "Appearance": {
+      "title": "Appearance",
+      "description": "Choose how Contently looks. You can also toggle theme from the top bar.",
+      "themes": {
+        "light": {
+          "label": "Light",
+          "description": "Bright background with dark text."
+        },
+        "dark": {
+          "label": "Dark",
+          "description": "Dark background with light text."
+        },
+        "system": {
+          "label": "System",
+          "description": "Match your device appearance settings."
+        }
+      }
+    },
+    "Security": {
+      "title": "Password",
+      "description": "Change your account password. This is local-only until the security API is available.",
+      "currentPassword": "Current password",
+      "newPassword": "New password",
+      "confirmPassword": "Confirm new password",
+      "currentPasswordRequired": "Current password is required.",
+      "newPasswordInvalid": "New password must be at least 8 characters.",
+      "confirmPasswordRequired": "Confirm your new password.",
+      "passwordMismatch": "Passwords do not match.",
+      "save": "Update password",
+      "saving": "Updating…",
+      "savedTitle": "Password updated",
+      "savedDescription": "Your password change was saved locally."
+    },
+    "Notifications": {
+      "title": "Notifications",
+      "description": "Choose which updates you want to receive. Preferences are stored locally for now.",
+      "savedTitle": "Preferences updated",
+      "savedDescription": "Your notification preferences were saved.",
+      "items": {
+        "emailDigest": {
+          "label": "Email digest",
+          "description": "Weekly summary of activity across your projects."
+        },
+        "articleUpdates": {
+          "label": "Article updates",
+          "description": "Alerts when articles move between review states."
+        },
+        "projectInvites": {
+          "label": "Project invites",
+          "description": "Notify me when someone invites me to a project."
+        },
+        "productNews": {
+          "label": "Product news",
+          "description": "Occasional updates about new Contently features."
+        }
+      }
+    },
+    "DeleteAccount": {
+      "title": "Delete account",
+      "description": "Request permanent removal of your Contently account.",
+      "warning": "After you submit a deletion request, your account is scheduled for permanent deletion in 30 days. You can cancel the request before then.",
+      "requestButton": "Request account deletion",
+      "confirmTitle": "Delete your account?",
+      "confirmDescription": "We will schedule your account for permanent deletion in {days} days. You can cancel this request from Settings before then.",
+      "confirmCancel": "Keep account",
+      "confirmSubmit": "Submit deletion request",
+      "confirming": "Submitting…",
+      "requestedTitle": "Deletion requested",
+      "requestedDescription": "Your account will be permanently deleted in {days} days unless you cancel.",
+      "pendingTitle": "Deletion scheduled",
+      "pendingDescription": "Your account will be permanently deleted in {days} days. Cancel below if you change your mind.",
+      "cancelRequest": "Cancel deletion request",
+      "cancelledTitle": "Deletion cancelled",
+      "cancelledDescription": "Your account will remain active."
+    }
   },
   "Projects": {
     "title": "Project",
