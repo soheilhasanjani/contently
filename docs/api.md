@@ -44,8 +44,8 @@ Frontend stores `token` in the `access_token` cookie and sends `Authorization: B
 
 | Method | Path | Purpose |
 | --- | --- | --- |
-| `POST` | `/auth/login` | Body `{ username, password }` → `{ data: { token, tokenType } }` |
-| `GET` | `/auth/me` | Bearer token → `{ data: { id, username, name, email } }` |
+| `POST` | `/auth/login` | Body `{ username, password, projectCode: "contently" }` → `{ data: { token, tokenType, user } }` |
+| `GET` | `/auth/me` | Bearer token → `{ data: { id, username, name, email, projectCode, plan } }` |
 | `POST` | `/auth/logout` | Invalidate session; frontend then clears cookie + cache |
 
 ## Notes

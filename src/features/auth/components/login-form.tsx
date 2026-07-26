@@ -1,6 +1,7 @@
 "use client";
 
 import { postAuthLogin } from "@/api/generated/endpoints/auth/auth";
+import { ProjectCode } from "@/api/generated/models";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -42,7 +43,10 @@ export function LoginForm() {
   const onSubmit = handleSubmit(async (values) => {
     setFormError(null);
     try {
-      const result = await postAuthLogin(values);
+      const result = await postAuthLogin({
+        ...values,
+        projectCode: ProjectCode.contently,
+      });
       setAccessToken(result.data.token);
 
       const next = resolveNextPath(searchParams.get("next"));
