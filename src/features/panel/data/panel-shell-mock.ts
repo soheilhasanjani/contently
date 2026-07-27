@@ -1,15 +1,38 @@
+export const PROJECT_COLORS = [
+  "primary",
+  "info",
+  "success",
+  "warning",
+  "tertiary",
+] as const;
+
+export type ProjectColor = (typeof PROJECT_COLORS)[number];
+
 export type PanelProject = {
   id: string;
   name: string;
-  color: string;
+  color: ProjectColor;
 };
 
-/** Static demo projects until projects API exists. */
-export const MOCK_PROJECTS: PanelProject[] = [
-  { id: "1", name: "Launch Blog", color: "#0D9488" },
-  { id: "2", name: "Product Updates", color: "#D97706" },
-  { id: "3", name: "SEO Series", color: "#7C3AED" },
-];
+export const PROJECT_COLOR_CLASSES: Record<ProjectColor, string> = {
+  primary: "bg-primary",
+  info: "bg-info",
+  success: "bg-success",
+  warning: "bg-warning",
+  tertiary: "bg-tertiary",
+};
 
-/** Static notification count until notifications API exists. */
-export const MOCK_NOTIFICATION_COUNT = 3;
+export function getProjectColor(projectId: number): ProjectColor {
+  return PROJECT_COLORS[projectId % PROJECT_COLORS.length] ?? "primary";
+}
+
+export function toPanelProject(project: {
+  id: number;
+  title: string;
+}): PanelProject {
+  return {
+    id: String(project.id),
+    name: project.title,
+    color: getProjectColor(project.id),
+  };
+}

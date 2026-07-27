@@ -10,8 +10,6 @@ import { NotificationsRow } from "./notifications-row";
 type NotificationsDayGroupProps = {
   date: string;
   notifications: NotificationItem[];
-  onToggleRead: (id: string) => void;
-  onDelete: (id: string) => void;
 };
 
 function formatDayLabel(
@@ -33,8 +31,6 @@ function formatDayLabel(
 export function NotificationsDayGroup({
   date,
   notifications,
-  onToggleRead,
-  onDelete,
 }: NotificationsDayGroupProps) {
   const t = useTranslations("Notifications");
   const locale = useLocale();
@@ -66,8 +62,6 @@ export function NotificationsDayGroup({
           <NotificationsRow
             key={notification.id}
             notification={notification}
-            onToggleRead={onToggleRead}
-            onDelete={onDelete}
           />
         ))}
       </ul>

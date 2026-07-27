@@ -1,12 +1,17 @@
 "use client";
 
+import { getApiContentlyNotifications } from "@/api/generated/endpoints/contently-notifications/contently-notifications";
+import { getApiContentlyProjects } from "@/api/generated/endpoints/contently-projects/contently-projects";
 import { Button } from "@/components/ui/button";
+import { getNotificationsQueryKey } from "@/features/notifications/data/notifications-mock";
 import { PanelNavLink } from "@/features/panel/components/panel-nav-link";
 import {
-  MOCK_NOTIFICATION_COUNT,
-  MOCK_PROJECTS,
+  PROJECT_COLOR_CLASSES,
+  toPanelProject,
 } from "@/features/panel/data/panel-shell-mock";
+import { getProjectsQueryKey } from "@/features/projects/data/project-mock";
 import { Link } from "@/i18n/navigation";
+import { cn } from "@/lib/utils";
 import { routes } from "@/lib/routes";
 import {
   Add01Icon,
@@ -16,10 +21,28 @@ import {
   Notification03Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
+import { useMemo } from "react";
 
 export function PanelSidebar() {
   const t = useTranslations("PanelShell");
+
+  const notificationsQuery = useQuery({
+    queryKey: getNotificationsQueryKey("all"),
+    queryFn: () => getApiContentlyNotifications(),
+  });
+
+  const projectsQuery = useQuery({
+    queryKey: getProjectsQueryKey(),
+    queryFn: () => getApiContentlyProjects(),
+  });
+
+  const notificationCount = notificationsQuery.data?.data.length ?? 0;
+  const projects = useMemo(
+    () => (projectsQuery.data?.data ?? []).map(toPanelProject),
+    [projectsQuery.data],
+  );
 
   return (
     <aside className="fixed bottom-0 start-0 top-16 z-30 flex w-64 flex-col bg-background">
@@ -43,7 +66,7 @@ export function PanelSidebar() {
           href={routes.notifications()}
           label={t("notifications")}
           icon={Notification03Icon}
-          badgeCount={MOCK_NOTIFICATION_COUNT}
+          badgeCount={notificationCount > 0 ? notificationCount : undefined}
         />
       </nav>
 
@@ -62,23 +85,47 @@ export function PanelSidebar() {
           </Button>
         </div>
 
-        <ul className="flex flex-col gap-0.5 overflow-y-auto">
-          {MOCK_PROJECTS.map((project) => (
-            <li key={project.id}>
-              <Link
-                href={routes.projects.id({ id: project.id })}
-                className="flex h-9 items-center gap-2.5 rounded-lg px-2.5 text-sm text-muted-foreground transition-colors hover:bg-muted/70 hover:text-foreground"
-              >
-                <span
-                  className="size-2 shrink-0 rounded-full"
-                  style={{ backgroundColor: project.color }}
-                  aria-hidden
-                />
-                <span className="min-w-0 truncate text-start">{project.name}</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
+        {projectsQuery.isLoading ? (
+          <p className="px-2.5 text-xs text-muted-foreground">
+            {t("projectsLoading")}
+          </p>
+        ) : null}
+
+        {projectsQuery.isError ? (
+          <p className="px-2.5 text-xs text-destructive" role="alert">
+            {t("projectsError")}
+          </p>
+        ) : null}
+
+        {projectsQuery.isSuccess && projects.length === 0 ? (
+          <p className="px-2.5 text-xs text-muted-foreground">
+            {t("projectsEmpty")}
+          </p>
+        ) : null}
+
+        {projects.length > 0 ? (
+          <ul className="flex flex-col gap-0.5 overflow-y-auto">
+            {projects.map((project) => (
+              <li key={project.id}>
+                <Link
+                  href={routes.projects.id({ id: project.id })}
+                  className="flex h-9 items-center gap-2.5 rounded-lg px-2.5 text-sm text-muted-foreground transition-colors hover:bg-muted/70 hover:text-foreground"
+                >
+                  <span
+                    className={cn(
+                      "size-2 shrink-0 rounded-full",
+                      PROJECT_COLOR_CLASSES[project.color],
+                    )}
+                    aria-hidden
+                  />
+                  <span className="min-w-0 truncate text-start">
+                    {project.name}
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        ) : null}
       </div>
     </aside>
   );

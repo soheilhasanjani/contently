@@ -11,8 +11,8 @@ type ArchivedDayGroupProps = {
   date: string;
   articles: ArchivedArticle[];
   projectsById: Map<string, ArchivedProject>;
-  onRestore: (id: string) => void;
-  onDelete: (id: string) => void;
+  restoringId: number | null;
+  onRestore: (id: number) => void;
 };
 
 function formatDayLabel(
@@ -35,8 +35,8 @@ export function ArchivedDayGroup({
   date,
   articles,
   projectsById,
+  restoringId,
   onRestore,
-  onDelete,
 }: ArchivedDayGroupProps) {
   const t = useTranslations("Archived");
   const locale = useLocale();
@@ -73,8 +73,8 @@ export function ArchivedDayGroup({
               key={article.id}
               article={article}
               project={project}
+              restoring={restoringId === article.id}
               onRestore={onRestore}
-              onDelete={onDelete}
             />
           );
         })}

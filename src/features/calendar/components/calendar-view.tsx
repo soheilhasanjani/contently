@@ -1,5 +1,16 @@
 "use client";
 
+import { getApiContentlyArticles } from "@/api/generated/endpoints/contently-articles/contently-articles";
+import {
+  getApiContentlyCalendar,
+  patchApiContentlyCalendarId,
+  putApiContentlyCalendarReorder,
+} from "@/api/generated/endpoints/contently-calendar/contently-calendar";
+import { getApiContentlyProjects } from "@/api/generated/endpoints/contently-projects/contently-projects";
+import type { ContentlyArticle } from "@/api/generated/models/contentlyArticle";
+import type { ContentlyCalendarEntry } from "@/api/generated/models/contentlyCalendarEntry";
+import type { ContentlyProject } from "@/api/generated/models/contentlyProject";
+import { ApiClientError } from "@/lib/api/error-mapper";
 import { cn } from "@/lib/utils";
 import {
   DndContext,
@@ -11,11 +22,12 @@ import {
   type DragEndEvent,
   type DragStartEvent,
 } from "@dnd-kit/core";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import isoWeek from "dayjs/plugin/isoWeek";
 import "dayjs/locale/en";
 import "dayjs/locale/fa";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import {
   useEffect,
   useMemo,
@@ -25,10 +37,11 @@ import {
 } from "react";
 import {
   DEFAULT_EXPECTED_RESULT,
-  MOCK_CALENDAR_ARTICLES,
-  MOCK_CALENDAR_PROJECTS,
   type CalendarArticle,
+  type CalendarProject,
   type ExpectedResult,
+  getCalendarTimeMeta,
+  getProjectColor,
 } from "../data/calendar-mock";
 import { CalendarArticleCardContent } from "./calendar-article-card";
 import { CalendarDayColumn } from "./calendar-day-column";
@@ -46,12 +59,137 @@ function getWeekDates(weekStart: dayjs.Dayjs): string[] {
   );
 }
 
+type CalendarQueryData = {
+  articles: CalendarArticle[];
+  projects: CalendarProject[];
+};
+
+function getCalendarQueryKey(from: string, to: string) {
+  return ["contently", "calendar", from, to] as const;
+}
+
+function normalizeCalendarData(
+  entries: ContentlyCalendarEntry[],
+  articles: ContentlyArticle[],
+  projects: ContentlyProject[],
+): CalendarQueryData {
+  const articlesById = new Map(articles.map((article) => [article.id, article]));
+
+  const normalizedProjects = projects.map((project) => ({
+    id: String(project.id),
+    name: project.title,
+    color: getProjectColor(project.id),
+  }));
+
+  const normalizedArticles = entries
+    .map((entry) => {
+      const article = articlesById.get(entry.articleId);
+      if (!article) return null;
+
+      return {
+        id: String(entry.id),
+        entryId: entry.id,
+        articleId: article.id,
+        title: article.name,
+        projectId: String(article.projectId),
+        date: entry.date,
+        order: entry.order,
+        ...getCalendarTimeMeta(entry.order),
+      } satisfies CalendarArticle;
+    })
+    .filter((article): article is CalendarArticle => article !== null)
+    .sort((left, right) => {
+      if (left.date !== right.date) {
+        return left.date.localeCompare(right.date);
+      }
+
+      return left.order - right.order;
+    });
+
+  return {
+    articles: normalizedArticles,
+    projects: normalizedProjects,
+  };
+}
+
+function resequenceDayArticles(articles: CalendarArticle[]) {
+  return articles.map((article, index) => ({
+    ...article,
+    order: index,
+    ...getCalendarTimeMeta(index),
+  }));
+}
+
+function getUpdatedArticlesForDrop(
+  articles: CalendarArticle[],
+  activeId: string,
+  overId: string,
+  weekDates: string[],
+) {
+  const activeArticle = articles.find((article) => article.id === activeId);
+  if (!activeArticle) return null;
+
+  const targetDate = weekDates.includes(overId)
+    ? overId
+    : articles.find((article) => article.id === overId)?.date;
+
+  if (!targetDate) return null;
+
+  const sourceDate = activeArticle.date;
+  const remainingArticles = articles.filter((article) => article.id !== activeId);
+  const sourceDayArticles = remainingArticles.filter(
+    (article) => article.date === sourceDate,
+  );
+  const targetDayArticles = remainingArticles.filter(
+    (article) => article.date === targetDate,
+  );
+
+  const insertIndex =
+    overId === targetDate
+      ? targetDayArticles.length
+      : Math.max(
+          targetDayArticles.findIndex((article) => article.id === overId),
+          0,
+        );
+
+  const nextTargetDayArticles = resequenceDayArticles([
+    ...targetDayArticles.slice(0, insertIndex),
+    { ...activeArticle, date: targetDate },
+    ...targetDayArticles.slice(insertIndex),
+  ]);
+
+  const updatedArticles =
+    sourceDate === targetDate
+      ? [
+          ...remainingArticles.filter((article) => article.date !== targetDate),
+          ...nextTargetDayArticles,
+        ]
+      : [
+          ...remainingArticles.filter(
+            (article) =>
+              article.date !== sourceDate && article.date !== targetDate,
+          ),
+          ...resequenceDayArticles(sourceDayArticles),
+          ...nextTargetDayArticles,
+        ];
+
+  return {
+    sourceDate,
+    targetDate,
+    updatedArticles: updatedArticles.sort((left, right) => {
+      if (left.date !== right.date) {
+        return left.date.localeCompare(right.date);
+      }
+
+      return left.order - right.order;
+    }),
+  };
+}
+
 export function CalendarView() {
   const locale = useLocale();
+  const t = useTranslations("Calendar");
   const [weekStart, setWeekStart] = useState(() => dayjs().startOf("isoWeek"));
-  const [articles, setArticles] = useState<CalendarArticle[]>(
-    MOCK_CALENDAR_ARTICLES,
-  );
   const [projectId, setProjectId] = useState("all");
   const [postTime, setPostTime] = useState("all");
   const [search, setSearch] = useState("");
@@ -78,15 +216,100 @@ export function CalendarView() {
     }),
   );
 
+  const weekDates = useMemo(() => getWeekDates(weekStart), [weekStart]);
+  const queryClient = useQueryClient();
+  const from = weekDates[0] ?? weekStart.format("YYYY-MM-DD");
+  const to = weekDates.at(-1) ?? weekStart.add(6, "day").format("YYYY-MM-DD");
+  const queryKey = useMemo(() => getCalendarQueryKey(from, to), [from, to]);
+
+  const calendarQuery = useQuery({
+    queryKey,
+    queryFn: async (): Promise<CalendarQueryData> => {
+      const [calendarResponse, articlesResponse, projectsResponse] = await Promise.all(
+        [
+          getApiContentlyCalendar({ from, to }),
+          getApiContentlyArticles(),
+          getApiContentlyProjects(),
+        ],
+      );
+
+      return normalizeCalendarData(
+        calendarResponse.data,
+        articlesResponse.data,
+        projectsResponse.data,
+      );
+    },
+  });
+
+  const projects = calendarQuery.data?.projects ?? [];
   const projectsById = useMemo(
-    () =>
-      Object.fromEntries(
-        MOCK_CALENDAR_PROJECTS.map((project) => [project.id, project]),
-      ),
-    [],
+    () => Object.fromEntries(projects.map((project) => [project.id, project])),
+    [projects],
   );
 
-  const weekDates = useMemo(() => getWeekDates(weekStart), [weekStart]);
+  const articles = calendarQuery.data?.articles ?? [];
+
+  const moveArticleMutation = useMutation({
+    mutationFn: async ({
+      entryId,
+      sourceDate,
+      targetDate,
+      targetOrderedIds,
+      sourceOrderedIds,
+    }: {
+      entryId: number;
+      sourceDate: string;
+      targetDate: string;
+      targetOrderedIds: number[];
+      sourceOrderedIds: number[];
+      updatedArticles: CalendarArticle[];
+    }) => {
+      if (sourceDate !== targetDate) {
+        await patchApiContentlyCalendarId(entryId, {
+          date: targetDate,
+          order: targetOrderedIds.indexOf(entryId),
+        });
+      }
+
+      await putApiContentlyCalendarReorder({
+        date: targetDate,
+        orderedIds: targetOrderedIds,
+      });
+
+      if (sourceDate !== targetDate && sourceOrderedIds.length > 0) {
+        await putApiContentlyCalendarReorder({
+          date: sourceDate,
+          orderedIds: sourceOrderedIds,
+        });
+      }
+    },
+    onMutate: async (variables) => {
+      await queryClient.cancelQueries({ queryKey });
+
+      const previousData = queryClient.getQueryData<CalendarQueryData>(queryKey);
+
+      queryClient.setQueryData<CalendarQueryData>(queryKey, (current) => {
+        if (!current) return current;
+
+        return {
+          ...current,
+          articles: variables.updatedArticles,
+        };
+      });
+
+      return { previousData };
+    },
+    onError: (_error, _variables, context) => {
+      if (context?.previousData) {
+        queryClient.setQueryData(queryKey, context.previousData);
+      }
+    },
+    onSettled: () => {
+      void queryClient.invalidateQueries({ queryKey });
+    },
+  });
+
+  const currentError = calendarQuery.error ?? moveArticleMutation.error;
 
   const filteredArticles = useMemo(() => {
     const query = search.trim().toLowerCase();
@@ -170,20 +393,25 @@ export function CalendarView() {
 
     const articleId = String(active.id);
     const overId = String(over.id);
+    const dropResult = getUpdatedArticlesForDrop(articles, articleId, overId, weekDates);
+    const movedArticle = articles.find((article) => article.id === articleId);
 
-    const targetDate = weekDates.includes(overId)
-      ? overId
-      : articles.find((article) => article.id === overId)?.date;
+    if (!dropResult || !movedArticle) return;
 
-    if (!targetDate) return;
-
-    setArticles((prev) =>
-      prev.map((article) =>
-        article.id === articleId && article.date !== targetDate
-          ? { ...article, date: targetDate }
-          : article,
-      ),
-    );
+    void moveArticleMutation.mutateAsync({
+      entryId: movedArticle.entryId,
+      sourceDate: dropResult.sourceDate,
+      targetDate: dropResult.targetDate,
+      targetOrderedIds: dropResult.updatedArticles
+        .filter((article) => article.date === dropResult.targetDate)
+        .sort((left, right) => left.order - right.order)
+        .map((article) => article.entryId),
+      sourceOrderedIds: dropResult.updatedArticles
+        .filter((article) => article.date === dropResult.sourceDate)
+        .sort((left, right) => left.order - right.order)
+        .map((article) => article.entryId),
+      updatedArticles: dropResult.updatedArticles,
+    });
   }
 
   return (
@@ -196,7 +424,7 @@ export function CalendarView() {
             weekStart={weekStart}
             onPrevWeek={() => setWeekStart((prev) => prev.subtract(1, "week"))}
             onNextWeek={() => setWeekStart((prev) => prev.add(1, "week"))}
-            projects={MOCK_CALENDAR_PROJECTS}
+            projects={projects}
             projectId={projectId}
             onProjectChange={setProjectId}
             postTime={postTime}
@@ -214,6 +442,22 @@ export function CalendarView() {
         </div>
       </div>
 
+      {calendarQuery.isLoading ? (
+        <div className="mx-auto max-w-5xl px-6 pt-4">
+          <p className="text-sm text-muted-foreground">{t("loading")}</p>
+        </div>
+      ) : null}
+
+      {calendarQuery.isError || moveArticleMutation.isError ? (
+        <div className="mx-auto max-w-5xl px-6 pt-4">
+          <p className="text-sm text-destructive" role="alert">
+            {currentError instanceof ApiClientError
+              ? currentError.mapped.message
+              : t("error")}
+          </p>
+        </div>
+      ) : null}
+
       <DndContext
         sensors={sensors}
         collisionDetection={closestCenter}
@@ -228,7 +472,7 @@ export function CalendarView() {
           onPointerUp={handleBoardPointerEnd}
           onPointerCancel={handleBoardPointerEnd}
           className={cn(
-            "relative z-0 mt-4 w-full min-w-0 overflow-x-auto overscroll-x-contain select-none [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
+            "relative z-0 mt-4 w-full min-w-0 overflow-x-auto overscroll-x-contain scrollbar-none select-none [&::-webkit-scrollbar]:hidden",
             BOARD_INLINE_START,
             isPanning ? "cursor-grabbing" : "cursor-grab",
           )}

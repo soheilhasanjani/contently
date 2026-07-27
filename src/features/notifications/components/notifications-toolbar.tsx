@@ -16,33 +16,29 @@ import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 import {
   NOTIFICATION_SORT_OPTIONS,
-  NOTIFICATION_STATUS_FILTERS,
+  NOTIFICATION_TYPE_FILTERS,
   type NotificationSortOption,
-  type NotificationStatusFilter,
+  type NotificationTypeFilter,
 } from "../data/notifications-mock";
 
 type NotificationsToolbarProps = {
-  status: NotificationStatusFilter;
-  onStatusChange: (status: NotificationStatusFilter) => void;
+  typeFilter: NotificationTypeFilter;
+  onTypeFilterChange: (type: NotificationTypeFilter) => void;
   sort: NotificationSortOption;
   onSortChange: (sort: NotificationSortOption) => void;
   search: string;
   onSearchChange: (value: string) => void;
   resultCount: number;
-  unreadCount: number;
-  onMarkAllRead: () => void;
 };
 
 export function NotificationsToolbar({
-  status,
-  onStatusChange,
+  typeFilter,
+  onTypeFilterChange,
   sort,
   onSortChange,
   search,
   onSearchChange,
   resultCount,
-  unreadCount,
-  onMarkAllRead,
 }: NotificationsToolbarProps) {
   const t = useTranslations("Notifications");
   const [searchOpen, setSearchOpen] = useState(false);
@@ -62,25 +58,25 @@ export function NotificationsToolbar({
 
       <div className="flex flex-wrap items-center justify-end gap-1.5">
         <Select
-          value={status}
+          value={typeFilter}
           onValueChange={(value) => {
             if (!value) return;
             if (
-              NOTIFICATION_STATUS_FILTERS.includes(
-                value as NotificationStatusFilter,
+              NOTIFICATION_TYPE_FILTERS.includes(
+                value as NotificationTypeFilter,
               )
             ) {
-              onStatusChange(value as NotificationStatusFilter);
+              onTypeFilterChange(value as NotificationTypeFilter);
             }
           }}
         >
-          <SelectTrigger size="sm" aria-label={t("statusFilter")}>
-            <SelectValue>{t(`status.${status}`)}</SelectValue>
+          <SelectTrigger size="sm" aria-label={t("typeFilter")}>
+            <SelectValue>{t(`type.${typeFilter}`)}</SelectValue>
           </SelectTrigger>
           <SelectContent align="end">
-            {NOTIFICATION_STATUS_FILTERS.map((option) => (
+            {NOTIFICATION_TYPE_FILTERS.map((option) => (
               <SelectItem key={option} value={option}>
-                {t(`status.${option}`)}
+                {t(`type.${option}`)}
               </SelectItem>
             ))}
           </SelectContent>
@@ -110,16 +106,6 @@ export function NotificationsToolbar({
             ))}
           </SelectContent>
         </Select>
-
-        <Button
-          type="button"
-          variant="outline"
-          size="sm"
-          disabled={unreadCount === 0}
-          onClick={onMarkAllRead}
-        >
-          {t("markAllRead")}
-        </Button>
 
         <Separator orientation="vertical" className="mx-1 hidden h-4 sm:block" />
 

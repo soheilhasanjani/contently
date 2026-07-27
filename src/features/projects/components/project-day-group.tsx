@@ -13,7 +13,7 @@ type ProjectDayGroupProps = {
   date: string;
   articles: ProjectArticle[];
   layout: ProjectLayout;
-  formatEditedLabel: (minutesAgo: number) => string;
+  formatEditedLabel: (updatedAt: string) => string;
 };
 
 function formatDayLabel(
@@ -73,7 +73,7 @@ export function ProjectDayGroup({
             <ProjectArticleRow
               key={article.id}
               article={article}
-              lastEditedLabel={formatEditedLabel(article.editedMinutesAgo)}
+              lastEditedLabel={formatEditedLabel(article.updatedAt)}
             />
           ))}
         </ul>
@@ -84,7 +84,7 @@ export function ProjectDayGroup({
               key={article.id}
               title={article.title}
               status={article.status}
-              lastEditedLabel={formatEditedLabel(article.editedMinutesAgo)}
+              lastEditedLabel={formatEditedLabel(article.updatedAt)}
               authorName={article.authorName}
               authorImageUrl={article.authorImageUrl}
             />
