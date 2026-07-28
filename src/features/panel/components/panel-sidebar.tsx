@@ -4,13 +4,13 @@ import { getApiContentlyNotifications } from "@/api/generated/endpoints/contentl
 import { getApiContentlyProjects } from "@/api/generated/endpoints/contently-projects/contently-projects";
 import { Button } from "@/components/ui/button";
 import { getNotificationsQueryKey } from "@/features/notifications/data/notifications-mock";
-import { PanelNavLink } from "@/features/panel/components/panel-nav-link";
+import { PanelNavLink, sidebarNavItemClassName } from "@/features/panel/components/panel-nav-link";
 import {
   PROJECT_COLOR_CLASSES,
   toPanelProject,
 } from "@/features/panel/data/panel-shell-mock";
 import { getProjectsQueryKey } from "@/features/projects/data/project-mock";
-import { Link } from "@/i18n/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import { routes } from "@/lib/routes";
 import { Icon } from "@/components/common/icon";
@@ -20,6 +20,7 @@ import { useMemo } from "react";
 
 export function PanelSidebar() {
   const t = useTranslations("PanelShell");
+  const pathname = usePathname();
 
   const notificationsQuery = useQuery({
     queryKey: getNotificationsQueryKey("all"),
@@ -98,11 +99,17 @@ export function PanelSidebar() {
 
         {projects.length > 0 ? (
           <ul className="flex flex-col gap-0.5 overflow-y-auto">
-            {projects.map((project) => (
+            {projects.map((project) => {
+              const projectHref = routes.projects.id({ id: project.id });
+              const active =
+                pathname === projectHref ||
+                pathname.startsWith(`${projectHref}/`);
+
+              return (
               <li key={project.id}>
                 <Link
-                  href={routes.projects.id({ id: project.id })}
-                  className="flex h-9 items-center gap-2.5 rounded-lg px-2.5 text-sm text-muted-foreground transition-colors hover:bg-muted/70 hover:text-foreground"
+                  href={projectHref}
+                  className={sidebarNavItemClassName(active)}
                 >
                   <span
                     className={cn(
@@ -116,7 +123,8 @@ export function PanelSidebar() {
                   </span>
                 </Link>
               </li>
-            ))}
+              );
+            })}
           </ul>
         ) : null}
       </div>

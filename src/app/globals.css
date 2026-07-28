@@ -17,6 +17,11 @@
   --color-sidebar-primary: var(--sidebar-primary);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar: var(--sidebar);
+  --color-sidebar-nav-foreground: var(--sidebar-nav-foreground);
+  --color-sidebar-nav-hover-background: var(--sidebar-nav-hover-background);
+  --color-sidebar-nav-hover-foreground: var(--sidebar-nav-hover-foreground);
+  --color-sidebar-nav-active-background: var(--sidebar-nav-active-background);
+  --color-sidebar-nav-active-foreground: var(--sidebar-nav-active-foreground);
   --color-chart-5: var(--chart-5);
   --color-chart-4: var(--chart-4);
   --color-chart-3: var(--chart-3);
@@ -97,6 +102,15 @@
   --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
   --sidebar-border: oklch(0.92 0.004 286.32);
   --sidebar-ring: oklch(0.705 0.015 286.067);
+  --sidebar-nav-foreground: #5f6368;
+  --sidebar-nav-hover-background: color-mix(
+    in srgb,
+    rgb(26, 115, 232) 4%,
+    transparent
+  );
+  --sidebar-nav-hover-foreground: rgb(23, 78, 166);
+  --sidebar-nav-active-background: rgb(232, 240, 254);
+  --sidebar-nav-active-foreground: rgb(23, 78, 166);
 }
 
 .dark {
@@ -106,7 +120,7 @@
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.21 0.006 285.885);
   --popover-foreground: oklch(0.985 0 0);
-  --primary: #4c8bf5;
+  --primary: #0b57d0;
   --primary-foreground: #ffffff;
   --secondary: oklch(0.274 0.006 286.033);
   --secondary-foreground: oklch(0.985 0 0);
@@ -133,12 +147,25 @@
   --chart-5: oklch(0.274 0.006 286.033);
   --sidebar: var(--background);
   --sidebar-foreground: var(--foreground);
-  --sidebar-primary: #4c8bf5;
+  --sidebar-primary: #0b57d0;
   --sidebar-primary-foreground: #ffffff;
   --sidebar-accent: oklch(0.274 0.006 286.033);
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.552 0.016 285.938);
+  --sidebar-nav-foreground: oklch(0.705 0.015 286.067);
+  --sidebar-nav-hover-background: color-mix(
+    in srgb,
+    var(--primary) 8%,
+    transparent
+  );
+  --sidebar-nav-hover-foreground: #8ab4f8;
+  --sidebar-nav-active-background: color-mix(
+    in srgb,
+    var(--primary) 18%,
+    transparent
+  );
+  --sidebar-nav-active-foreground: #8ab4f8;
 }
 
 @layer base {
