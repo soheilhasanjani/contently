@@ -1,8 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { CheckmarkCircle02Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
+import { Icon } from "@/components/common/icon";
 import { useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
 import { useSyncExternalStore } from "react";
@@ -133,11 +132,7 @@ export function SettingsAppearanceSection() {
                   {t(`themes.${option}.label`)}
                 </span>
                 {selected ? (
-                  <HugeiconsIcon
-                    icon={CheckmarkCircle02Icon}
-                    strokeWidth={1.5}
-                    className="size-4 shrink-0 text-primary"
-                  />
+                  <Icon name="check_circle" size={16} className="shrink-0 text-primary" />
                 ) : null}
               </div>
             </button>

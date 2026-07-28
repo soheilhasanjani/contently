@@ -1,5 +1,5 @@
 ---
-description: shadcn ui/common, Hugeicons, toasts
+description: shadcn ui/common, Material Symbols icons, toasts
 globs: src/components/**/*.{ts,tsx}
 alwaysApply: false
 ---
@@ -8,7 +8,7 @@ alwaysApply: false
 
 - shadcn CLI → `components/ui` (includes `cn` setup).
 - Complex shared UI + `AppProviders` → `components/common`.
-- **Icons**: Hugeicons — `@hugeicons/react` + `@hugeicons/core-free-icons` (shadcn `iconLibrary: hugeicons`).
+- **Icons**: Material Symbols Rounded — `@/components/common/icon` (`<Icon name="…" />`; typed allowlist in `ICONS`).
 - **Toasts**: `@/components/ui/toast` — `<Toaster />` in `AppProviders`; `toast.add({ title, type })` (`success` | `error` | `info` | `warning` | `loading`).
 - Prefer `next/image`, `next/font`, Next navigation. Dynamic-import heavy UIs.
 - TipTap deferred until editor feature starts.

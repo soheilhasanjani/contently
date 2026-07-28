@@ -1,7 +1,6 @@
 "use client";
 
-import { Calendar03Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
+import { Icon } from "@/components/common/icon";
 import dayjs from "dayjs";
 import { useLocale, useTranslations } from "next-intl";
 import type { ArchivedArticle, ArchivedProject } from "../data/archived-mock";
@@ -51,11 +50,7 @@ export function ArchivedDayGroup({
           id={`archived-day-${date}`}
           className="flex min-w-0 items-center gap-1.5 text-xs font-semibold tracking-wide text-muted-foreground uppercase"
         >
-          <HugeiconsIcon
-            icon={Calendar03Icon}
-            strokeWidth={2}
-            className="size-3.5 shrink-0"
-          />
+          <Icon name="calendar_month" size={14} className="shrink-0" />
           <span className="truncate">{formatDayLabel(date, locale, t)}</span>
         </h2>
         <p className="shrink-0 text-xs text-muted-foreground">

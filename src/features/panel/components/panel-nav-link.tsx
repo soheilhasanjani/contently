@@ -1,14 +1,13 @@
 "use client";
 
+import { Icon, type IconName } from "@/components/common/icon";
 import { Link, usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
-import { HugeiconsIcon } from "@hugeicons/react";
-import type { IconSvgElement } from "@hugeicons/react";
 
 type PanelNavLinkProps = {
   href: string;
   label: string;
-  icon: IconSvgElement;
+  icon: IconName;
   badgeCount?: number;
 };
 
@@ -31,7 +30,7 @@ export function PanelNavLink({
           : "text-muted-foreground hover:bg-muted/70 hover:text-foreground",
       )}
     >
-      <HugeiconsIcon icon={icon} strokeWidth={2} className="size-4 shrink-0" />
+      <Icon name={icon} size={16} className="shrink-0" />
       <span className="min-w-0 flex-1 truncate text-start">{label}</span>
       {badgeCount != null && badgeCount > 0 ? (
         <span className="inline-flex min-w-5 items-center justify-center rounded-full bg-destructive px-1.5 text-[10px] font-semibold leading-4 text-white">

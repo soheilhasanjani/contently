@@ -10,8 +10,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
-import { Cancel01Icon, Search01Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
+import { Icon } from "@/components/common/icon";
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 import {
@@ -128,7 +127,7 @@ export function ArchivedToolbar({
                 onSearchChange("");
               }}
             >
-              <HugeiconsIcon icon={Cancel01Icon} strokeWidth={2} />
+              <Icon name="close" size={16} />
             </Button>
           </div>
         ) : (
@@ -139,7 +138,7 @@ export function ArchivedToolbar({
             aria-label={t("search")}
             onClick={() => setSearchOpen(true)}
           >
-            <HugeiconsIcon icon={Search01Icon} strokeWidth={2} />
+            <Icon name="search" size={16} />
           </Button>
         )}
       </div>

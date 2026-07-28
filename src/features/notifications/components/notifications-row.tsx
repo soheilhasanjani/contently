@@ -1,23 +1,16 @@
 "use client";
 
-import {
-  FileEditIcon,
-  NewsIcon,
-  Notification03Icon,
-  UserAdd01Icon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
-import type { IconSvgElement } from "@hugeicons/react";
+import { Icon, type IconName } from "@/components/common/icon";
 import type {
   NotificationItem,
   NotificationType,
 } from "../data/notifications-mock";
 
-const TYPE_ICONS: Record<NotificationType, IconSvgElement> = {
-  article_update: FileEditIcon,
-  project_invite: UserAdd01Icon,
-  product_news: NewsIcon,
-  system: Notification03Icon,
+const TYPE_ICONS: Record<NotificationType, IconName> = {
+  article_update: "edit_note",
+  project_invite: "person_add",
+  product_news: "newspaper",
+  system: "notifications",
 };
 
 type NotificationsRowProps = {
@@ -33,7 +26,7 @@ export function NotificationsRow({ notification }: NotificationsRowProps) {
         className="mt-0.5 inline-flex size-7 shrink-0 items-center justify-center rounded-md bg-primary/10 text-primary"
         aria-hidden
       >
-        <HugeiconsIcon icon={icon} strokeWidth={2} className="size-3.5" />
+        <Icon name={icon} size={14} />
       </span>
 
       <div className="min-w-0 flex-1">

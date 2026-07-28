@@ -23,12 +23,7 @@ import {
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
-import {
-  Cancel01Icon,
-  Search01Icon,
-  Target01Icon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
+import { Icon } from "@/components/common/icon";
 import dayjs from "dayjs";
 import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
@@ -172,7 +167,7 @@ export function CalendarToolbar({
           <DialogTrigger
             render={<Button type="button" variant="outline" size="sm" />}
           >
-            <HugeiconsIcon icon={Target01Icon} strokeWidth={2} />
+            <Icon name="center_focus_strong" size={16} />
             {t("expectedResult")}
           </DialogTrigger>
           <DialogContent className="sm:max-w-md">
@@ -284,7 +279,7 @@ export function CalendarToolbar({
                   onSearchChange("");
                 }}
               >
-                <HugeiconsIcon icon={Cancel01Icon} strokeWidth={2} />
+                <Icon name="close" size={16} />
               </Button>
             </div>
           ) : (
@@ -295,7 +290,7 @@ export function CalendarToolbar({
               aria-label={t("search")}
               onClick={() => setSearchOpen(true)}
             >
-              <HugeiconsIcon icon={Search01Icon} strokeWidth={2} />
+              <Icon name="search" size={16} />
             </Button>
           )}
         </div>

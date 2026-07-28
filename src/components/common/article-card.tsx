@@ -1,15 +1,8 @@
 "use client";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Icon, type IconName } from "@/components/common/icon";
 import { cn } from "@/lib/utils";
-import {
-  CheckmarkCircle02Icon,
-  Clock01Icon,
-  Edit02Icon,
-  Refresh01Icon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
-import type { IconSvgElement } from "@hugeicons/react";
 import { useTranslations } from "next-intl";
 
 export const ARTICLE_STATUSES = [
@@ -32,22 +25,22 @@ export type ArticleCardProps = {
 
 const STATUS_STYLES: Record<
   ArticleStatus,
-  { icon: IconSvgElement; className: string }
+  { icon: IconName; className: string }
 > = {
   waitingReview: {
-    icon: Clock01Icon,
+    icon: "schedule",
     className: "bg-info text-info-foreground",
   },
   beingEdited: {
-    icon: Edit02Icon,
+    icon: "edit",
     className: "bg-tertiary text-tertiary-foreground",
   },
   revision: {
-    icon: Refresh01Icon,
+    icon: "refresh",
     className: "bg-warning text-warning-foreground",
   },
   approved: {
-    icon: CheckmarkCircle02Icon,
+    icon: "check_circle",
     className: "bg-success text-success-foreground",
   },
 };
@@ -100,11 +93,7 @@ export function ArticleCard({
             statusStyle.className,
           )}
         >
-          <HugeiconsIcon
-            icon={statusStyle.icon}
-            strokeWidth={2}
-            className="size-3.5"
-          />
+          <Icon name={statusStyle.icon} size={14} />
           {t(`status.${status}`)}
         </span>
       </div>

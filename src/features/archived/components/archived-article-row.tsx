@@ -2,8 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { ArchiveRestoreIcon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
+import { Icon } from "@/components/common/icon";
 import { useTranslations } from "next-intl";
 import {
   PROJECT_COLOR_CLASSES,
@@ -49,7 +48,7 @@ export function ArchivedArticleRow({
         disabled={restoring}
         onClick={() => onRestore(article.id)}
       >
-        <HugeiconsIcon icon={ArchiveRestoreIcon} strokeWidth={2} />
+        <Icon name="unarchive" size={16} />
         {restoring ? t("restoring") : t("restore")}
       </Button>
     </li>

@@ -4,8 +4,7 @@ import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { useDraggable } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
-import { Clock01Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
+import { Icon } from "@/components/common/icon";
 import { useTranslations } from "next-intl";
 import {
   PROJECT_COLOR_CLASSES,
@@ -51,11 +50,7 @@ export function CalendarArticleCardContent({
       <Separator className="my-2.5" />
 
       <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-        <HugeiconsIcon
-          icon={Clock01Icon}
-          strokeWidth={2}
-          className="size-3.5 shrink-0"
-        />
+        <Icon name="schedule" size={14} className="shrink-0" />
         <span>{t("aroundTime", { time: article.timeRange })}</span>
       </div>
     </article>

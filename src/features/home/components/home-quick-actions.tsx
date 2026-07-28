@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  AiContentGenerator01Icon,
-  FileEditIcon,
-  FolderAddIcon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
-import type { IconSvgElement } from "@hugeicons/react";
+import { Icon, type IconName } from "@/components/common/icon";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 
@@ -14,22 +8,22 @@ type QuickActionId = "generateArticle" | "createProject" | "manualArticle";
 
 const QUICK_ACTIONS: {
   id: QuickActionId;
-  icon: IconSvgElement;
+  icon: IconName;
   iconClassName: string;
 }[] = [
   {
     id: "generateArticle",
-    icon: AiContentGenerator01Icon,
+    icon: "auto_awesome",
     iconClassName: "bg-primary/10 text-primary",
   },
   {
     id: "createProject",
-    icon: FolderAddIcon,
+    icon: "create_new_folder",
     iconClassName: "bg-tertiary text-tertiary-foreground",
   },
   {
     id: "manualArticle",
-    icon: FileEditIcon,
+    icon: "edit_note",
     iconClassName: "bg-success text-success-foreground",
   },
 ];
@@ -54,11 +48,7 @@ export function HomeQuickActions() {
               action.iconClassName,
             )}
           >
-            <HugeiconsIcon
-              icon={action.icon}
-              strokeWidth={1.5}
-              className="size-7"
-            />
+            <Icon name={action.icon} size={28} weight={300} />
           </span>
           <span className="min-w-0 flex-1">
             <span className="block text-sm font-semibold text-foreground">

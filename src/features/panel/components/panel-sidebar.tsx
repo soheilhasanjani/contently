@@ -13,14 +13,7 @@ import { getProjectsQueryKey } from "@/features/projects/data/project-mock";
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import { routes } from "@/lib/routes";
-import {
-  Add01Icon,
-  Archive02Icon,
-  Calendar03Icon,
-  Home01Icon,
-  Notification03Icon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
+import { Icon } from "@/components/common/icon";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
@@ -50,22 +43,22 @@ export function PanelSidebar() {
         <PanelNavLink
           href={routes.home()}
           label={t("home")}
-          icon={Home01Icon}
+          icon="home"
         />
         <PanelNavLink
           href={routes.calendar()}
           label={t("contentCalendar")}
-          icon={Calendar03Icon}
+          icon="calendar_month"
         />
         <PanelNavLink
           href={routes.archived()}
           label={t("archived")}
-          icon={Archive02Icon}
+          icon="archive"
         />
         <PanelNavLink
           href={routes.notifications()}
           label={t("notifications")}
-          icon={Notification03Icon}
+          icon="notifications"
           badgeCount={notificationCount > 0 ? notificationCount : undefined}
         />
       </nav>
@@ -81,7 +74,7 @@ export function PanelSidebar() {
             size="icon-xs"
             aria-label={t("addProject")}
           >
-            <HugeiconsIcon icon={Add01Icon} strokeWidth={2} />
+            <Icon name="add" size={16} />
           </Button>
         </div>
 

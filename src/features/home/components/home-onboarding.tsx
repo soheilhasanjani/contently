@@ -12,8 +12,7 @@ import {
   type OnboardingStorageState,
 } from "../lib/onboarding-storage";
 import { cn } from "@/lib/utils";
-import { Tick02Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
+import { Icon } from "@/components/common/icon";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
@@ -108,11 +107,7 @@ export function HomeOnboarding() {
                     aria-hidden
                   >
                     {completed ? (
-                      <HugeiconsIcon
-                        icon={Tick02Icon}
-                        strokeWidth={2}
-                        className="size-3.5"
-                      />
+                      <Icon name="check" size={14} />
                     ) : (
                       index + 1
                     )}

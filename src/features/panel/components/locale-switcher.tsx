@@ -1,5 +1,6 @@
 "use client";
 
+import { Icon } from "@/components/common/icon";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -9,8 +10,6 @@ import {
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { routing, type AppLocale } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
-import { CheckIcon, AlphabetJapaneseIcon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
 
@@ -44,11 +43,7 @@ export function LocaleSwitcher() {
           />
         }
       >
-        <HugeiconsIcon
-          icon={AlphabetJapaneseIcon}
-          strokeWidth={1.5}
-          className="size-5"
-        />
+        <Icon name="translate" size={20} />
       </PopoverTrigger>
       <PopoverContent align="end" className="w-40 gap-0.5 p-1">
         {routing.locales.map((item) => {
@@ -67,9 +62,7 @@ export function LocaleSwitcher() {
               onClick={() => onLocaleChange(item)}
             >
               {LOCALE_LABELS[item]}
-              {selected ? (
-                <HugeiconsIcon icon={CheckIcon} strokeWidth={2} />
-              ) : null}
+              {selected ? <Icon name="check" size={16} /> : null}
             </Button>
           );
         })}

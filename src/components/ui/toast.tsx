@@ -5,8 +5,7 @@ import { Toast as ToastPrimitive } from "@base-ui/react/toast"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import { HugeiconsIcon } from "@hugeicons/react"
-import { Cancel01Icon, CheckmarkCircle02Icon, InformationCircleIcon, Alert02Icon, MultiplicationSignCircleIcon, Loading03Icon } from "@hugeicons/core-free-icons"
+import { Icon } from "@/components/common/icon"
 
 const toast = ToastPrimitive.createToastManager()
 
@@ -127,7 +126,7 @@ function ToastClose({
       {...props}
     >
       {children ?? (
-        <HugeiconsIcon icon={Cancel01Icon} strokeWidth={2} aria-hidden="true" />
+        <Icon name="close" size={16} />
       )}
     </ToastPrimitive.Close>
   )
@@ -138,31 +137,31 @@ function ToastIcon({ type }: { type: string | undefined }) {
 
   if (type === "success") {
     icon = (
-      <HugeiconsIcon icon={CheckmarkCircle02Icon} strokeWidth={2} aria-hidden="true" />
+      <Icon name="check_circle" size={16} />
     )
   }
 
   if (type === "info") {
     icon = (
-      <HugeiconsIcon icon={InformationCircleIcon} strokeWidth={2} aria-hidden="true" />
+      <Icon name="info" size={16} />
     )
   }
 
   if (type === "warning") {
     icon = (
-      <HugeiconsIcon icon={Alert02Icon} strokeWidth={2} aria-hidden="true" />
+      <Icon name="warning" size={16} />
     )
   }
 
   if (type === "error") {
     icon = (
-      <HugeiconsIcon icon={MultiplicationSignCircleIcon} strokeWidth={2} className="text-destructive" aria-hidden="true" />
+      <Icon name="cancel" size={16} className="text-destructive" />
     )
   }
 
   if (type === "loading") {
     icon = (
-      <HugeiconsIcon icon={Loading03Icon} strokeWidth={2} className="animate-spin" aria-hidden="true" />
+      <Icon name="progress_activity" size={16} className="animate-spin" />
     )
   }
 

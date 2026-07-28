@@ -11,7 +11,7 @@ This repository is the **frontend** (Next.js App Router). Business logic and per
 - Cookie-based Bearer auth with route protection
 - Feature-based app structure (`features/*/pages|components|hooks`)
 - Generated typed route helpers (`routes.*`)
-- Theme support (system / light / dark) and Hugeicons UI
+- Theme support (system / light / dark) and Material Symbols icons
 
 ## Stack
 
@@ -24,7 +24,7 @@ This repository is the **frontend** (Next.js App Router). Business logic and per
 | Forms | React Hook Form + Zod |
 | State | Zustand (session), nuqs (URL) |
 | Theme | next-themes |
-| Icons | Hugeicons |
+| Icons | Material Symbols Rounded |
 
 ## Prerequisites
 

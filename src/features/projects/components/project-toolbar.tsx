@@ -11,13 +11,7 @@ import {
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
-import {
-  Cancel01Icon,
-  GridViewIcon,
-  ListViewIcon,
-  Search01Icon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
+import { Icon } from "@/components/common/icon";
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 import {
@@ -135,10 +129,7 @@ export function ProjectToolbar({
                 className={cn(active && "bg-muted")}
                 onClick={() => onLayoutChange(option)}
               >
-                <HugeiconsIcon
-                  icon={option === "list" ? ListViewIcon : GridViewIcon}
-                  strokeWidth={2}
-                />
+                <Icon name={option === "list" ? "view_list" : "grid_view"} size={16} />
               </Button>
             );
           })}
@@ -167,7 +158,7 @@ export function ProjectToolbar({
                 onSearchChange("");
               }}
             >
-              <HugeiconsIcon icon={Cancel01Icon} strokeWidth={2} />
+              <Icon name="close" size={16} />
             </Button>
           </div>
         ) : (
@@ -178,7 +169,7 @@ export function ProjectToolbar({
             aria-label={t("search")}
             onClick={() => setSearchOpen(true)}
           >
-            <HugeiconsIcon icon={Search01Icon} strokeWidth={2} />
+            <Icon name="search" size={16} />
           </Button>
         )}
       </div>

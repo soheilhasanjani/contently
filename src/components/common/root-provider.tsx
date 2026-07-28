@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { NextIntlClientProvider } from "next-intl";
 import { isRtlLocale } from "@/i18n/routing";
-import { getAppFont } from "@/lib/fonts";
+import { getAppFont, materialSymbolsRounded } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 
 type RootProviderProps = {
@@ -23,7 +23,7 @@ export function RootProvider({ locale, children }: RootProviderProps) {
       lang={locale}
       dir={direction}
       suppressHydrationWarning
-      className={cn("h-full", font.variable)}
+      className={cn("h-full", font.variable, materialSymbolsRounded.variable)}
     >
       <body className={cn("flex min-h-full flex-col antialiased", font.className)}>
         <NextIntlClientProvider>{children}</NextIntlClientProvider>

@@ -1,9 +1,8 @@
 "use client";
 
 import { Input } from "@/components/ui/input";
+import { Icon } from "@/components/common/icon";
 import { cn } from "@/lib/utils";
-import { Search01Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 import type { ComponentProps } from "react";
 
 type SearchInputProps = Omit<ComponentProps<"input">, "type"> & {
@@ -18,10 +17,10 @@ export function SearchInput({
 }: SearchInputProps) {
   return (
     <div className={cn("relative w-full", containerClassName)}>
-      <HugeiconsIcon
-        icon={Search01Icon}
-        strokeWidth={2}
-        className="pointer-events-none absolute start-2.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground"
+      <Icon
+        name="search"
+        size={16}
+        className="pointer-events-none absolute start-2.5 top-1/2 -translate-y-1/2 text-muted-foreground"
       />
       <Input
         type="search"

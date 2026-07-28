@@ -1,12 +1,8 @@
 "use client";
 
+import { Icon } from "@/components/common/icon";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import {
-  ArrowLeft01Icon,
-  ArrowRight01Icon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 
 type PeriodSwitcherProps = {
   label: string;
@@ -35,11 +31,7 @@ export function PeriodSwitcher({
         onClick={onPrevious}
         aria-label={previousLabel}
       >
-        <HugeiconsIcon
-          icon={ArrowLeft01Icon}
-          strokeWidth={2}
-          className="rtl:rotate-180"
-        />
+        <Icon name="chevron_left" size={16} className="rtl:rotate-180" />
       </Button>
       <div className="flex h-7 min-w-40 items-center justify-center rounded-[min(var(--radius-md),12px)] border border-border bg-background px-2.5 text-sm font-medium tracking-tight text-foreground">
         {label}
@@ -51,11 +43,7 @@ export function PeriodSwitcher({
         onClick={onNext}
         aria-label={nextLabel}
       >
-        <HugeiconsIcon
-          icon={ArrowRight01Icon}
-          strokeWidth={2}
-          className="rtl:rotate-180"
-        />
+        <Icon name="chevron_right" size={16} className="rtl:rotate-180" />
       </Button>
     </div>
   );

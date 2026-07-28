@@ -9,8 +9,7 @@ import { ThemeSwitcher } from "@/features/panel/components/theme-switcher";
 import { Link } from "@/i18n/navigation";
 import { routes } from "@/lib/routes";
 import { cn } from "@/lib/utils";
-import { Settings02Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
+import { Icon } from "@/components/common/icon";
 import { useTranslations } from "next-intl";
 
 export function PanelTopBar() {
@@ -45,11 +44,7 @@ export function PanelTopBar() {
           aria-label={t("settings")}
           className={cn(buttonVariants({ variant: "ghost", size: "icon" }))}
         >
-          <HugeiconsIcon
-            icon={Settings02Icon}
-            strokeWidth={1.5}
-            className="size-5"
-          />
+          <Icon name="settings" size={20} />
         </Link>
 
         <Separator orientation="vertical" className="mx-1 h-6" />

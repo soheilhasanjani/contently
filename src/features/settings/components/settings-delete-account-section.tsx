@@ -16,8 +16,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { toast } from "@/components/ui/toast";
-import { Alert02Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
+import { Icon } from "@/components/common/icon";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { ACCOUNT_DELETION_GRACE_DAYS } from "../data/settings-mock";
@@ -63,7 +62,7 @@ export function SettingsDeleteAccountSection() {
       {pending ? (
         <div className="max-w-lg space-y-3">
           <Alert variant="destructive">
-            <HugeiconsIcon icon={Alert02Icon} strokeWidth={1.5} />
+            <Icon name="warning" size={16} />
             <AlertTitle>{t("pendingTitle")}</AlertTitle>
             <AlertDescription>
               {t("pendingDescription", { days: ACCOUNT_DELETION_GRACE_DAYS })}

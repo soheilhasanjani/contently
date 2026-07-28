@@ -22,7 +22,7 @@ Frontend-only Next.js app. Backend lives in a separate API project. This doc is 
 | Route helpers | Typed path functions (e.g. `routes.home()`) for all navigation |
 | i18n | `next-intl`; locales `en` (LTR), `fa` (RTL); default **`fa`** |
 | Fonts | **Inter** (`en`) + **Vazirmatn** (`fa`) via `next/font` |
-| Icons | **Hugeicons** (`@hugeicons/react` + `@hugeicons/core-free-icons`) |
+| Icons | **Material Symbols Rounded** (`Icon` + local variable font) |
 | Toasts | shadcn Base UI toast (`toast` + `<Toaster />` in `AppProviders`) |
 | Env | Zod-validated module + `.env.example` |
 | Quality | ESLint + TypeScript + Prettier |
@@ -161,7 +161,7 @@ src/
 - Root `app/layout.tsx`: pass-through only (required by Next.js); globals CSS import.
 - **`next-themes`**: `class="dark"`; system default then browser storage; not in Zustand.
 - **Colors**: always use **semantic Tailwind classes** (`bg-background`, `text-muted-foreground`, `border-border`, `bg-primary/10`, …) mapped through `@theme` → CSS variables in `src/app/globals.css`. Prefer conventional feedback tokens (`success`, `warning`, `info`, `tertiary`, `destructive`). Define new tokens only when no existing semantic token fits. Never put raw hex/rgb in component classNames or inline styles for theme UI.
-- Fonts: **Inter** + **Vazirmatn** via `next/font` (`src/lib/fonts.ts`) in `RootProvider`.
+- Fonts: **Inter** + **Vazirmatn** via `next/font` (`src/lib/fonts.ts`) in `RootProvider`; Material Symbols Rounded variable font (`--font-msr`) for icons.
 
 ## Forms & dates
 
@@ -172,7 +172,7 @@ src/
 
 - shadcn CLI → `components/ui`; complex shared → `components/common`.
 - **`cn`**: from shadcn install.
-- **Icons**: Hugeicons (`@hugeicons/react` + `@hugeicons/core-free-icons`); shadcn `iconLibrary` is `hugeicons`.
+- **Icons**: Material Symbols Rounded via `@/components/common/icon` (`Icon` + typed `IconName`); font in `src/assets/fonts/msr-variable.ttf`. Add new ligatures to `ICONS` in that file.
 - **Toasts**: shadcn Base UI toast (`components/ui/toast`); mount `<Toaster />` in `AppProviders`; call `toast.add({ title, description, type })` from `@/components/ui/toast`.
 - TipTap: add when editor work starts.
 
